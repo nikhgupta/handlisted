@@ -1,4 +1,11 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  devise_for :users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/monitor'
+  end
+  root to: 'high_voltage/pages#show', id: 'home'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -43,3 +43,37 @@ group :development, :test do
   gem 'spring'
 end
 
+
+gem 'better_errors', group: :development
+gem 'binding_of_caller', group: :development
+gem 'pry-rails', group: [:test, :development]
+gem 'dotenv-rails', group: [:test, :development]
+gem 'devise'
+gem 'activeadmin', github: 'activeadmin'
+gem 'bootstrap-generators'
+gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
+gem 'high_voltage'
+gem 'pundit'
+gem 'sidekiq'
+gem 'sinatra', require: false
+group :development do
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'terminal-notifier'
+  gem 'terminal-notifier-guard'
+end
+
+group :test do
+  gem 'launchy'
+  gem 'capybara'
+  gem 'email_spec'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner'
+  gem 'simplecov', require: false
+  gem 'cucumber-rails', require: false
+end
+
+group :test, :development do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
