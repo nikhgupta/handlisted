@@ -1,7 +1,8 @@
-@import "flat-ui/variables";
+@import "bootstrap-variables.scss";
+// @import "flat-ui/variables";
 @import "bootstrap-sprockets.scss";
 @import "bootstrap.scss";
-@import "flat-ui";
+// @import "flat-ui";
 
 body {
   padding-top: $navbar-height + 10px;

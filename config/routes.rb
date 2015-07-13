@@ -1,11 +1,40 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  devise_for :users, ActiveAdmin::Devise.config
+
+  resources :users, only: [:edit, :update]
+  devise_for :users, skip: [:sessions, :registrations], controllers: {
+    omniauth_callbacks: "users/omniauth_callbacks",
+  }
+  as :user do
+    get 'login' => 'devise/sessions#new', as: :new_user_session
+    get 'logout' => 'devise/sessions#destroy', as: :logout_path
+    get 'register' => 'users/registrations#new', as: :new_user_registration
+    get "profile/edit" => "users#edit", as: :edit_profile
+    post 'login' => 'devise/sessions#create', as: :user_session
+    post 'register' => 'users/registrations#create', as: :user_registration
+    delete  'logout' => 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
+  # devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/monitor'
   end
+
   root to: 'high_voltage/pages#show', id: 'home'
+
+  # resource: product
+  post '/products/scrape' => "products#scrape", as: :scrape_product
+  get '/products' => "products#index", as: :products
+  post '/products' => "products#create"
+  get '/products/new' => "products#new", as: :new_product
+  get '/product/*id/edit' => "products#edit", as: :edit_product
+  get '/product/*id' => "products#show", as: :product
+  patch '/product/*id' => "products#update"
+  put '/product/*id' => "products#update"
+  delete '/product/*id' => "products#destroy"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

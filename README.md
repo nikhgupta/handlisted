@@ -7,4 +7,3 @@ you even think about pushing this application to Github.
 ## TODO
 
 - TODO: Update the README.
-

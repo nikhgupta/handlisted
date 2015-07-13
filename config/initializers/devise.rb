@@ -238,7 +238,11 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: "email"
+  config.omniauth :twitter, ENV['TWITTER_APP_ID'], ENV['TWITTER_APP_SECRET']
+  config.omniauth :google_oauth2, ENV["GOOGLE_APP_ID"], ENV["GOOGLE_APP_SECRET"],
+    name: 'google_plus', image_aspect_ratio: 'square', image_size: 50,
+    scope: 'email, profile, http://gdata.youtube.com'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -262,4 +266,14 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+end
+
+# Layout for the devise
+Rails.application.config.to_prepare do
+  Devise::SessionsController.layout "devise"
+  Devise::ConfirmationsController.layout "devise"
+  Devise::UnlocksController.layout "devise"
+  Devise::PasswordsController.layout "devise"
+  # Devise::RegistrationsController.layout "devise"
+  Devise::RegistrationsController.layout proc { |controller| user_signed_in? ? "application" : "devise" }
 end

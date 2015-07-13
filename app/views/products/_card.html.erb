@@ -1,0 +1,15 @@
+<% if defined?(size) && size == :small %>
+  <div class="col-sm-4 product-image">
+    <%= link_to image_tag(product.cover_image, height: 200), product %>
+  </div>
+<% else %>
+  <div class="col-sm-6 product-image">
+    <%= image_tag product.cover_image %>
+  </div>
+  <div class="col-sm-6 col-pull-right-6 product-details">
+    <h2><%= product.name %></h2>
+    <h3>by <%= product.brand_name %></h3>
+    <%= link_to "#{humanized_money_with_symbol(product.price)} on Amazon Prime!", "http://www.amazon.com/dp/#{product.pid}/",
+      class: "btn btn-primary btn-default" %>
+  </div>
+<% end %>

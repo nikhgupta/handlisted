@@ -1,0 +1,22 @@
+# Relation: Follow
+- a user can follow other users
+
+# Relation: Like
+- a user can like many products
+- a product can be liked by many users
+
+# Relation: Find
+- a user can find many products
+- a product can be found by one user
+
+# # Relation: curate
+# - a user can curate a product in a collection
+# - a product can be curated in multiple collections
+
+user:
+  has_many: products (found relation)
+  # has_many: collections
+
+product:
+  belongs_to: user
+  belongs_to: provider

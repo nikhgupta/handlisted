@@ -1,0 +1,40 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require bootstrap-generators
+ *= require vendor/plugins/magnific/magnific-popup.css
+ *= require assets/skin/default_skin/css/theme
+ *= require assets/admin-tools/admin-forms/css/admin-forms.css
+ *= require identities
+ *= require_self
+ */
+
+h3.logo {
+  color: white;
+  margin: 0;
+  font-size: 1.8em;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.admin-form {
+  small {
+    font-size: 0.8em;
+  }
+  .alert {
+    .fa-2x {
+      float: left;
+      vertical-align: middle;
+      line-height: 1.3em;
+      padding-right: 15px;
+    }
+  }
+}
