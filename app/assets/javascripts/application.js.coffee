@@ -12,17 +12,24 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require turbolinks
-#= require bootstrap
-#= require vendor/plugins/magnific/jquery.magnific-popup.js
-#= require assets/js/utility/utility.js
-#= require assets/js/main.js
-#= require vendor/plugins/canvasbg/canvasbg.js
+#= require absolute-admin/jquery.validate.min
+#= require absolute-admin/jquery.validate.additional.min
+#= require absolute-admin/theme-utility-with-bootstrap
+#= require absolute-admin/theme-core
 #= require_self
 
 $ ->
-  CanvasBG.init
-    Loc:
-      x: window.innerWidth / 2
-      y: window.innerHeight / 3.3
-  $('body').on 'contextmenu', '#demo-canvas', (e) -> false
+  "use strict"
+
+  Core.init()
+
+  $('.navbar-search input').on 'focus', ->
+    width = 0
+    $("header.navbar > *:not('.navbar-search')").each -> width += $(@).width()
+    $(@).attr "data-width", $(@).css('width')
+    $(@).css 'width', $('header.navbar').width() - width - 100 + 'px'
+    $(@).val "" if $(@).val() == $(@).attr("placeholder")
+  $('.navbar-search input').on 'blur', ->
+    $(@).css 'width', $(@).attr("data-width")
+    $(@).removeAttr("data-width")
+    $(@).val($(@).attr("placeholder")) unless $(@).val()?

@@ -1,7 +1,7 @@
-<% @products.each_slice(3) do |slice| %>
-  <div class="product-card row">
-    <% slice.each do |product| %>
-      <%= render "card", product: product, size: :small %>
-    <% end %>
-  </div>
-<% end %>
+<div class="row">
+  <% @products.each do |product| %>
+    <div class="col-sm-6 col-md-4">
+      <%= render "card", product: product %>
+    </div>
+  <% end %>
+</div>

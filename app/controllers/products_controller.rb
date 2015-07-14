@@ -23,6 +23,16 @@ class ProductsController < ApplicationController
   def edit
   end
 
+  # POST /products/search
+  # POST /products/search.json
+  def search
+    # url  = params[:product_url]
+    # data = ProductScrapingService.new(url: url).run
+    # @product = Product.create data
+    # format.html { redirect_to @product, notice: 'Product was successfully created.' }
+    # format.json { render :show, status: :created, location: @product }
+  end
+
   # POST /products/scrape
   # POST /products/scrape.json
   def scrape

@@ -13,4 +13,8 @@
 /tmp
 
 config/secrets.yml
-config/database.ymlcoverage/*
+config/database.yml
+
+coverage/*
+
+.env-heroku

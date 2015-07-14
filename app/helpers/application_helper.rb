@@ -1,7 +1,13 @@
 module ApplicationHelper
-  def image_logo_tag options = {}
-    "<h3 class='logo brand'>Curated Shop</h3>".html_safe
-    # image_tag:logo, { title: "CuratedShop" }.merge(options)
+
+  def current_user
+    UserDecorator.decorate(super) unless super.nil?
+  end
+
+  def link_logo_to(path, options = {})
+    # html = image_tag("logo.png", class: "img-responsive w250")
+    html = "<span><strong>Curated</strong> Shop</span>"
+    link_to html.html_safe, path, options
   end
 
   def fa_icon(name, options = {})
@@ -9,15 +15,16 @@ module ApplicationHelper
     "<i #{options.map{|k,v| "#{k}=\"#{v}\""}.join(" ")}'></i>".html_safe
   end
 
-  def fa_omniauth_button(provider, options = {})
-    text = "<span>#{fa_icon(provider)}</span>#{options.fetch(:name, provider.to_s.titleize)}"
-    options[:class] = "button btn-social #{provider} btn-block #{options[:class]}"
-    link_to text.html_safe, user_omniauth_authorize_path(provider.to_s.underscore), options
+  def oauth_icon_for provider, options = {}
+    provider = provider.to_s.titleize
+    options  = { title: provider, }.merge(options)
+    size     = "fa-#{options.delete(:size) || "2x"}"
+    options[:class] = "#{options[:class]} #{size} fa-#{provider.parameterize}-colored"
+    fa_icon "#{provider.parameterize}-square", options
   end
 
-  def fa_omniauth_icon provider, options = {}
-    provider = provider.to_s.humanize.parameterize
-    icon = fa_icon "#{provider}-square", title: provider.titleize, class: "fa-#{options.fetch(:size, 2)}x fa-#{provider}-colored", style: options[:style]
-    link_to icon.html_safe, user_omniauth_authorize_path(provider.to_s.underscore)
+  def oauth_link_to provider, html, options = {}
+    link = omniauth_authorize_path(:user, provider.to_s.underscore)
+    link_to html.html_safe, link, options
   end
 end

@@ -68,9 +68,8 @@ gem 'monetize'
 gem 'money-rails'
 gem 'google_currency'
 
-gem 'product_scraper', path: "./gems/product_scraper"
-gem 'simple_form'
-gem 'nokogiri'
+gem 'product_scraper', path: "./vendor/gems/product_scraper"
+gem 'rails_12factor', group: :production
 
 # # Future additions
 # gem 'omniauth'

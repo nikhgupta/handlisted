@@ -1,24 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Curated Shop</title>
-
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js", "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
-  <![endif]-->
-
-  <%= stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', media: 'screen' %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body class="external-page sb-l-c sb-r-c">
+<%= render 'shared/head' %>
+<body id="devise-page" class="external-page sb-l-c sb-r-c">
   <!-- Start: Main -->
   <div id="main" class="animated fadeIn">
 
@@ -37,7 +20,7 @@
 
           <div class="row mb15 table-layout">
             <div class="col-xs-6 va-m pln">
-              <%= link_to image_logo_tag(class: "img-responsive w250"), root_path, title: "Return to Homepage" %>
+              <%= link_logo_to root_path, title: "Rerurn Home" %>
             </div>
             <div class="col-xs-6 text-right va-b pr5">
               <div class="login-links">
@@ -72,4 +55,3 @@
   <!-- End: Main -->
 </body>
 </html>
-

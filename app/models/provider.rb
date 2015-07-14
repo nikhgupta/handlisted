@@ -15,6 +15,7 @@ end
 
 class Amazon < Provider
   def image_for_key(key)
+    return key if key.start_with?('http')
     "http://ecx.images-amazon.com/images/I/#{key}.jpg"
   end
 end

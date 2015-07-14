@@ -1,0 +1,36 @@
+<header class="navbar navbar-fixed-top navbar-shadow">
+  <div class="navbar-branding">
+    <%= link_logo_to root_path, class: "navbar-brand" %>
+    <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
+  </div>
+  <ul class="nav navbar-nav navbar-left">
+    <li> <%= link_to "#{fa_icon 'home'} Home".html_safe, root_path %> </li>
+    <li> <%= link_to "#{fa_icon 'shopping-cart'} Shop".html_safe, "#" %> </li>
+    <li> <%= link_to "#{fa_icon 'star'} Featured".html_safe, "#" %> </li>
+  </ul>
+  <%= form_for :product, url: search_product_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>
+    <div class="form-group">
+      <%= f.text_field :search, class: "form-control", placeholder: "Search..", value: "Search.." %>
+    </div>
+  <% end %>
+  <ul class="nav navbar-nav navbar-right">
+    <li>
+      <div class="navbar-btn btn-group">
+        <% if current_user.present? %>
+          <%= link_to "Profile", edit_profile_path, class: "btn btn-sm" %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "btn btn-sm btn-login" %>
+        <% end %>
+      </div>
+    </li>
+    <li>
+      <div class="navbar-btn btn-group">
+        <% if current_user.present? %>
+          <%= link_to "Logout", destroy_user_session_path, class: "btn btn-sm" %>
+        <% else %>
+          <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-register" %>
+        <% end %>
+      </div>
+    </li>
+  </ul>
+</header>

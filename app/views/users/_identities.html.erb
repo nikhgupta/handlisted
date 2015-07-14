@@ -2,7 +2,7 @@
   <h4>Add a new identity:</h4>
   <ul>
     <% Devise.omniauth_configs.keys.each do |provider| %>
-      <li><%= fa_omniauth_icon provider, size: 4 %></li>
+      <li><%= oauth_link_to provider, oauth_icon_for(provider, size: "4x") %></li>
     <% end %>
   </ul>
 </div>
@@ -21,18 +21,22 @@
     </thead>
 
     <tbody>
-      <%= content_tag_for(:tr, @user.identities) do |identity| %>
-        <td>
-          <%= fa_omniauth_icon identity.provider, style: "vertical-align:middle" %>
-          <span><%= identity.provider.titleize %></span>
-        </td>
-        <%# <td><%= identity.provider.titleize %1></td> %>
-        <%# <td><%= identity.uid %1></td> %>
-        <td><%= link_to image_tag(identity.image, width: 50), identity.url, target: '_blank' %></td>
-        <td><%= identity.name %></td>
-        <td><%= "#{identity.email} / #{identity.username}".gsub(/^\s*\//, '').gsub(/\/\s*$/, '').strip %></td>
+      <% if @user.identities.any? %>
+        <%= content_tag_for(:tr, @user.identities) do |identity| %>
+          <td>
+            <li><%= oauth_link_to provider, oauth_icon_for(provider) %></li>
+            <%= oauth_link_to provider, oauth_icon_for(provider, style: "vertical-align:middle") %>
+            <span><%= identity.provider.titleize %></span>
+          </td>
+          <%# <td><%= identity.provider.titleize %1></td> %>
+          <%# <td><%= identity.uid %1></td> %>
+          <td><%= link_to image_tag(identity.image, width: 50), identity.url, target: '_blank' %></td>
+          <td><%= identity.name %></td>
+          <td><%= "#{identity.email} / #{identity.username}".gsub(/^\s*\//, '').gsub(/\/\s*$/, '').strip %></td>
+        <% end %>
+      <% else %>
+        <tr><td colspan="4" style='text-align:center'>No identities attached!</td></tr>
       <% end %>
     </tbody>
   </table>
 </div>
-
