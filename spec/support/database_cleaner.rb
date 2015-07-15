@@ -1,11 +1,13 @@
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
-    begin
-      DatabaseCleaner.start
-      FactoryGirl.lint
-    ensure
-      DatabaseCleaner.clean_with(:truncation)
+    if ENV['COVERAGE'] || ENV['FULL'] || ENV['LINT']
+      begin
+        DatabaseCleaner.start
+        FactoryGirl.lint
+      ensure
+        DatabaseCleaner.clean_with(:truncation)
+      end
     end
   end
 

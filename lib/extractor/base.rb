@@ -1,5 +1,6 @@
 # Read: https://sethvargo.com/authorizers-extractors-and-policy-objects/
 module Extractor
+  class Error < StandardError; end
   class Base
     class << self
       def class_for(provider)
@@ -7,7 +8,7 @@ module Extractor
         begin
           "#{provider}Extractor".constantize
         rescue NameError
-          raise RuntimeError, "#{provider} is not a valid extractor!"
+          raise Error, "#{provider} is not a valid extractor!"
         end
       end
 

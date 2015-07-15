@@ -17,7 +17,6 @@ namespace :scraper do
   end
   task canopy: :environment do
     agent = Mechanize.new{|a| a.user_agent_alias = 'Mac Safari'}
-    provider = Provider.find_or_create_by(name: "Amazon")
     user = User.first
     (1..20000).to_a.shuffle.each do |i|
       begin
@@ -43,10 +42,10 @@ namespace :scraper do
           price: (data['price'] ? data["price"].to_money : 0)
         }
 
-        if provider.products.where(pid: data[:pid]).exists?
+        if AmazonProduct.where(pid: data[:pid]).exists?
           puts "Already found Product with Canopy ID: #{"%05d" % i}"
         else
-          provider.products.create data
+          AmazonProduct.create data
           puts "Scraped Product with Canopy ID: #{"%05d" % i}"
         end
       rescue StandardError => e

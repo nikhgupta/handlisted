@@ -1,32 +1,26 @@
-<!--
-<% if defined?(size) && size == :small %>
-  <div class="col-sm-4 product-image">
-    <%= link_to image_tag(product.cover_image, height: 200), product %>
+<%# TODO: use CSS background for displaying images rather than img tag %>
+<div class="panel panel-tile text-center br-a br-grey product-card">
+  <div class="panel-body">
+    <div class="product-details"><h3><%= product.short_name %></h3></div>
+    <div class="product-image" data-link="<%= product.path %>" data-image="<%= product.cover_image %>"> </div>
   </div>
-<% else %>
-  <div class="col-sm-6 product-image">
-    <%= image_tag product.cover_image %>
-  </div>
-  <div class="col-sm-6 col-pull-right-6 product-details">
-    <h2><%= product.name %></h2>
-    <h3>by <%= product.brand_name %></h3>
-    <%= link_to "#{humanized_money_with_symbol(product.price)} on Amazon Prime!", "http://www.amazon.com/dp/#{product.pid}/",
-      class: "btn btn-primary btn-default" %>
-  </div>
-<% end %>
--->
-
-<div class="bs-component product-card">
-  <div class="panel">
-    <div class="panel-heading">
-      <span class="panel-title"><%= product.name[0,30] %></span>
-      <div class="widget-menu pull-right mr10">
-        <span class="label bg-primary mr10"><%= product.provider %></span>
-        <span class="badge"><%= humanized_money_with_symbol product.price %></span>
+  <div class="panel-footer br-t p12">
+    <span class="fs11">
+      <div class="widget-menu pull-left ml10">
+        <span class="label bg-primary mr10 label-<%= product.provider %>">
+          <%= product.provider.titleize %>
+        </span>
+        <span class="badge"><%= product.price %></span>
       </div>
-    </div>
-    <div class="panel-body" style='max-height: 240px'>
-      <%= image_tag product.cover_image, height: 200 %>
-    </div>
+      <span class="panel-title">&nbsp;</span>
+      <div class="widget-menu pull-right mr10">
+        <%= link_to fa_icon('search', class: "fa-2x"), product.path %>
+        <%= fa_icon 'check', class: "fa-2x" if product.priority_service? %>&nbsp;
+        <%= link_to fa_icon('heart-o', class: "fa-2x", style: "color:grey"), "#" %>
+      </div>
+    </span>
+  </div>
+  <div id="modal-panel" class="product-info popup-large bg-none mfp-with-anim mfp-hide">
+    <%# <%= render 'info', product: product %1> %>
   </div>
 </div>

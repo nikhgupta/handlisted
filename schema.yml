@@ -1,22 +1,27 @@
-# Relation: Follow
-- a user can follow other users
+MVP:
+  - implement user authentication and registration using devise
+  - integrate OmniAuth with devise, and add support for Facebook, Twitter..
+  - Create a module scraping gem to scrape Amazon, and Flipkart.
+  - Create pages for:
+    - user's found products
+    - product
+    - merchant
 
-# Relation: Like
-- a user can like many products
-- a product can be liked by many users
+Beta:
+  - A user can find many products.
+  - New products can be added by adding the URL to site-wide search.
+  - A user can like many products.
+  - A product is likeable by many users.
+  - Create/update pages for:
+    - trending products for a given brand
+    - trending products for a given merchant
+    - product likeability factor, and score
+    - user's liked products
 
-# Relation: Find
-- a user can find many products
-- a product can be found by one user
-
-# # Relation: curate
-# - a user can curate a product in a collection
-# - a product can be curated in multiple collections
-
-user:
-  has_many: products (found relation)
-  # has_many: collections
-
-product:
-  belongs_to: user
-  belongs_to: provider
+v1.0.0:
+  - user karma/reputation system
+  - Create pages for:
+    - collection
+    - user's collected products
+    - related brands for a given brand
+    - product's collection status, and related products

@@ -24,8 +24,7 @@
       <% if @user.identities.any? %>
         <%= content_tag_for(:tr, @user.identities) do |identity| %>
           <td>
-            <li><%= oauth_link_to provider, oauth_icon_for(provider) %></li>
-            <%= oauth_link_to provider, oauth_icon_for(provider, style: "vertical-align:middle") %>
+            <%= oauth_link_to identity.provider, oauth_icon_for(identity.provider, style: "vertical-align:middle") %>
             <span><%= identity.provider.titleize %></span>
           </td>
           <%# <td><%= identity.provider.titleize %1></td> %>

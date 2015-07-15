@@ -1,9 +1,14 @@
 module ApplicationHelper
 
+  def static_page?
+    controller.is_a?(HighVoltage::PagesController)
+  end
+
   def current_user
     UserDecorator.decorate(super) unless super.nil?
   end
 
+  # TODO: link tp image logo
   def link_logo_to(path, options = {})
     # html = image_tag("logo.png", class: "img-responsive w250")
     html = "<span><strong>Curated</strong> Shop</span>"
@@ -17,7 +22,7 @@ module ApplicationHelper
 
   def oauth_icon_for provider, options = {}
     provider = provider.to_s.titleize
-    options  = { title: provider, }.merge(options)
+    options  = { title: provider }.merge(options)
     size     = "fa-#{options.delete(:size) || "2x"}"
     options[:class] = "#{options[:class]} #{size} fa-#{provider.parameterize}-colored"
     fa_icon "#{provider.parameterize}-square", options

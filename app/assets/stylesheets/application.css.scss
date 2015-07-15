@@ -13,7 +13,10 @@
  *= require bootstrap-generators
  *= require absolute-admin/admin-forms
  *= require absolute-admin/theme
+ *= require absolute-admin/plugins/magnific/magnific-popup
  *= require identities
+ *= require products
+ *= require homepage
  *= require_self
  */
 
@@ -30,9 +33,6 @@ body#devise-page {
 header.navbar {
   .navbar-nav {
     li {
-      a:not(.btn) {
-        font-size: 1.4em;
-      }
       a.btn-login {
         background-color: #55BADF !important;
         color: white !important;

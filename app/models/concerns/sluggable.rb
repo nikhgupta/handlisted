@@ -34,9 +34,9 @@ module Sluggable
     end
   end
 
-  class_methods do
-    def slug_scoped_to(relation)
-      friendly_id :slug_candidates, use: :scoped, scope: relation
-    end
-  end
+  # class_methods do
+  #   def slug_scoped_to(relation)
+  #     friendly_id :slug_candidates, use: :scoped, scope: relation
+  #   end
+  # end
 end

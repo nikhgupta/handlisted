@@ -11,7 +11,7 @@ shared_examples_for "sluggable" do |options = {}|
 
   it "auto guesses field names to be used for slug generation" do
     allow(described_class).to receive(:method_defined?) do |arg|
-      !%w[name username title display_name].include?(arg)
+      !%w[name username title display_name].include?(arg.to_s)
     end
     instance = build model
     candidates = instance.send :friendly_id_methods

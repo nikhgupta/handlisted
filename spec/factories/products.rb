@@ -1,15 +1,26 @@
 FactoryGirl.define do
   factory :product do
+    transient do
+      provider "Amazon"
+    end
     user
-    provider
-    brand { create(:brand, provider: provider) }
-    pid "somepid"
+    brand_name "Brand X"
+    product_type { "#{provider.to_s.camelize}Product" }
+    sequence(:pid){ |n| "#{product_type}ID#{n}" }
     sequence(:name){ |n| "Product #{n}" }
-    original_name { "#{brand.name} #{name}" }
+    original_name { "#{brand_name} #{name}" }
     description nil
     note "Some Editor's Note"
     available true
     priority_service true
+    price_cents 80
+    price_currency "USD"
+    marked_price_cents 100
+    marked_price_currency "USD"
+
+    initialize_with do
+      product_type.constantize.new
+    end
 
     trait(:unavailable)  { available false }
     trait(:not_priority) { priority_service false }
@@ -20,34 +31,16 @@ FactoryGirl.define do
         include_images []
       end
 
-      after(:create) do |product, evaluator|
-        count  = evaluator.images_count
-        count -= evaluator.include_images.count if evaluator.include_images.respond_to?(:any?)
-
-        create_list(:image, count, product: product)
-        evaluator.include_images.each do |image|
-          create(:image, product: product, url: image)
-        end
-      end
-    end
-
-    trait :with_cover do
-      transient do
-        cover nil
-      end
-      after(:create) do |product, evaluator|
-        if evaluator.cover.present?
-          create_list(:image, 2, product: product) if product.images.blank?
-          image = product.images.last
-          image.cover = true
-          image.url   = evaluator.cover if evaluator.cover.is_a?(String)
-          image.save
-        end
+      after(:build) do |product, evaluator|
+        images = evaluator.images_count.times.map{|i| "http://url.to/image-#{i}.jpg"}
+        images << evaluator.include_images if evaluator.include_images.present?
+        product.images = images.flatten.last(evaluator.images_count).reverse
+        product.save
       end
     end
 
     factory :unavailable_product, traits: [:unavailable]
     factory :product_without_priority_service, traits: [:not_priority]
-    factory :product_with_images, traits: [:with_images, :with_cover]
+    factory :product_with_images, traits: [:with_images]
   end
 end

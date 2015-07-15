@@ -1,0 +1,47 @@
+/*
+ *= require absolute-admin/plugins/slick/slick
+ */
+
+.static-page {
+  .navbar {
+    border: 0;
+    box-shadow: 0 0 0;
+  }
+  .home-page-slider {
+    min-height: 400px;
+    padding: 40px;
+    background: #fff;
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.08), 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
+    .slick-prev{ left: 15px; }
+    .slick-next{ right: 15px; }
+    .slick-dots{ bottom: 5px; }
+
+    .mesh-slide {
+      .mesh {
+        z-index: -1000;
+      }
+      .overlay {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        background-color: rgba(0,0,0,0.85);
+        color: white;
+        padding: 10px 40px;
+      }
+    }
+  }
+
+  .home-page-overview {
+    min-height: 400px;
+    padding: 40px;
+    border-right: 2px solid #eee;
+    background: #fff;
+  }
+}
+.bg-header {
+  text-align: center;
+  margin: 0 -30px;
+  background-color: #e0e0e0;
+  padding: 10px 0;
+  font-size: 18px;
+}

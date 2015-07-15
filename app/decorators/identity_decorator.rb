@@ -1,0 +1,2 @@
+class IdentityDecorator < ApplicationDecorator
+end

@@ -2,7 +2,6 @@ class CreateProducts < ActiveRecord::Migration
   def change
     create_table :products do |t|
       # associations
-      t.references :provider, index: true, foreign_key: true
       t.references :user, index: true, foreign_key: true
       t.text :images, array: true
       t.text :categories, array: true
@@ -17,6 +16,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.string :brand_name
       t.text   :note
+      t.string :product_type # STI
 
       # text fields
       t.text :features, array: true

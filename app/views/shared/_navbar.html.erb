@@ -1,11 +1,11 @@
-<header class="navbar navbar-fixed-top navbar-shadow">
+<header class="navbar navbar-static-top navbar-shadow">
   <div class="navbar-branding">
     <%= link_logo_to root_path, class: "navbar-brand" %>
     <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
   </div>
   <ul class="nav navbar-nav navbar-left">
     <li> <%= link_to "#{fa_icon 'home'} Home".html_safe, root_path %> </li>
-    <li> <%= link_to "#{fa_icon 'shopping-cart'} Shop".html_safe, "#" %> </li>
+    <li> <%= link_to "#{fa_icon 'shopping-cart'} Shop".html_safe, products_path %> </li>
     <li> <%= link_to "#{fa_icon 'star'} Featured".html_safe, "#" %> </li>
   </ul>
   <%= form_for :product, url: search_product_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>

@@ -18,3 +18,5 @@ config/database.yml
 coverage/*
 
 .env-heroku
+
+.pt

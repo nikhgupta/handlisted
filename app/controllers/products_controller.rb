@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   def index
     page = params[:page].to_i || 1
     page = 1 if page < 1
-    @products = Product.all.offset((page - 1) * 30).limit(30)
+    @products = Product.order(updated_at: :desc).all.offset((page - 1) * 30).limit(30)
   end
 
   # GET /products/1
@@ -89,8 +89,7 @@ class ProductsController < ApplicationController
       # @provider = Provider.find(params[:provider])
       match     = params[:id].match(/^(.*?)\/(.*)\/?/)
       _, params[:provider], params[:product] = match.to_a if match
-      @provider  = Provider.find params[:provider]
-      @product  = @provider.products.find(params[:product])
+      @product = Product.find(params[:product])
     end
 
     def redirect_if_moved

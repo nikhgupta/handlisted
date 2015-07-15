@@ -22,8 +22,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/monitor'
   end
 
-  root to: "products#index"
-  # root to: 'high_voltage/pages#show', id: 'home'
+  # root to: "products#index"
+  root to: 'high_voltage/pages#show', id: 'home'
 
   # resource: product
   post '/products/search' => "products#search", as: :search_product

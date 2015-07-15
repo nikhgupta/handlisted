@@ -1,13 +1,16 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 # simplecov configuration
-require 'simplecov'
-SimpleCov.start 'rails' do
-  add_group 'Policies', 'app/policies'
-  add_group 'Extractors', 'app/extractors'
-  add_group 'SidekiqJobs', 'app/jobs'
+if ENV['COVERAGE'] || ENV['FULL']
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter 'vendor/gems'
+    add_group 'ActiveAdmin', 'app/admin'
+    add_group 'Decorators', 'app/decorators'
+    add_group 'Extractors', 'app/extractors'
+  end
+  SimpleCov.command_name 'RSpec'
 end
-SimpleCov.command_name 'RSpec'
 
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production

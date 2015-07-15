@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20150713062757) do
     t.string   "commentable_type"
     t.integer  "user_id"
     t.string   "role",                        default: "comments"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 20150713062757) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.integer  "provider_id"
     t.integer  "user_id"
     t.text     "images",                                             array: true
     t.text     "categories",                                         array: true
@@ -108,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150713062757) do
     t.string   "name"
     t.string   "brand_name"
     t.text     "note"
+    t.string   "product_type"
     t.text     "features",                                           array: true
     t.text     "description"
     t.integer  "price_cents",           default: 0,     null: false
@@ -122,16 +122,7 @@ ActiveRecord::Schema.define(version: 20150713062757) do
     t.datetime "updated_at",                            null: false
   end
 
-  add_index "products", ["provider_id"], name: "index_products_on_provider_id", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
-
-  create_table "providers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.string   "priority_service_name"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                                   null: false
@@ -164,6 +155,5 @@ ActiveRecord::Schema.define(version: 20150713062757) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "identities", "users"
-  add_foreign_key "products", "providers"
   add_foreign_key "products", "users"
 end

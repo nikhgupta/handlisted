@@ -16,6 +16,9 @@
 #= require absolute-admin/jquery.validate.additional.min
 #= require absolute-admin/theme-utility-with-bootstrap
 #= require absolute-admin/theme-core
+#= require absolute-admin/plugins/magnific/jquery.magnific-popup
+#= require products
+#= require homepage
 #= require_self
 
 $ ->

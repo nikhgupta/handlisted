@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, omniauth_providers: [:facebook, :twitter, :google_plus]
 
+  validates :name, presence: true
+
   def to_s
     name
   end
