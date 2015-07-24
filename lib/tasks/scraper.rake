@@ -17,6 +17,7 @@ namespace :scraper do
   end
   task canopy: :environment do
     agent = Mechanize.new{|a| a.user_agent_alias = 'Mac Safari'}
+    merchant = Merchant.find_or_create_by(name: "Amazon")
     user = User.first
     (1..20000).to_a.shuffle.each do |i|
       begin
@@ -27,14 +28,16 @@ namespace :scraper do
           puts "Product with Canopy ID: #{"%05d" % i} has since been removed."
           next
         end
-        data = JSON.parse(data.attr("data-react-props").value)
-        data = data["product"]
-        data = {
-          user: user,
-          brand_name: data["brand_name"],
+        data  = JSON.parse(data.attr("data-react-props").value)
+        data  = data["product"]
+        brand = merchant.brands.find_or_create_by(name: data["brand_name"]) if data["brand_name"]
+        data  = {
+          founder: user,
+          brand: brand,
+          url: data["amazon_link"],
           name: data["name_without_brand"],
           original_name: data["name"],
-          priority_service: data["prime"],
+          prioritized: data["prime"],
           note: data["editors_note"],
           available: data["available"],
           pid: data["asin"],
@@ -42,11 +45,15 @@ namespace :scraper do
           price: (data['price'] ? data["price"].to_money : 0)
         }
 
-        if AmazonProduct.where(pid: data[:pid]).exists?
+        if merchant.products.where(pid: data[:pid]).exists?
           puts "Already found Product with Canopy ID: #{"%05d" % i}"
         else
-          AmazonProduct.create data
-          puts "Scraped Product with Canopy ID: #{"%05d" % i}"
+          product = merchant.products.create data
+          if product.errors.any?
+            puts product.errors.full_messages.join("\n")
+          else
+            puts "Scraped Product with Canopy ID: #{"%05d" % i}"
+          end
         end
       rescue StandardError => e
         puts
