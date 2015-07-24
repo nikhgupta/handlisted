@@ -41,6 +41,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring-commands-rspec'
+  gem "spring-commands-cucumber"
 end
 
 gem 'devise'
@@ -58,10 +59,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 
-gem 'mechanize'
-gem 'capybara'
-gem 'poltergeist'
-
 gem 'acts_in_relation'
 gem 'acts_as_commentable'
 gem 'awesome_nested_set'
@@ -69,7 +66,6 @@ gem 'awesome_nested_set'
 gem 'monetize'
 gem 'money-rails'
 gem 'google_currency'
-
 
 gem 'product_scraper', path: "./vendor/gems/product_scraper"
 gem 'rails_12factor', group: :production

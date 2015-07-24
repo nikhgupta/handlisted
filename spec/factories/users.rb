@@ -24,6 +24,10 @@ FactoryGirl.define do
       timezone_offset 19800
     end
 
+    factory :admin do
+      admin true
+    end
+
     factory :confirmed_user, traits: [:confirmed]
     factory :user_with_full_info, traits: [:full_info]
   end

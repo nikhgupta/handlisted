@@ -41,33 +41,12 @@ OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(
   }
 )
 
-OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-  provider: "github",
-  uid: "12345",
-  info: {
-    nickname: "testusername",
-    email: "testuser@github.com",
-    name: "Test Github User",
-    image: "http://url.to/profile-image.jpg",
-    urls: {
-      GitHub: "https://github.com/testusername"
-    }
-  },
-  credentials: {
-    token: "some-token", expires: false
-  },
-
-  extra: {
-    raw_info: { has_a_lot_of_irrelevant_info: true }
-  }
-)
-
-OmniAuth.config.mock_auth[:google] = OmniAuth::AuthHash.new(
-  provider: "google",
+OmniAuth.config.mock_auth[:google_plus] = OmniAuth::AuthHash.new(
+  provider: "google_plus",
   uid: "12345",
   info: {
     name: "Test Google User",
-    email: "testuser@google.com",
+    email: "testuser@google_plus.com",
     image: "http://url.to/profile-image.jpg",
     urls: {
       Google: "http://plus.google.com/some-profile-id"
@@ -84,50 +63,6 @@ OmniAuth.config.mock_auth[:google] = OmniAuth::AuthHash.new(
       gender: "female",
       email_verified: "true",
       locale: "fr"
-    }
-  }
-)
-
-OmniAuth.config.mock_auth[:linkedin] = OmniAuth::AuthHash.new(
-  provider: "linkedin",
-  uid: "12345",
-  info: {
-    name: "Test Linkedin User",
-    email: "testuser@linkedin.com",
-    image: "http://url.to/profile-image.jpg",
-    urls: {
-      public_profile: "https://www.linkedin.com/in/testusername"
-    }
-  },
-  credentials: {
-    token: "some-token" * 100,
-    expires_at: 4.hours.since,
-    expires: true
-  },
-  extra: {
-    raw_info: { has_irrelevant_information: true }
-  }
-)
-
-OmniAuth.config.mock_auth[:foursquare] = OmniAuth::AuthHash.new(
-  provider: "foursquare",
-  uid: "12345",
-  info: {
-    name: "Test Foursquare User",
-    email: "testuser@foursquare.com",
-    image: {
-      prefix: "http://url.to/",
-      suffix: "/profile-image.jpg",
-      default: true
-    }
-  },
-  credentials: {
-    token: "some-token",
-    expires: false
-  },
-  extra: {
-    raw_info: {
-      gender: "female",
     }
   }
 )

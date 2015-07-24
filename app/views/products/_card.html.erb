@@ -7,15 +7,15 @@
   <div class="panel-footer br-t p12">
     <span class="fs11">
       <div class="widget-menu pull-left ml10">
-        <span class="label bg-primary mr10 label-<%= product.provider %>">
-          <%= product.provider.titleize %>
+        <span class="label bg-primary mr10 label-<%= product.merchant.identifier %>">
+          <%= product.merchant.name %>
         </span>
         <span class="badge"><%= product.price %></span>
       </div>
       <span class="panel-title">&nbsp;</span>
       <div class="widget-menu pull-right mr10">
         <%= link_to fa_icon('search', class: "fa-2x"), product.path %>
-        <%= fa_icon 'check', class: "fa-2x" if product.priority_service? %>&nbsp;
+        <%= fa_icon 'check', class: "fa-2x" if product.prioritized? %>&nbsp;
         <%= link_to fa_icon('heart-o', class: "fa-2x", style: "color:grey"), "#" %>
       </div>
     </span>

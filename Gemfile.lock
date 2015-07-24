@@ -21,10 +21,8 @@ PATH
   specs:
     product_scraper (0.1.0)
       activesupport
-      capybara
       mechanize
       monetize
-      poltergeist
       reverse_markdown
       sanitize
 
@@ -101,7 +99,6 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -291,11 +288,6 @@ GEM
       omniauth-oauth (~> 1.0)
     orm_adapter (0.5.0)
     pg (0.18.2)
-    poltergeist (1.6.0)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      multi_json (~> 1.0)
-      websocket-driver (>= 0.2.0)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
     pry (0.10.1)
@@ -415,6 +407,8 @@ GEM
       tilt (>= 1.3, < 3)
     slop (3.6.0)
     spring (1.3.6)
+    spring-commands-cucumber (1.0.1)
+      spring (>= 0.9.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (3.2.0)
@@ -451,9 +445,6 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     webrobots (0.1.1)
-    websocket-driver (0.5.4)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -469,7 +460,6 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-generators
   byebug
-  capybara
   coffee-rails (~> 4.1.0)
   cucumber-rails
   database_cleaner
@@ -486,14 +476,12 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
-  mechanize
   monetize
   money-rails
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
   pg
-  poltergeist
   product_scraper!
   pry-rails
   pundit
@@ -507,6 +495,7 @@ DEPENDENCIES
   simplecov
   sinatra
   spring
+  spring-commands-cucumber
   spring-commands-rspec
   terminal-notifier
   terminal-notifier-guard
