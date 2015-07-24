@@ -4,8 +4,8 @@ FactoryGirl.define do
     service "Merchant X's Priority Service"
 
     factory :flipkart do
-      name 'Flipkart!'
       service 'Flipkart Advantage'
+      initialize_with { Merchant.find_or_initialize_by(name: "Flipkart!") }
     end
   end
 end
