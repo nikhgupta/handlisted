@@ -1,29 +1,21 @@
 FactoryGirl.define do
   factory :product do
-    transient do
-      provider "Amazon"
-    end
-    user
-    brand_name "Brand X"
-    product_type { "#{provider.to_s.camelize}Product" }
-    sequence(:pid){ |n| "#{product_type}ID#{n}" }
+    founder
+    merchant
+    category
+    brand nil
+    sequence(:pid){ |n| "#{merchant.to_s.upcase}ID#{n}" }
     sequence(:name){ |n| "Product #{n}" }
-    original_name { "#{brand_name} #{name}" }
+    original_name { "#{merchant} #{name}" }
     description nil
-    note "Some Editor's Note"
-    available true
-    priority_service true
-    price_cents 80
+    note nil
+    available false
+    prioritized false
+    price_cents 0
     price_currency "USD"
-    marked_price_cents 100
+    marked_price_cents 0
     marked_price_currency "USD"
-
-    initialize_with do
-      product_type.constantize.new
-    end
-
-    trait(:unavailable)  { available false }
-    trait(:not_priority) { priority_service false }
+    url 'http://url.to/product/'
 
     trait :with_images do
       transient do
@@ -39,8 +31,34 @@ FactoryGirl.define do
       end
     end
 
-    factory :unavailable_product, traits: [:unavailable]
-    factory :product_without_priority_service, traits: [:not_priority]
     factory :product_with_images, traits: [:with_images]
+  end
+
+  factory :moto_x, class: Product do
+    founder
+    association :category, factory: :mobile
+
+    initialize_with do
+      brand = Brand.find_by(attributes_for(:ws_retail)) || create(:ws_retail)
+      product = brand.products.build
+      product.merchant = brand.merchant
+      product
+    end
+
+    pid "MOBDZ3FVVZT38WQH"
+    name nil
+    original_name "Moto X (2nd Generation)"
+    description "Moto X (2nd Gen)\nPure Style. Pure Performance. Pure Voice."
+    available true
+    prioritized true
+    price_cents 500_00
+    price_currency "INR"
+    marked_price_cents 100_00
+    marked_price_currency "INR"
+    images %w( http://url.to/image-1.jpg http://url.to/image-2.jpg )
+    url 'http://url.to/product/'
+
+    average_rating 95
+    ratings_count 1000
   end
 end

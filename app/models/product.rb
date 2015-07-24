@@ -1,11 +1,22 @@
 class Product < ActiveRecord::Base
-  belongs_to :user
-
   include Sluggable
-  self.inheritance_column = :product_type
 
-  validates :product_type, presence: true
-  validates :pid, uniqueness: { scope: :product_type }
+  belongs_to :founder, class_name: "User", validate: true, counter_cache: :found_products_count
+  belongs_to :brand, validate: true, counter_cache: true
+  belongs_to :category, validate: true, counter_cache: true
+  belongs_to :merchant, validate: true, required: true
+
+  before_validation :populate_merchant_info_from_brand
+  validates :pid, presence: true, uniqueness: { scope: :merchant_id }
+  validates :original_name, presence: true
+  validates :url, presence: true
+  validates :price_currency, presence: true
+  validates :marked_price_currency, presence: true
+  validates :price_cents, numericality: { only_integer: true }
+  validates :marked_price_cents, numericality: { only_integer: true }
+  validates :ratings_count, numericality: { only_integer: true }
+  validates :average_rating, inclusion: { in: 0..100 }
+  validate  :brand_belongs_to_merchant?
 
   scope :featured, ->{ Product.order(created_at: :desc) }
 
@@ -15,29 +26,20 @@ class Product < ActiveRecord::Base
   monetize :price_cents, with_model_currency: :currency
   monetize :marked_price_cents, with_model_currency: :currency
 
-  def initialize(*args)
-    raise NotImplementedError, "Cannot directly instantiate a Product" if self.class == Product
-    super
-  end
+  delegate :name, to: :brand, prefix: true, allow_nil: true
+  delegate :name, to: :merchant, prefix: true, allow_nil: true
 
   def to_s
-    name
+    return name if name.present?
+    original_name
   end
 
   def to_param
-    "#{provider_slug}/#{slug}"
+    "#{merchant.slug}/#{slug}"
   end
 
   def slug_candidates
-    [:name, :original_name, [:name, :brand_name]]
-  end
-
-  def provider
-    product_type.gsub(/Product$/, '')
-  end
-
-  def provider_slug
-    provider.titleize.parameterize
+    [:to_s, [:to_s, :brand_name], [:to_s, :brand_name, :merchant_name]]
   end
 
   def cover_image
@@ -50,20 +52,15 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def affiliate_link; url; end
-  def priority_service_name; end
-end
+  private
 
-class AmazonProduct < Product
-  def images
-    super{|image| "http://ecx.images-amazon.com/images/I/#{image}.jpg"}
+  def brand_belongs_to_merchant?
+    return unless brand.present?
+    errors.add(:brand, "does not belong to this merchant") unless brand.merchant == merchant
   end
 
-  def affiliate_link
-    "http://www.amazon.com/dp/#{pid}/?tag=shabd-20"
-  end
-
-  def priority_service_name
-    "Fulfilled by Amazon"
+  def populate_merchant_info_from_brand
+    return if merchant.present? || brand.blank?
+    self.merchant = brand.merchant
   end
 end

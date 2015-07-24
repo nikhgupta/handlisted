@@ -4,6 +4,12 @@ require "models/concerns/sluggable_examples.rb"
 RSpec.describe User, type: :model do
   it_behaves_like "sluggable"
 
+  it {
+    is_expected.to have_many(
+      :found_products
+    ).class_name("Product").dependent(:nullify).autosave(true)
+  }
+
   it "uses name for string representation" do
     user = build(:user, name: "Test User")
     expect(user.to_s).to eq("Test User")

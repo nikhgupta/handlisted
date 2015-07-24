@@ -23,20 +23,52 @@ ActiveRecord::Schema.define(version: 20150713062757) do
     t.string   "resource_type", null: false
     t.integer  "author_id"
     t.string   "author_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "brands", force: :cascade do |t|
+    t.integer  "merchant_id",                null: false
+    t.string   "name",                       null: false
+    t.string   "slug",                       null: false
+    t.integer  "average_rating", default: 0, null: false
+    t.integer  "ratings_count",  default: 0, null: false
+    t.integer  "products_count", default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "brands", ["merchant_id"], name: "index_brands_on_merchant_id", using: :btree
+  add_index "brands", ["name"], name: "index_brands_on_name", using: :btree
+  add_index "brands", ["slug"], name: "index_brands_on_slug", using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "parent_id",                  null: false
+    t.integer  "lft",                        null: false
+    t.integer  "rgt",                        null: false
+    t.integer  "depth",          default: 0, null: false
+    t.integer  "children_count", default: 0, null: false
+    t.integer  "products_count", default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.string   "title",            limit: 50, default: ""
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.integer  "user_id"
+    t.integer  "user_id",                                          null: false
     t.string   "role",                        default: "comments"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
@@ -47,11 +79,14 @@ ActiveRecord::Schema.define(version: 20150713062757) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "follows", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "target_user_id"
+    t.integer  "user_id",        null: false
+    t.integer  "target_user_id", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  add_index "follows", ["target_user_id"], name: "index_follows_on_target_user_id", using: :btree
+  add_index "follows", ["user_id"], name: "index_follows_on_user_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -68,61 +103,83 @@ ActiveRecord::Schema.define(version: 20150713062757) do
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "provider",        limit: 16,                 null: false
+    t.string   "uid",             limit: 20,                 null: false
     t.string   "name"
     t.string   "username"
     t.string   "email"
     t.string   "image"
-    t.string   "gender"
+    t.string   "gender",          limit: 8
     t.integer  "timezone_offset"
-    t.string   "language"
+    t.string   "language",        limit: 4,  default: "en"
     t.string   "url"
-    t.boolean  "verified"
-    t.text     "token"
+    t.boolean  "verified",                   default: false
+    t.text     "token",                                      null: false
     t.string   "secret"
     t.string   "refresh_token"
     t.datetime "expires_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
+  add_index "identities", ["provider", "uid"], name: "index_identities_on_provider_and_uid", using: :btree
+  add_index "identities", ["token"], name: "index_identities_on_token", using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "likes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "target_product_id"
+    t.integer  "user_id",           null: false
+    t.integer  "target_product_id", null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
+  add_index "likes", ["target_product_id"], name: "index_likes_on_target_product_id", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
+
+  create_table "merchants", force: :cascade do |t|
+    t.string   "name",         limit: 20,             null: false
+    t.string   "service"
+    t.string   "slug",                                null: false
+    t.integer  "brands_count",            default: 0, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "merchants", ["name"], name: "index_merchants_on_name", using: :btree
+
   create_table "products", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "founder_id",                            null: false
+    t.integer  "merchant_id",                           null: false
+    t.integer  "brand_id"
+    t.integer  "category_id"
     t.text     "images",                                             array: true
-    t.text     "categories",                                         array: true
-    t.string   "pid"
-    t.string   "slug"
-    t.string   "original_name"
-    t.string   "url"
+    t.string   "pid",                                   null: false
+    t.string   "slug",                                  null: false
+    t.string   "original_name",                         null: false
+    t.string   "url",                                   null: false
     t.string   "name"
-    t.string   "brand_name"
     t.text     "note"
-    t.string   "product_type"
     t.text     "features",                                           array: true
     t.text     "description"
     t.integer  "price_cents",           default: 0,     null: false
     t.string   "price_currency",        default: "USD", null: false
     t.integer  "marked_price_cents",    default: 0,     null: false
     t.string   "marked_price_currency", default: "USD", null: false
-    t.boolean  "available",             default: false
-    t.boolean  "priority_service",      default: false
-    t.integer  "average_rating"
-    t.integer  "ratings_count"
+    t.boolean  "available",             default: false, null: false
+    t.boolean  "prioritized",           default: false, null: false
+    t.integer  "average_rating",        default: 0,     null: false
+    t.integer  "ratings_count",         default: 0,     null: false
+    t.string   "lock_version",          default: "0",   null: false
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
 
-  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
+  add_index "products", ["brand_id"], name: "index_products_on_brand_id", using: :btree
+  add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
+  add_index "products", ["founder_id"], name: "index_products_on_founder_id", using: :btree
+  add_index "products", ["merchant_id", "pid"], name: "index_products_on_merchant_id_and_pid", using: :btree
+  add_index "products", ["merchant_id"], name: "index_products_on_merchant_id", using: :btree
+  add_index "products", ["pid"], name: "index_products_on_pid", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",                                   null: false
@@ -146,6 +203,7 @@ ActiveRecord::Schema.define(version: 20150713062757) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.integer  "found_products_count",   default: 0,     null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
@@ -154,6 +212,10 @@ ActiveRecord::Schema.define(version: 20150713062757) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "brands", "merchants"
   add_foreign_key "identities", "users"
-  add_foreign_key "products", "users"
+  add_foreign_key "products", "brands"
+  add_foreign_key "products", "categories"
+  add_foreign_key "products", "merchants"
+  add_foreign_key "products", "users", column: "founder_id"
 end

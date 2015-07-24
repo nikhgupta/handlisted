@@ -27,7 +27,7 @@ end
 group :test do
   gem 'launchy'
   gem 'email_spec'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'cucumber-rails', require: false
@@ -40,6 +40,7 @@ group :development do
   gem 'terminal-notifier-guard'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'spring-commands-rspec'
 end
 
 gem 'devise'
@@ -63,10 +64,12 @@ gem 'poltergeist'
 
 gem 'acts_in_relation'
 gem 'acts_as_commentable'
+gem 'awesome_nested_set'
 
 gem 'monetize'
 gem 'money-rails'
 gem 'google_currency'
+
 
 gem 'product_scraper', path: "./vendor/gems/product_scraper"
 gem 'rails_12factor', group: :production

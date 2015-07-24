@@ -26,10 +26,10 @@ class ProductDecorator < ApplicationDecorator
     h.product_path(product)
   end
 
-  def affiliate_link_action_button(options = {})
-    return unless model.affiliate_link.present?
-    text = "#{price} on #{provider}"
-    options[:class] = options.fetch(:class, "btn btn-large btn-primary fs28")
-    h.link_to text, model.affiliate_link, options
-  end
+  # def affiliate_link_action_button(options = {})
+  #   return unless model.affiliate_link.present?
+  #   text = "#{price} on #{merchant}"
+  #   options[:class] = options.fetch(:class, "btn btn-large btn-primary fs28")
+  #   h.link_to text, model.affiliate_link, options
+  # end
 end

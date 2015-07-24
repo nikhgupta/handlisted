@@ -3,11 +3,11 @@ FactoryGirl.define do
     "user#{n}@example.com"
   end
 
-  factory :user do
-    sequence(:name){ |n| "User #{n}" }
+  factory :user, aliases: [:founder] do
     email
     password "password"
     password_confirmation "password"
+    sequence(:name){ |n| "User #{n}" }
 
     trait :confirmed do
       initialize_with do
