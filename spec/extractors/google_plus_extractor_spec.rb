@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe GooglePlusExtractor do
-  let(:auth) { OmniAuth.config.mock_auth[:google] }
+  let(:auth) { OmniAuth.config.mock_auth[:google_plus] }
   subject{ described_class.new(auth) }
   let(:match) {
     {
       uid: "12345",
-      provider: "google",
+      provider: "google_plus",
       name: "Test Google User",
-      email: "testuser@google.com",
+      email: "testuser@google_plus.com",
       image: "http://url.to/profile-image.jpg",
       verified: true,
       username: nil,
