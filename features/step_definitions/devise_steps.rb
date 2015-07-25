@@ -1,70 +1,61 @@
-Given /^I sign ?up with email "(.*?)" and password "(.*?)"$/ do |email, password|
-  visit new_user_registration_path
-  fill_in 'user_email', with: email
-  fill_in 'user_password', with: password
-  fill_in 'user_password_confirmation', with: password
-  fill_in 'user_name', with: "Test User" if find_field('Name').value.blank?
-  click_button "Sign up"
-  step "I should be on the home page"
+# log out any user that is signed in
+Given(/^I am not(?:| an?) (?:authenticated|signed in|logged in)(?:| user)$/) do
+  step "I log out"
 end
 
-Then /^user with email "(.*?)" should( not)? (exist|be confirmed)$/ do |email, negate, status|
-  user = User.find_by(email: email)
-  case
-  when status == "be confirmed" && !negate
-    expect(user).to be_persisted.and be_confirmed
-  when status == "exist" && !negate
-    expect(user).to be_persisted
-  when status == "be confirmed"
-    expect(user).to be_persisted
-    expect(user).not_to be_confirmed
-  else
-    expect(user).to be_nil
-  end
-end
-
-Given /^I am not authenticated$/ do
-  link = first(:link, 'Logout') if has_link?('Logout')
-  link.click if link
-end
-
-When /^I logout$/ do
+# log in as a user with given attributes (assuming password is default 'password')
+Given(/^I am logged in as #{capture_model} with #{capture_fields}$/) do |user, fields|
   steps %Q{
-    Given I am not authenticated
-    Then  I should be on the home page
-    And   I should see "Signed out successfully"
+    Given confirmed #{user} exists with #{fields}
+    When  I sign in as #{user} with #{fields} and password: "password"
+    Then  I should see notice with message: "Signed in successfully"
   }
 end
 
-Given /^I am a new, authenticated, and confirmed user$/ do
-  step "I am logged in user with email \"notexistant@email.com\""
+# sign out current session
+When(/^I log ?out$/) do
+  visit destroy_user_session_path
+  step "I should be logged out"
 end
 
-Given /^user with email address "(.*?)" exists$/ do |email|
-  create(:confirmed_user, email: email)
+# sign in as a user and given password
+When(/^I sign ?in as(?:| this) #{capture_model}(?: with #{capture_fields})? and password: "(.*?)"$/) do |user, fields, password|
+  user = find_model!(user, fields)
+  step "I sign in with email \"#{user.email}\" and password \"#{password}\""
 end
 
-Given /^I (?:am logged in user|log ?in) with email "(.*?)"$/ do |email|
-  user = User.find_by(email: email) || create(:confirmed_user, email: email)
-  visit new_user_session_path
-  fill_in 'user_email', with: user.email
-  fill_in 'user_password', with: user.password
+# sign in with given email and password
+When(/^I sign ?in with email "(.*?)" and password "(.*?)"$/) do |email, password|
+  step 'I go to the login page'
+  fill_in 'user_email', with: email
+  fill_in 'user_password', with: password
   click_button 'Log in'
-  @current_user = user
+  @current_user = User.find_by(email: email)
 end
 
-Given /^I am(?:| a)( not)? logged in(?:| user)$/ do |negate|
-  if negate
-    step "I am not authenticated"
-  else
-    step "I am a new, authenticated, and confirmed user"
-  end
+# register with given email and password
+When(/^I sign ?up with email: "(.*?)"(?: and password: "(.*?)")?$/) do |email, password|
+  visit new_user_registration_path
+  fill_in 'user_email', with: email
+  fill_in 'user_password', with: (password || "password")
+  fill_in 'user_password_confirmation', with: (password || "password")
+  fill_in 'user_name', with: "Test User" if find_field('Name').value.blank?
+  click_button "Sign up"
+  step "I should be on the home page"
+  step "I should see notice with message: \"activate your account\""
 end
 
-When /^I follow the confirmation link in the confirmation email$/ do
+# assert that user has been logged out
+Then(/should be logged in$/) do
+  step "I should be on the home page"
+  step "I should see link with text \"Logout\""
+  step "I should see notice with message: \"Signed in successfully\""
+end
+
+# assert that user has been logged out
+Then(/should be logged out$/) do
   steps %Q{
-    When I open the email
-    Then I should see "confirm" in the email body
-    When I follow "Confirm my account" in the email
+    Then I should be on the home page
+     And I should see "Signed out successfully"
   }
 end

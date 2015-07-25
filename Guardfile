@@ -15,7 +15,7 @@
 #
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
-guard "cucumber", command_prefix: 'DEBUG=open bundle exec spring' do
+guard "cucumber", command_prefix: 'DEBUG=open' do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { "features" }
 

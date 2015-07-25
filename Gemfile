@@ -22,11 +22,11 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'pickle'
 end
 
 group :test do
   gem 'launchy'
-  gem 'email_spec'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'simplecov', require: false

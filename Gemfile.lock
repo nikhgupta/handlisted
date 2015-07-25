@@ -144,9 +144,6 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0)
-    email_spec (1.6.0)
-      launchy (~> 2.1)
-      mail (~> 2.2)
     erubis (2.7.0)
     execjs (2.5.2)
     factory_girl (4.5.0)
@@ -288,6 +285,9 @@ GEM
       omniauth-oauth (~> 1.0)
     orm_adapter (0.5.0)
     pg (0.18.2)
+    pickle (0.5.1)
+      cucumber (>= 0.8)
+      rake
     polyamorous (1.2.0)
       activerecord (>= 3.0)
     pry (0.10.1)
@@ -466,7 +466,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   draper
-  email_spec
   factory_girl_rails
   friendly_id
   google_currency
@@ -482,6 +481,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-twitter
   pg
+  pickle
   product_scraper!
   pry-rails
   pundit

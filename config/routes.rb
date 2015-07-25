@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get "profile/edit" => "users#edit", as: :edit_profile
     post 'login' => 'devise/sessions#create', as: :user_session
     post 'register' => 'users/registrations#create', as: :user_registration
-    delete  'logout' => 'devise/sessions#destroy', as: :destroy_user_session
+    delete 'logout' => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
   # devise_for :users, ActiveAdmin::Devise.config
