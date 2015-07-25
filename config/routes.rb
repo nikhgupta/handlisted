@@ -1,18 +1,25 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
-  resources :users, only: [:edit, :update]
-  devise_for :users, skip: [:sessions, :registrations], controllers: {
-    omniauth_callbacks: "users/omniauth_callbacks",
-  }
+  authenticate :user do
+    get "profile/edit"   => "users#edit",  as: :edit_profile
+    put "profile/edit"   => "users#update"
+    patch "profile/edit" => "users#update"
+  end
+
+  devise_for(
+    :users,
+    skip: [:sessions, :registrations],
+    controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  )
+
   as :user do
-    get 'login' => 'devise/sessions#new', as: :new_user_session
-    get 'logout' => 'devise/sessions#destroy', as: :logout_path
-    get 'register' => 'users/registrations#new', as: :new_user_registration
-    get "profile/edit" => "users#edit", as: :edit_profile
-    post 'login' => 'devise/sessions#create', as: :user_session
+    get 'login'     => 'devise/sessions#new',        as: :new_user_session
+    get 'logout'    => 'devise/sessions#destroy',    as: :logout_path
+    get 'register'  => 'users/registrations#new',    as: :new_user_registration
+    post 'login'    => 'devise/sessions#create',     as: :user_session
     post 'register' => 'users/registrations#create', as: :user_registration
-    delete 'logout' => 'devise/sessions#destroy', as: :destroy_user_session
+    delete 'logout' => 'devise/sessions#destroy',    as: :destroy_user_session
   end
 
   # devise_for :users, ActiveAdmin::Devise.config

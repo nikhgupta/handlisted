@@ -51,14 +51,13 @@ Then /^(?:|I )should( not)? see link with text "(.*?)"$/ do |negate, link|
 end
 
 # Forms
-Then /^I should( not)? see field "(.*?)" prefilled with "(.*?)"$/ do |negate, field, value|
-  expect(page).to have_field(field)
-  if negate
-    expect(page.find_field(field).value).not_to eq(value)
-  else
-    expect(page.find_field(field).value).to eq(value)
-  end
+Then(/^I should see field "(.*?)" prefilled with "(.*?)"$/) do |field, value|
+  expect(page).to have_field(field, with: value, exact: true)
 end
-
-Then(/save and open page/){ save_and_open_page }
-Then(/save and open screenshot/){ save_and_open_screenshot }
+Then(/^I should not see field "(.*?)" prefilled with "(.*?)"$/) do |field, value|
+  expect(page).not_to have_field(field, with: value, exact: true)
+end
+Then(/^I should see empty field "(.*?)"$/) do |field|
+  expect(page).to have_field(field, exact: true)
+  expect(find_field(field).value).to be_blank
+end
