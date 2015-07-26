@@ -1,0 +1,27 @@
+<%= form_for :product, url: search_or_add_product_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>
+  <div class="form-group">
+    <%= f.text_field :search, class: "form-control", placeholder: "Search..", value: "Search.." %>
+    <%= f.submit 'Search', hidden: true %>
+  </div>
+  <div class="progress progress-bar-xl" style='display: none'>
+    <div class="progress-bar progress-bar-dark progress-bar-striped active"
+      role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> </div>
+  </div>
+  <div id="modal-panel" class="product-adder-errors popup-full bg-none mfp-with-anim mfp-hide">
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title"><%= fa_icon 'rocket' %> Uh oh! We're sorry!</span>
+      </div>
+      <div class="panel-body">
+        <h3>We're having some troubles importing that product!</h3>
+        <ul class='errors'></ul>
+        <h3>This is embarassing. We've taken a note. Here is what we will do:</h4>
+        <ol>
+          <li>We will import the product manually, if required.</li>
+          <li>You will be credited for finding this product.</li>
+          <li>We will look into why we could not import the product, in the first place.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+<% end %>

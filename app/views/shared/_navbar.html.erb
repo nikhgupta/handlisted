@@ -8,11 +8,7 @@
     <li> <%= link_to "#{fa_icon 'shopping-cart'} Shop".html_safe, products_path %> </li>
     <li> <%= link_to "#{fa_icon 'star'} Featured".html_safe, "#" %> </li>
   </ul>
-  <%= form_for :product, url: search_product_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>
-    <div class="form-group">
-      <%= f.text_field :search, class: "form-control", placeholder: "Search..", value: "Search.." %>
-    </div>
-  <% end %>
+  <%= render 'shared/navbar/form' %>
   <ul class="nav navbar-nav navbar-right">
     <li>
       <div class="navbar-btn btn-group">

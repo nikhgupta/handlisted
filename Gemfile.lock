@@ -99,6 +99,7 @@ GEM
       xpath (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    cliver (0.3.2)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -288,6 +289,11 @@ GEM
     pickle (0.5.1)
       cucumber (>= 0.8)
       rake
+    poltergeist (1.6.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
     pry (0.10.1)
@@ -396,6 +402,8 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
+    sidekiq-status (0.5.4)
+      sidekiq (>= 2.7)
     simplecov (0.10.0)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -445,6 +453,9 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     webrobots (0.1.1)
+    websocket-driver (0.6.2)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -482,6 +493,7 @@ DEPENDENCIES
   omniauth-twitter
   pg
   pickle
+  poltergeist
   product_scraper!
   pry-rails
   pundit
@@ -492,6 +504,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   shoulda-matchers
   sidekiq
+  sidekiq-status
   simplecov
   sinatra
   spring

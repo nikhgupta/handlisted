@@ -15,7 +15,7 @@
 #
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
-guard "cucumber", command_prefix: 'DEBUG=open' do
+guard "cucumber", focus_on: "focus" do #, command_prefix: 'DEBUG=open' do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { "features" }
 

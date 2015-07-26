@@ -31,6 +31,7 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'cucumber-rails', require: false
+  gem 'poltergeist'
 end
 
 group :development do
@@ -48,6 +49,7 @@ gem 'devise'
 gem 'pundit'
 gem 'activeadmin', github: 'activeadmin'
 gem 'sidekiq'
+gem 'sidekiq-status'
 gem 'sinatra', require: false
 gem 'draper'
 gem 'friendly_id'

@@ -1,0 +1,18 @@
+<div class='product-search'>
+  <div class='results'>
+    <h3></h3>
+  </div>
+
+  <% if @job_id.present? %>
+    <div class='queue-performance' data-job-id="<%= @job_id %>">
+      <div class="progress progress-bar-xl ml10 mbn mt5">
+        <div class="progress-bar progress-bar-dark progress-bar-striped active"
+          role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> </div>
+      </div>
+
+      <div class='product-info row'>
+
+      </div>
+    </div>
+  <% end %>
+</div>

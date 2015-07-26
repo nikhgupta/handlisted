@@ -26,21 +26,20 @@ class ProductsController < ApplicationController
   # POST /products/search
   # POST /products/search.json
   def search
-    # url  = params[:product_url]
-    # data = ProductScrapingService.new(url: url).run
-    # @product = Product.create data
-    # format.html { redirect_to @product, notice: 'Product was successfully created.' }
-    # format.json { render :show, status: :created, location: @product }
+    url = query_params[:search]
+    job_id = ProductScraperJob.perform_async current_user.id, url
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Successfully queued.." }
+      format.json { render json: { id: job_id }.to_json }
+    end
   end
 
-  # POST /products/scrape
-  # POST /products/scrape.json
-  def scrape
-    url  = params[:product_url]
-    data = ProductScrapingService.new(url: url).run
-    @product = Product.create data
-    format.html { redirect_to @product, notice: 'Product was successfully created.' }
-    format.json { render :show, status: :created, location: @product }
+  def status
+    id = job_params[:job_id]
+    status = Sidekiq::Status::status(id).to_s.camelize
+    data = Sidekiq::Status::get_all id
+    response = { status: status, id: data['id'], errors: data['errors'] }
+    render json: response.to_json
   end
 
   # POST /products
@@ -51,10 +50,10 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
+        # format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        # format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,10 +64,10 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
+        # format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        # format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,7 +78,7 @@ class ProductsController < ApplicationController
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+      # format.json { head :no_content }
     end
   end
 
@@ -105,5 +104,13 @@ class ProductsController < ApplicationController
         :price_cents, :price_currency, :marked_price_cents,
         :marked_price_currency, :available, :priority_service
       )
+    end
+
+    def job_params
+      params.permit(:job_id)
+    end
+
+    def query_params
+      params.permit(:search)
     end
 end

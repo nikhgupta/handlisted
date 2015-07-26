@@ -25,7 +25,7 @@ end
 
 
 # Navigation
-Then /^(?:|I )should( not)? be on (.+)$/ do |negate, page_name|
+Then /^(?:|I )should( not)? (?:be|remain|stay) on (.+)$/ do |negate, page_name|
   if !negate
     expect(page.current_path).to eq(path_to(page_name))
   else

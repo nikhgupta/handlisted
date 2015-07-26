@@ -12,6 +12,13 @@ class Merchant < ActiveRecord::Base
   end
 
   def identifier
-    to_s.parameterize
+    to_s.parameterize.to_sym
+  end
+
+  def image_for_key(key)
+    case identifier
+    when :amazon then "http://ecx.images-amazon.com/images/I/#{key}.jpg"
+    else key
+    end
   end
 end

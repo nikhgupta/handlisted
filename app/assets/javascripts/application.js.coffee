@@ -19,6 +19,7 @@
 #= require absolute-admin/plugins/magnific/jquery.magnific-popup
 #= require products
 #= require homepage
+#= require product_adder
 #= require_self
 
 $ ->
@@ -36,3 +37,12 @@ $ ->
     $(@).css 'width', $(@).attr("data-width")
     $(@).removeAttr("data-width")
     $(@).val($(@).attr("placeholder")) unless $(@).val()?
+
+  # Sidekiq Queue results on Search/Add Product Page
+  new ProductAdder(
+    form:  '.navbar-search',
+    input: '#product_search'
+    endpoints:
+      search: "/products/search.json"
+      status: "/products/status"
+  ).init()

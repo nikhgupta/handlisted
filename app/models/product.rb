@@ -23,8 +23,8 @@ class Product < ActiveRecord::Base
   acts_as_commentable
   acts_in_relation role: :target, source: :user, action: :like
 
-  monetize :price_cents, with_model_currency: :currency
-  monetize :marked_price_cents, with_model_currency: :currency
+  monetize :price_cents, with_model_currency: :price_currency
+  monetize :marked_price_cents, with_model_currency: :marked_price_currency
 
   delegate :name, to: :brand, prefix: true, allow_nil: true
   delegate :name, to: :merchant, prefix: true, allow_nil: true
@@ -48,7 +48,7 @@ class Product < ActiveRecord::Base
 
   def images
     super.map do |image|
-      image.start_with?('http') ? image : yield(image)
+      image.start_with?('http') ? image : merchant.image_for_key(image)
     end
   end
 

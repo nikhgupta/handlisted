@@ -29,7 +29,7 @@ When(/^I sign ?in with email "(.*?)" and password "(.*?)"$/) do |email, password
   step 'I go to the login page'
   fill_in 'user_email', with: email
   fill_in 'user_password', with: password
-  click_button 'Log in'
+  click_on 'Log in'
   @current_user = User.find_by(email: email)
 end
 

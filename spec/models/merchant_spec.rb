@@ -18,9 +18,9 @@ RSpec.describe Merchant, type: :model do
   end
 
   it 'has an identifier' do
-    expect(subject.identifier).to eq('flipkart')
+    expect(subject.identifier).to eq(:flipkart)
     subject.name = "Flip Kart"
-    expect(subject.identifier).to eq('flip-kart')
+    expect(subject.identifier).to eq(:'flip-kart')
   end
 
   it "validates uniqueness of name" do

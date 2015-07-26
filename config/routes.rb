@@ -1,6 +1,7 @@
 require 'sidekiq/web'
-Rails.application.routes.draw do
+require 'sidekiq-status/web'
 
+Rails.application.routes.draw do
   authenticate :user do
     get "profile/edit"   => "users#edit",  as: :edit_profile
     put "profile/edit"   => "users#update"
@@ -33,8 +34,8 @@ Rails.application.routes.draw do
   root to: 'high_voltage/pages#show', id: 'home'
 
   # resource: product
-  post '/products/search' => "products#search", as: :search_product
-  post '/products/scrape' => "products#scrape", as: :scrape_product
+  post '/products/status' => "products#status"
+  post '/products/search' => "products#search", as: :search_or_add_product
   get '/products' => "products#index", as: :products
   post '/products' => "products#create"
   get '/products/new' => "products#new", as: :new_product
