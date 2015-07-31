@@ -26,6 +26,14 @@ class ProductDecorator < ApplicationDecorator
     h.product_path(product)
   end
 
+  def marked_description
+    return unless product.description
+    renderer   = Redcarpet::Render::HTML.new no_links: false, no_styles: true, no_images: true
+    extensions = { autolink: true, tables: false, no_intra_emphasis: true, disable_indented_code_blocks: true }
+    markdown   = Redcarpet::Markdown.new renderer, extensions
+    markdown.render product.description
+  end
+
   # def affiliate_link_action_button(options = {})
   #   return unless model.affiliate_link.present?
   #   text = "#{price} on #{merchant}"
