@@ -34,10 +34,12 @@ class ProductDecorator < ApplicationDecorator
     markdown.render product.description
   end
 
-  # def affiliate_link_action_button(options = {})
-  #   return unless model.affiliate_link.present?
-  #   text = "#{price} on #{merchant}"
-  #   options[:class] = options.fetch(:class, "btn btn-large btn-primary fs28")
-  #   h.link_to text, model.affiliate_link, options
-  # end
+  def affiliate_link_action_button(options = {})
+    return unless model.url.present?
+    text = available ? "#{price} on #{merchant}" : "Maybe Unavailable"
+    options[:class] = options.fetch :class, (available ? "system" : "danger")
+    options[:class] = "btn btn-large light fs28 affiliate-button btn-#{options[:class]}"
+    options = { target: "_blank" }.merge(options)
+    h.link_to text, model.merchant.affiliate_link_for(model.url), options
+  end
 end
