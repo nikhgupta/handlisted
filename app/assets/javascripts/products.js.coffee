@@ -8,8 +8,8 @@ $ ->
     image.removeAttr "data-image"
 
   card.find('.panel-body').on 'click', (e) ->
-    e.preventDefault()
-    # window.location = $(@).find('.product-image').attr('data-link')
+    # Preventing default action will make links unusable inside .panel-body
+    # e.preventDefault()
     $.magnificPopup.open
       removalDelay: 500
       items:
