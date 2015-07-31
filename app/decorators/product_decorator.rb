@@ -26,6 +26,14 @@ class ProductDecorator < ApplicationDecorator
     h.product_path(product)
   end
 
+  def like_button
+    return unless h.current_user
+    status = h.current_user.liking?(model) ? :on : :off
+    icon = status == :on ? 'heart' : 'heart-o'
+    icon = h.fa_icon(icon, class: "fa-2x")
+    h.link_to icon, h.like_product_path(model), data: { like: status }
+  end
+
   # def affiliate_link_action_button(options = {})
   #   return unless model.affiliate_link.present?
   #   text = "#{price} on #{merchant}"

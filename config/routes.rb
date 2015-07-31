@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get '/products' => "products#index", as: :products
   post '/products' => "products#create"
   get '/products/new' => "products#new", as: :new_product
+  post '/products/*id/like' => "products#like", as: :like_product
   get '/product/*id/edit' => "products#edit", as: :edit_product
   get '/product/*id' => "products#show", as: :product
   patch '/product/*id' => "products#update"
