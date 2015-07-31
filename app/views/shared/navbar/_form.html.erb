@@ -1,4 +1,4 @@
-<%= form_for :product, url: search_or_add_product_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>
+<%= form_for :product, url: search_or_add_products_path, html: { class: "navbar-form navbar-left navbar-search alt", role: "search" } do |f| %>
   <div class="form-group">
     <%= f.text_field :search, class: "form-control", placeholder: "Search..", value: "Search.." %>
     <%= f.submit 'Search', hidden: true %>

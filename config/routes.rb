@@ -34,16 +34,12 @@ Rails.application.routes.draw do
   root to: 'high_voltage/pages#show', id: 'home'
 
   # resource: product
-  post '/products/status' => "products#status"
-  post '/products/search' => "products#search", as: :search_or_add_product
-  get '/products' => "products#index", as: :products
-  post '/products' => "products#create"
-  get '/products/new' => "products#new", as: :new_product
-  get '/product/*id/edit' => "products#edit", as: :edit_product
-  get '/product/*id' => "products#show", as: :product
-  patch '/product/*id' => "products#update"
-  put '/product/*id' => "products#update"
-  delete '/product/*id' => "products#destroy"
+  resources :products do
+    collection do
+      post :status
+      post :search, as: :search_or_add
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

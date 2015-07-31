@@ -12,7 +12,7 @@ RSpec.describe UsersController, type: :routing do
     end
 
     it "does not route to #show" do
-      expect(get: "/products/1").not_to be_routable
+      expect(get: "/users/1").not_to be_routable
     end
 
     it "does not route to #create" do
