@@ -31,16 +31,19 @@ namespace :scraper do
         data  = JSON.parse(data.attr("data-react-props").value)
         data  = data["product"]
         brand = merchant.brands.find_or_create_by(name: data["brand_name"]) if data["brand_name"]
+        uri   = URI.parse data["amazon_link"]
+        hash  = Digest::MD5.hexdigest "amazon.com#{uri.path}"
         data  = {
           founder: user,
           brand: brand,
-          url: data["amazon_link"],
+          url: "#{uri.scheme}://#{uri.host}#{uri.path}",
           name: data["name_without_brand"],
           original_name: data["name"],
           prioritized: data["prime"],
           note: data["editors_note"],
           available: data["available"],
           pid: data["asin"],
+          url_hash: hash,
           images: ["https:#{data.delete("image")}"],
           price: (data['price'] ? data["price"].to_money : 0)
         }

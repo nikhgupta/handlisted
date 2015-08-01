@@ -16,7 +16,7 @@
   .product-image {
     opacity: 1;
     height: 300px;
-    background-size: 200px 200px;
+    background-size: 280px;
     background-repeat: no-repeat;
     background-position: center;
     transition: all 0.4s ease-in-out;
@@ -28,8 +28,8 @@
     }
     .product-image {
       opacity: 0.2;
-      background-size: 150px 150px;
-      background-position: 50% 70%;
+      // background-size: 210px;
+      // background-position: 50% 70%;
     }
   }
 }
