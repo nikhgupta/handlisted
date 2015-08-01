@@ -40,6 +40,6 @@ class ProductDecorator < ApplicationDecorator
     options[:class] = options.fetch :class, (available ? "system" : "danger")
     options[:class] = "btn btn-large light fs28 affiliate-button btn-#{options[:class]}"
     options = { target: "_blank" }.merge(options)
-    h.link_to text, model.merchant.affiliate_link_for(model.url), options
+    h.link_to text, h.visit_product_path(model), options
   end
 end

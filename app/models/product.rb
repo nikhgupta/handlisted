@@ -52,6 +52,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def affiliate_link
+    merchant.affiliate_link_for(url)
+  end
+
   private
 
   def brand_belongs_to_merchant?
