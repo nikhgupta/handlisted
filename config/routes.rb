@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   root to: 'high_voltage/pages#show', id: 'home'
 
   # resource: product
+  get '/go/*id' => "products#visit", as: :visit_product
   post '/products/status' => "products#status"
   post '/products/search' => "products#search", as: :search_or_add_product
   get '/products' => "products#index", as: :products

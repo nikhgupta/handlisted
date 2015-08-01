@@ -1,9 +1,3 @@
-.mfp-inline-holder .mfp-content, .mfp-ajax-holder .mfp-content {
-  .product-info {
-    width: 80%;
-    margin: 0 auto;
-  }
-}
 .product-card {
   .product-details {
     height: 80px;
@@ -59,10 +53,20 @@
   .product-details {
     padding-right: 5%;
   }
-  .description {
-    margin-top: 60px;
-    font-size: 1.3em;
-    text-align: justify;
+  .description { 
+    overflow-y: scroll;
+    margin-bottom: 40px;
+    border-bottom: 0;
+    .markdown {
+      margin-top: 0px;
+      font-size: 1.3em;
+      text-align: justify;
+      margin: 20px 6%;
+      max-height: 300px;
+      p {
+        font-size: 0.8em;
+      }
+    }
   }
 }
 
@@ -80,21 +84,7 @@
   }
 }
 
-.product-card-1 {
-  height: 300px;
-  background-color: white;
-  border: 2px solid rgb(232, 232, 232);
-  border-radius: 4px;
-  img {
-    width: 100%;
-    position: relative;
-    margin: 0px auto;
-    border-radius: 4px 4px 0px 0px;
-    display: table-cell;
-    vertical-align: middle;
-    top: 50%;
-    transform: translateY(-50%);
-    max-height: 300px;
-    padding: 10px;
-  }
+.affiliate-button {
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+  padding: 10px 20px;
 }

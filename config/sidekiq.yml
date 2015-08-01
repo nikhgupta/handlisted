@@ -9,7 +9,8 @@ production:
   :concurrency: 20
   :logfile: ./log/sidekiq.log
 :queues:
-  - default
-  - [high_priority, 2]
+  - [low_priority,  1]
+  - [default,       2]
+  - [high_priority, 4]
 
 

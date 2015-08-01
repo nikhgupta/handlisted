@@ -42,6 +42,11 @@ class ProductsController < ApplicationController
     render json: response.to_json
   end
 
+  def visit
+    set_product
+    redirect_to @product.affiliate_link
+  end
+
   # POST /products
   # POST /products.json
   def create

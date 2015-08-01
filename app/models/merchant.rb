@@ -8,7 +8,7 @@ class Merchant < ActiveRecord::Base
   validates :brands_count, numericality: { only_integer: true }
 
   def to_s
-    name
+    name.try :titleize
   end
 
   def identifier
@@ -20,5 +20,21 @@ class Merchant < ActiveRecord::Base
     when :amazon then "http://ecx.images-amazon.com/images/I/#{key}.jpg"
     else key
     end
+  end
+
+  def affiliate_link_for(url)
+    case identifier
+    when :amazon then "#{url}/?shabd-20"
+    when :flipkart then "#{url}?affid=menikhgup"
+    else url
+    end
+  end
+
+  def has_price?
+    price_cents > 0
+  end
+
+  def available?
+    has_price? && available?
   end
 end
