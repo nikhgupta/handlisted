@@ -54,7 +54,7 @@ class Product < ActiveRecord::Base
   end
 
   def to_param
-    "#{merchant.slug}/#{slug}"
+    slug
   end
 
   def slug_candidates

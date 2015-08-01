@@ -14,7 +14,7 @@ class ProductScraperJob
     service = ProductMigratingService.new(user: user, data: data)
     response = service.run
     store id: response[:id]
-    store errors: "<li>#{response[:errors].join("</li><li>")}</li>" if response[:errors]
+    store errors: "<li>#{response[:errors].uniq.join("</li><li>")}</li>" if response[:errors]
   rescue ProductScraper::Error => e
     store errors: "<li>#{e.message}</li>"
     raise

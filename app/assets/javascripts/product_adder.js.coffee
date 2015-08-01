@@ -17,7 +17,6 @@ class @ProductAdder
     @form.on 'submit', (e) =>
       e.preventDefault()
       $.post @endpoints.check, { search: @input.val() }, (response) =>
-        console.log response
         if response.valid and response.existing?
           window.location = response.existing
         else if response.valid
@@ -44,7 +43,7 @@ class @ProductAdder
     if @status.status in ["Failed", ""]
       @displayErrors(@status.errors)
     else if @status.id?
-      setInterval (=> window.location = "/product/#{@status.id}"), 800
+      setInterval (=> window.location = "/products/#{@status.id}"), 800
 
   displayErrors: (errors) ->
     @errorModal.find('ul.errors').html(errors) if errors?.length > 0

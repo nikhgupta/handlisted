@@ -33,16 +33,15 @@ Rails.application.routes.draw do
   # root to: "products#index"
   root to: 'high_voltage/pages#show', id: 'home'
 
-  # resource: product
   resources :products do
     collection do
-      post 'create/status' => "products#status"
-      post 'create/check'  => "products#parseable"
+      post 'create/status' => 'products#status'
+      post 'create/check'  => 'products#parseable'
       post 'search', as: :search_or_add
     end
     member do
       get 'go' => 'products#visit', as: :visit
-      post 'like' => "products#like"
+      post 'like'
     end
   end
 

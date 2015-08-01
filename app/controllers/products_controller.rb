@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   def index
     page = params[:page].to_i || 1
     page = 1 if page < 1
-    query = params[:product][:search]
+    query = params[:product][:search] rescue nil
     scope = query.present? ? Product.search(query) : Product.order(updated_at: :desc)
     @products = scope.all.offset((page - 1) * 30).limit(30)
   end
@@ -66,6 +66,7 @@ class ProductsController < ApplicationController
     id = params[:job_id]
     status = Sidekiq::Status::status(id).to_s.camelize
     data = Sidekiq::Status::get_all id
+    status = 'Failed' if data['errrors'].present?
     response = { status: status, id: data['id'], errors: data['errors'] }
     render json: response.to_json
   end
@@ -73,10 +74,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      # FIXME: to_params logic
-      match     = params[:id].match(/^(.*?)\/(.*)\/?/)
-      _, params[:merchant], params[:product] = match.to_a if match
-      @product = Product.find(params[:product])
+      @product = Product.find(params[:id])
     end
 
     def redirect_if_moved
