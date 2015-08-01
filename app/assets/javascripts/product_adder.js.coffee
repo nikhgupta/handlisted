@@ -17,7 +17,10 @@ class @ProductAdder
     @form.on 'submit', (e) =>
       e.preventDefault()
       $.post @endpoints.check, { search: @input.val() }, (response) =>
-        if response.valid
+        console.log response
+        if response.valid and response.existing?
+          window.location = response.existing
+        else if response.valid
           @switchToProgressBar()
           $.post @endpoints.add, { url: @input.val() }, (response) =>
             @form.data "job-id", response.id

@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
     end
   end
 
+  # if product exists, redirect to it, else queue it.
   def create
     job_id = ProductScraperJob.perform_async current_user.id, params[:url]
     respond_to do |format|
@@ -32,9 +33,11 @@ class ProductsController < ApplicationController
 
   # Quick-dirty API check to see if the search term is indeed a Merchant URL?
   def parseable
-    data = ProductScraper.can_parse?(params[:search]) ? true : false
+    hash = ProductScraper.url_hash_for(params[:search])
+    existing = Product.find_by(url_hash: hash) if hash
+    existing = existing ? product_path(existing) : nil
     respond_to do |format|
-      format.json { render json: { valid: data } }
+      format.json { render json: { valid: hash.present?, existing: existing } }
     end
   end
 
