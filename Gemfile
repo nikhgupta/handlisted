@@ -75,6 +75,9 @@ gem 'rails_12factor', group: :production
 gem 'redcarpet'
 gem 'pg_search'
 
+gem 'foreman'
+gem 'thin'
+
 # # Future additions
 # gem 'omniauth'
 # gem 'activerecord-reputation-system'
@@ -83,3 +86,4 @@ gem 'pg_search'
 # gem 'acts-as-taggable-on', '~> 3.4'
 # gem 'public_activity'; gem 'unread'
 # gem 'socializer', github: 'dominicgoulet/socializer'
+
