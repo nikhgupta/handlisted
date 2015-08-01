@@ -16,10 +16,18 @@ class @ProductAdder
     return unless @setup()
     @form.on 'submit', (e) =>
       e.preventDefault()
-      @switchToProgressBar()
-      $.post @endpoints.search, { search: @input.val() }, (response) =>
-        @form.data "job-id", response.id
-        @timer = setInterval (=> @getJobStatus()), 1000
+      $.post @endpoints.check, { search: @input.val() }, (response) =>
+        console.log response
+        if response.valid and response.existing?
+          window.location = response.existing
+        else if response.valid
+          @switchToProgressBar()
+          $.post @endpoints.add, { url: @input.val() }, (response) =>
+            @form.data "job-id", response.id
+            @timer = setInterval (=> @getJobStatus()), 1000
+        else
+          @form.unbind('submit')
+          @form.submit()
 
   getJobStatus: ->
     job_id = @form.data('job-id')

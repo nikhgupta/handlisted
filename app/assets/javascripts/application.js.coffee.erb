@@ -43,6 +43,7 @@ $ ->
     form:  '.navbar-search',
     input: '#product_search'
     endpoints:
-      search: "/products/search.json"
-      status: "/products/status"
+      status: "/products/create/status.json"
+      check: "/products/create/check.json"
+      add: "/products.json"
   ).init()

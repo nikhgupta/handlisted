@@ -35,8 +35,8 @@ Rails.application.routes.draw do
 
   # resource: product
   get '/go/*id' => "products#visit", as: :visit_product
-  post '/products/status' => "products#status"
-  post '/products/search' => "products#search", as: :search_or_add_product
+  post '/products/create/status' => "products#status"
+  post '/products/create/check' => "products#parseable"
   get '/products' => "products#index", as: :products
   post '/products' => "products#create"
   get '/products/new' => "products#new", as: :new_product

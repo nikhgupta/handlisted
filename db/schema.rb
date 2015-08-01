@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713062757) do
+ActiveRecord::Schema.define(version: 20150801050841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,30 +148,31 @@ ActiveRecord::Schema.define(version: 20150713062757) do
   add_index "merchants", ["name"], name: "index_merchants_on_name", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.integer  "founder_id",                            null: false
-    t.integer  "merchant_id",                           null: false
+    t.integer  "founder_id",                                       null: false
+    t.integer  "merchant_id",                                      null: false
     t.integer  "brand_id"
     t.integer  "category_id"
-    t.text     "images",                                             array: true
-    t.string   "pid",                                   null: false
-    t.string   "slug",                                  null: false
-    t.string   "original_name",                         null: false
-    t.string   "url",                                   null: false
+    t.text     "images",                                                        array: true
+    t.string   "pid",                                              null: false
+    t.string   "slug",                                             null: false
+    t.string   "original_name",                                    null: false
+    t.string   "url",                                              null: false
     t.string   "name"
     t.text     "note"
-    t.text     "features",                                           array: true
+    t.text     "features",                                                      array: true
     t.text     "description"
-    t.integer  "price_cents",           default: 0,     null: false
-    t.string   "price_currency",        default: "USD", null: false
-    t.integer  "marked_price_cents",    default: 0,     null: false
-    t.string   "marked_price_currency", default: "USD", null: false
-    t.boolean  "available",             default: false, null: false
-    t.boolean  "prioritized",           default: false, null: false
-    t.integer  "average_rating",        default: 0,     null: false
-    t.integer  "ratings_count",         default: 0,     null: false
-    t.string   "lock_version",          default: "0",   null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "price_cents",                      default: 0,     null: false
+    t.string   "price_currency",                   default: "USD", null: false
+    t.integer  "marked_price_cents",               default: 0,     null: false
+    t.string   "marked_price_currency",            default: "USD", null: false
+    t.boolean  "available",                        default: false, null: false
+    t.boolean  "prioritized",                      default: false, null: false
+    t.integer  "average_rating",                   default: 0,     null: false
+    t.integer  "ratings_count",                    default: 0,     null: false
+    t.string   "lock_version",                     default: "0",   null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "url_hash",              limit: 32,                 null: false
   end
 
   add_index "products", ["brand_id"], name: "index_products_on_brand_id", using: :btree

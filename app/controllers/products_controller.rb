@@ -1,45 +1,25 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :destroy]
 
   # GET /products
   # GET /products.json
   def index
     page = params[:page].to_i || 1
     page = 1 if page < 1
-    @products = Product.order(updated_at: :desc).all.offset((page - 1) * 30).limit(30)
+    query = params[:product][:search]
+    scope = query.present? ? Product.search(query) : Product.order(updated_at: :desc)
+    @products = scope.all.offset((page - 1) * 30).limit(30)
   end
 
-  # GET /products/1
-  # GET /products/1.json
   def show
   end
 
-  # GET /products/new
-  def new
-    @product = Product.new
-  end
-
-  # GET /products/1/edit
-  def edit
-  end
-
-  # POST /products/search
-  # POST /products/search.json
-  def search
-    url = query_params[:search]
-    job_id = ProductScraperJob.perform_async current_user.id, url
+  def destroy
+    @product.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Successfully queued.." }
-      format.json { render json: { id: job_id }.to_json }
+      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+      # format.json { head :no_content }
     end
-  end
-
-  def status
-    id = job_params[:job_id]
-    status = Sidekiq::Status::status(id).to_s.camelize
-    data = Sidekiq::Status::get_all id
-    response = { status: status, id: data['id'], errors: data['errors'] }
-    render json: response.to_json
   end
 
   def visit
@@ -62,52 +42,40 @@ class ProductsController < ApplicationController
     end
   end
 
-  # POST /products
-  # POST /products.json
+  # if product exists, redirect to it, else queue it.
   def create
-    @product = Product.new(product_params)
-
+    job_id = ProductScraperJob.perform_async current_user.id, params[:url]
     respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        # format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        # format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to root_path, notice: "Successfully queued.." }
+      format.json { render json: { id: job_id }.to_json }
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
-  def update
+  # Quick-dirty API check to see if the search term is indeed a Merchant URL?
+  def parseable
+    hash = ProductScraper.url_hash_for(params[:search])
+    existing = Product.find_by(url_hash: hash) if hash
+    existing = existing ? product_path(existing) : nil
     respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        # format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+      format.json { render json: { valid: hash.present?, existing: existing } }
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
-  def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      # format.json { head :no_content }
-    end
+  # Quick-dirty API to query the status of a sidekiq job
+  def status
+    id = params[:job_id]
+    status = Sidekiq::Status::status(id).to_s.camelize
+    data = Sidekiq::Status::get_all id
+    response = { status: status, id: data['id'], errors: data['errors'] }
+    render json: response.to_json
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      # @provider = Provider.find(params[:provider])
+      # FIXME: to_params logic
       match     = params[:id].match(/^(.*?)\/(.*)\/?/)
-      _, params[:provider], params[:product] = match.to_a if match
+      _, params[:merchant], params[:product] = match.to_a if match
       @product = Product.find(params[:product])
     end
 
@@ -124,13 +92,5 @@ class ProductsController < ApplicationController
         :price_cents, :price_currency, :marked_price_cents,
         :marked_price_currency, :available, :priority_service
       )
-    end
-
-    def job_params
-      params.permit(:job_id)
-    end
-
-    def query_params
-      params.permit(:search)
     end
 end

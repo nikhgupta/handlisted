@@ -29,6 +29,25 @@ class Product < ActiveRecord::Base
   delegate :name, to: :brand, prefix: true, allow_nil: true
   delegate :name, to: :merchant, prefix: true, allow_nil: true
 
+  # TODO: use ranked_by to rank better products higher
+  include PgSearch
+  pg_search_scope :search, against: {
+    name: "A",
+    original_name: "A",
+    note: "B",
+    features: "C",
+    description: "D",
+  }, associated_against: {
+    merchant: :name,
+    brand: :name,
+  }, using: {
+    tsearch: {
+      prefix: true,
+      dictionary: 'english',
+      normalization: 63
+    }
+  }, order_within_rank: 'average_rating DESC'
+
   def to_s
     return name if name.present?
     original_name

@@ -73,6 +73,7 @@ gem 'product_scraper', path: "./vendor/gems/product_scraper"
 gem 'rails_12factor', group: :production
 
 gem 'redcarpet'
+gem 'pg_search'
 
 # # Future additions
 # gem 'omniauth'
