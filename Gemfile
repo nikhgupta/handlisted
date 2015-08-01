@@ -72,6 +72,8 @@ gem 'google_currency'
 gem 'product_scraper', path: "./vendor/gems/product_scraper"
 gem 'rails_12factor', group: :production
 
+gem 'pg_search'
+
 # # Future additions
 # gem 'omniauth'
 # gem 'activerecord-reputation-system'
