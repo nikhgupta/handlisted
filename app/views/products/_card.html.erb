@@ -3,6 +3,7 @@
   <div class="panel-body">
     <div class="product-details"><h3><%= product.short_name %></h3></div>
     <div class="product-image" data-link="<%= product.path %>" data-image="<%= product.cover_image %>"> </div>
+    <p class='error'></p>
   </div>
   <div class="panel-footer br-t p12">
     <span class="fs11">
@@ -16,7 +17,7 @@
       <div class="widget-menu pull-right mr10">
         <%= link_to fa_icon('search', class: "fa-2x"), product.path %>
         <%= fa_icon 'check', class: "fa-2x" if product.prioritized? %>&nbsp;
-        <%= link_to fa_icon('heart-o', class: "fa-2x", style: "color:grey"), "#" %>
+        <%= product.like_button %>
       </div>
     </span>
   </div>

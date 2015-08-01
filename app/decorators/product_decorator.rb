@@ -42,4 +42,12 @@ class ProductDecorator < ApplicationDecorator
     options = { target: "_blank" }.merge(options)
     h.link_to text, h.visit_product_path(model), options
   end
+
+  def like_button
+    return unless h.current_user
+    status = h.current_user.liking?(model) ? :on : :off
+    icon = status == :on ? 'heart' : 'heart-o'
+    icon = h.fa_icon(icon, class: "fa-2x")
+    h.link_to icon, h.like_product_path(model), data: { like: status }
+  end
 end

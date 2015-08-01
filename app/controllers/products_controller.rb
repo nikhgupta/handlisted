@@ -47,6 +47,21 @@ class ProductsController < ApplicationController
     redirect_to @product.affiliate_link
   end
 
+  def like
+    set_product
+    method = params[:status] == "on" ? :unlike : :like
+    success = current_user.send method, @product
+    status = current_user.liking?(@product) ? :on : :off
+    respond_to do |format|
+      if success
+        format.json { render json: { liking: status } }
+      else
+        message = 'There was an error with your request. Please, try again.'
+        format.json { render json: { liking: status, message: message }, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /products
   # POST /products.json
   def create
