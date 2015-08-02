@@ -30,19 +30,17 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'simplecov', require: false
-  gem 'cucumber-rails', require: false
   gem 'poltergeist'
+  gem 'email_spec', require: true
 end
 
 group :development do
   gem 'guard-rspec'
-  gem 'guard-cucumber'
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring-commands-rspec'
-  gem "spring-commands-cucumber"
 end
 
 gem 'devise'

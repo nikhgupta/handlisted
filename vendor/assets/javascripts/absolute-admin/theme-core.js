@@ -722,7 +722,6 @@ $(document).ready(function(){
         runFooter();
         runTrays();
         runFormElements();
-        console.log("[CuratedShop]: Theme initialized..");
       }
 
     }

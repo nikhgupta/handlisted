@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Extractor::Base do
+describe Extractor::Base, :omniauth do
   it "finds the class for a given extractor" do
     expect(described_class.class_for(:facebook)).to eq(FacebookExtractor)
     expect{described_class.class_for(:something)}.to raise_error(Extractor::Error)

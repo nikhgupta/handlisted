@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Identity, type: :model do
+RSpec.describe Identity, :omniauth, type: :model do
   before do
     @auth = OmniAuth.config.mock_auth[:facebook]
   end

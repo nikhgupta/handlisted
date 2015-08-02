@@ -16,6 +16,7 @@ FactoryGirl.define do
     marked_price_cents 0
     marked_price_currency "USD"
     url 'http://url.to/product/'
+    url_hash { Digest::MD5.hexdigest url }
 
     trait :with_images do
       transient do
@@ -57,6 +58,7 @@ FactoryGirl.define do
     marked_price_currency "INR"
     images %w( http://url.to/image-1.jpg http://url.to/image-2.jpg )
     url 'http://url.to/product/'
+    url_hash { Digest::MD5.hexdigest url }
 
     average_rating 95
     ratings_count 1000

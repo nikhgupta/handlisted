@@ -2,7 +2,7 @@
 <div class="panel panel-tile text-center br-a br-grey product-card">
   <div class="panel-body">
     <div class="product-details"><h3><%= product.short_name %></h3></div>
-    <div class="product-image" data-link="<%= product.path %>" data-image="<%= product.cover_image %>"> </div>
+    <div class="product-image" data-link="<%= product_path(product) %>" data-image="<%= product.cover_image %>"> </div>
     <p class='error'></p>
   </div>
   <div class="panel-footer br-t p12">
@@ -15,7 +15,7 @@
       </div>
       <span class="panel-title">&nbsp;</span>
       <div class="widget-menu pull-right mr10">
-        <%= link_to fa_icon('search', class: "fa-2x"), product.path %>
+        <%= link_to fa_icon('search', class: "fa-2x"), product_path(product) %>
         <%= fa_icon 'check', class: "fa-2x" if product.prioritized? %>&nbsp;
         <%= product.like_button %>
       </div>

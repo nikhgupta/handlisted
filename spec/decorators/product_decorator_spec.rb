@@ -40,11 +40,6 @@ describe ProductDecorator do
     expect(decorated.marked_price).to eq("$125")
   end
 
-  it "defines path to easily access product's show path" do
-    decorated = create(:moto_x).decorate
-    expect(decorated.path).to eq("/product/flipkart/moto-x-2nd-generation")
-  end
-
   # it "defines an action button for affiliate link" do
   #   decorated = build(
   #     :product, pid: "123", price_cents: 80_00,

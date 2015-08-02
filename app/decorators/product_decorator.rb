@@ -22,10 +22,6 @@ class ProductDecorator < ApplicationDecorator
     h.humanized_money_with_symbol model.marked_price
   end
 
-  def path
-    h.product_path(product)
-  end
-
   def marked_description
     return unless product.description
     renderer   = Redcarpet::Render::HTML.new no_links: false, no_styles: true, no_images: true

@@ -1,4 +1,4 @@
-#= require absolute-admin/plugins/slick/slick
+#= require slick
 
 $ ->
 

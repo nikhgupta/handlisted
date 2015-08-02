@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :user, aliases: [:founder] do
     email
     password "password"
-    password_confirmation "password"
+    password_confirmation { password }
     sequence(:name){ |n| "User #{n}" }
 
     trait :confirmed do

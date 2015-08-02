@@ -37,7 +37,7 @@ RSpec.describe Product, type: :model do
 
   it "parameterizes the product using merchant name" do
     subject.valid? # generates slug
-    expect(subject.to_param).to eq("flipkart/moto-x-2nd-generation")
+    expect(subject.to_param).to eq("moto-x-2nd-generation")
   end
 
   it "scopes product uid to merchant" do
