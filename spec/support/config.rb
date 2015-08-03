@@ -10,6 +10,9 @@ RSpec.configure do |config|
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
 
+  # include helpers for testing presenters
+  config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
+
   # custom helpers
   config.include LoginHelpers
   config.extend  LoginHelpers::Macros

@@ -1,11 +1,18 @@
 module ApplicationHelper
-
-  def static_page?
-    controller.is_a?(HighVoltage::PagesController)
+  def present(object, klass=nil)
+    klass ||= "#{object.class}Presenter".constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
   end
 
   def current_user
-    UserDecorator.decorate(super) unless super.nil?
+    present(super) unless super.nil?
+    # super.presenter_for(self) unless super.nil?
+  end
+
+  def static_page?
+    controller.is_a?(HighVoltage::PagesController)
   end
 
   # TODO: link tp image logo

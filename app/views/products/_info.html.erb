@@ -2,25 +2,25 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-6 product-image-large">
-        <%= product.cover_image_tag %>
+        <%= presenter.cover_image_tag %>
       </div>
       <div class="col-md-6 product-details">
         <h1><%= product.name %></h3>
         <h3>By <%= product.brand_name %></h4>
         <br/><br/>
-        <%= product.affiliate_link_action_button target: '_blank' %>
+        <%= presenter.affiliate_link_action_button target: '_blank' %>
       </div>
     </div>
   </div>
 </div>
-<% if product.marked_description.present? %>
+<% if presenter.marked_description.present? %>
   <div class="panel">
     <div class="panel-heading">
       <h3>Description</h3>
     </div>
     <div class="panel-body description">
       <div class='markdown'>
-        <%= product.marked_description.try :html_safe %>
+        <%= presenter.marked_description.try :html_safe %>
       </div>
     </div>
   </div>

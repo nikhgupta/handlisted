@@ -49,7 +49,6 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'sidekiq'
 gem 'sidekiq-status'
 gem 'sinatra', require: false
-gem 'draper'
 gem 'friendly_id'
 gem 'high_voltage'
 gem 'bootstrap-generators'

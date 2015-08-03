@@ -1,8 +1,9 @@
 <%# TODO: use CSS background for displaying images rather than img tag %>
 <div class="panel panel-tile text-center br-a br-grey product-card">
   <div class="panel-body">
-    <div class="product-details"><h3><%= product.short_name %></h3></div>
-    <div class="product-image" data-link="<%= product_path(product) %>" data-image="<%= product.cover_image %>"> </div>
+    <div class="product-details"><h3><%= presenter.name %></h3></div>
+    <div class="product-image" data-link="<%= product_path(product) %>"
+      data-image="<%= presenter.cover_image %>"> </div>
     <p class='error'></p>
   </div>
   <div class="panel-footer br-t p12">
@@ -17,11 +18,11 @@
       <div class="widget-menu pull-right mr10">
         <%= link_to fa_icon('search', class: "fa-2x"), product_path(product) %>
         <%= fa_icon 'check', class: "fa-2x" if product.prioritized? %>&nbsp;
-        <%= product.like_button %>
+        <%= presenter.like_button %>
       </div>
     </span>
   </div>
   <div id="modal-panel" class="product-info popup-full bg-none mfp-with-anim mfp-hide">
-    <%= render 'products/info', product: product %>
+    <%= render 'products/info', product: product, presenter: presenter %>
   </div>
 </div>

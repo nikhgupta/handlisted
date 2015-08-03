@@ -49,12 +49,12 @@ FactoryGirl.define do
     pid "MOBDZ3FVVZT38WQH"
     name nil
     original_name "Moto X (2nd Generation)"
-    description "Moto X (2nd Gen)\nPure Style. Pure Performance. Pure Voice."
+    description "### Moto X (2nd Gen)\nPure Style. Pure Performance. Pure Voice."
     available true
     prioritized true
     price_cents 500_00
     price_currency "INR"
-    marked_price_cents 100_00
+    marked_price_cents 1000_00
     marked_price_currency "INR"
     images %w( http://url.to/image-1.jpg http://url.to/image-2.jpg )
     url 'http://url.to/product/'

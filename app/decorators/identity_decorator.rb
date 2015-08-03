@@ -1,2 +1,0 @@
-class IdentityDecorator < ApplicationDecorator
-end
