@@ -1,43 +1,29 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :destroy]
+  before_action :set_product, only: [:show, :visit, :like]
+  before_action :authenticate_user!, only: [:like, :unlike, :create]
 
   # GET /products
   # GET /products.json
   def index
-    page = params[:page].to_i || 1
-    page = 1 if page < 1
     query = params[:product][:search] rescue nil
     scope = query.present? ? Product.search(query) : Product.order(updated_at: :desc)
-    @products = scope.all.offset((page - 1) * 30).limit(30)
+    @products = scope.all.limit(30)
   end
 
   def show
   end
 
-  def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      # format.json { head :no_content }
-    end
-  end
-
   def visit
-    set_product
     redirect_to @product.affiliate_link
   end
 
   def like
-    set_product
-    method = params[:status] == "on" ? :unlike : :like
-    success = current_user.send method, @product
-    status = current_user.liking?(@product) ? :on : :off
+    method = current_user.liking?(@product) ? :unlike : :like
     respond_to do |format|
-      if success
-        format.json { render json: { liking: status } }
+      if current_user.send method, @product
+        format.js { render :like }
       else
-        message = 'There was an error with your request. Please, try again.'
-        format.json { render json: { liking: status, message: message }, status: :unprocessable_entity }
+        format.js { render :toggle_error, action: :like }
       end
     end
   end
@@ -66,7 +52,7 @@ class ProductsController < ApplicationController
     id = params[:job_id]
     status = Sidekiq::Status::status(id).to_s.camelize
     data = Sidekiq::Status::get_all id
-    status = 'Failed' if data['errrors'].present?
+    status = 'Failed' if data['errors'].present?
     response = { status: status, id: data['id'], errors: data['errors'] }
     render json: response.to_json
   end
@@ -75,20 +61,5 @@ class ProductsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
-    end
-
-    def redirect_if_moved
-      return if params[:product] == @product.slug
-      redirect_to product_path(@product), status: :moved_permanently
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(
-        :brand_id, :user_id, :provider_id,
-        :pid, :name, :original_name, :note, :description,
-        :price_cents, :price_currency, :marked_price_cents,
-        :marked_price_currency, :available, :priority_service
-      )
     end
 end

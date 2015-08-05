@@ -5,8 +5,10 @@ ENV['RAILS_ENV'] ||= 'test'
 if ENV['COVERAGE'] || ENV['FULL']
   require 'simplecov'
   SimpleCov.start 'rails' do
+    add_filter 'vendor/'
     add_group 'Presenters', 'app/presenters'
     add_group 'Extractors', 'app/extractors'
+    add_group 'Services',   'app/services'
     add_group 'Sidekiq',    'app/jobs'
     add_group 'Admin',      'app/admin'
   end

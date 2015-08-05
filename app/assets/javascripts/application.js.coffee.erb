@@ -22,6 +22,10 @@
 #= require product_adder
 #= require_self
 
+$(document).ajaxError (e, XHR, options) ->
+  # TODO: display a message here saying that the action requires login
+  window.location.replace("/login") if XHR.status == 401
+
 $ ->
   "use strict"
 

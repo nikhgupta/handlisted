@@ -30,6 +30,7 @@ RSpec.configure do |config|
 
   # use faster :transaction strategy on rack tests
   config.before(:each) do
+    Sidekiq::Worker.clear_all
     ActionMailer::Base.deliveries.clear
     DatabaseCleaner.strategy = :transaction
   end

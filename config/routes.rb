@@ -33,15 +33,15 @@ Rails.application.routes.draw do
   # root to: "products#index"
   root to: 'high_voltage/pages#show', id: 'home'
 
-  resources :products do
+  resources :products, only: [:index, :show, :create] do
     collection do
-      post 'create/status' => 'products#status'
-      post 'create/check'  => 'products#parseable'
+      post 'create/status' => 'products#status', defaults: { format: :json }, constraints: { format: :json }
+      post 'create/check' => 'products#parseable', defaults: { format: :json }, constraints: { format: :json }
       post 'search', as: :search_or_add
     end
     member do
       get 'go' => 'products#visit', as: :visit
-      post 'like'
+      post 'like', defaults: { format: :js }, constraints: { format: :js }
     end
   end
 

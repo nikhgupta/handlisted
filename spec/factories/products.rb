@@ -57,8 +57,8 @@ FactoryGirl.define do
     marked_price_cents 1000_00
     marked_price_currency "INR"
     images %w( http://url.to/image-1.jpg http://url.to/image-2.jpg )
-    url 'http://url.to/product/'
-    url_hash { Digest::MD5.hexdigest url }
+    url 'http://www.amazon.com/dp/B00X4WHP5E'
+    url_hash '3410f59232bc883c02ce418bd0317ac0'
 
     average_rating 95
     ratings_count 1000

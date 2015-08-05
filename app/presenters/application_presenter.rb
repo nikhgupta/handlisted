@@ -48,6 +48,6 @@ private
   end
 
   def respond_to?(method, include_private = false)
-    super || @subject.respond_to?(method, include_private)
+    super || @object.respond_to?(method, include_private)
   end
 end

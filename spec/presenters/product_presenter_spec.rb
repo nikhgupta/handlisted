@@ -35,11 +35,6 @@ describe ProductPresenter do
   end
 
   describe "product like button" do
-    it 'produces nothing if no user is logged in' do
-      allow(view).to receive(:current_user).and_return(nil)
-      expect(presenter.like_button).to be_nil
-    end
-
     it 'produces button with empty heart if user has not liked the product yet' do
       allow(view).to receive(:current_user).and_return(build_stubbed(:user))
       html = Capybara.string presenter.like_button

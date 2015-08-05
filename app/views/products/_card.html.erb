@@ -1,5 +1,5 @@
 <%# TODO: use CSS background for displaying images rather than img tag %>
-<div class="panel panel-tile text-center br-a br-grey product-card">
+<div class="panel panel-tile text-center br-a br-grey product-card" data-pid="<%= product.pid %>">
   <div class="panel-body">
     <div class="product-details"><h3><%= presenter.name %></h3></div>
     <div class="product-image" data-link="<%= product_path(product) %>"

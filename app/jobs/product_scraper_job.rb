@@ -8,15 +8,22 @@ class ProductScraperJob
   end
 
   def perform(user_id, url)
-    url  = "http://#{url}" unless url.starts_with?("http")
-    data = ProductScraper.fetch_basic_info url
-    user = User.find user_id
-    service = ProductMigratingService.new(user: user, data: data)
-    response = service.run
+    url      = "http://#{url}" unless url.starts_with?("http")
+    user     = User.find user_id
+    data     = ProductScraper.fetch_basic_info url
+    response = ProductMigratingService.new(user: user, data: data).run
+
     store id: response[:id]
-    store errors: "<li>#{response[:errors].uniq.join("</li><li>")}</li>" if response[:errors]
+    store_errors response[:errors] if response[:errors]
   rescue ProductScraper::Error => e
-    store errors: "<li>#{e.message}</li>"
+    store_errors e.message
     raise
+  end
+
+private
+  def store_errors(errors)
+    errors = [errors].flatten.uniq
+    html = "<li>#{errors.join('</li><li>')}</li>"
+    store errors: html
   end
 end
