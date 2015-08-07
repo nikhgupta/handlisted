@@ -5,10 +5,13 @@ class ApplicationPresenter
   end
 
   def markdown(text)
-    renderer  = Redcarpet::Render::HTML.new no_links: false, no_styles: true, no_images: true
-    extension = { autolink: true, tables: false, no_intra_emphasis: true, disable_indented_code_blocks: true }
-    markdown  = Redcarpet::Markdown.new renderer, extension
-    markdown.render(text).strip
+    options = {
+      auto_ids: false,
+      syntax_highlighter: nil,
+      entity_output: :as_input,
+      header_offset: 0
+    }
+    Kramdown::Document.new(text, options).to_html.strip
   end
 
   # tiny magic to allow:
