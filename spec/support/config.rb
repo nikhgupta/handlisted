@@ -13,8 +13,12 @@ RSpec.configure do |config|
   # include helpers for testing presenters
   config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
 
+  # include time travelling
+  config.include ActiveSupport::Testing::TimeHelpers
+
   # custom helpers
   config.include LoginHelpers
+  config.include ProductHelpers
   config.extend  LoginHelpers::Macros
   config.include DriverAgnosticHelpers
 
@@ -56,6 +60,7 @@ RSpec.configure do |config|
 
   # clean the database after each test, and open html/screenshot, if debugging
   config.after do |example|
+    travel_back
     DatabaseCleaner.clean
     if example.metadata[:type] == :feature and example.exception.present?
       save_and_open_page if ENV['DEBUG'].present?

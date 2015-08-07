@@ -7,6 +7,10 @@ class ProductsController < ApplicationController
   def index
     query = params[:product][:search] rescue nil
     scope = query.present? ? Product.search(query) : Product.order(updated_at: :desc)
+    if scope.empty?
+      scope = Product.order(updated_at: :desc)
+      flash[:alert] = "No matching products were found. Showing all products."
+    end
     @products = scope.all.limit(30)
   end
 

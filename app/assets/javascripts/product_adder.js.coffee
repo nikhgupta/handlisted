@@ -40,8 +40,10 @@ class @ProductAdder
       @response = null
 
   takeActionForCurrentStatus: ->
-    if @status.status in ["Failed", ""]
+    if @status.status is "Failed"
       @displayErrors(@status.errors)
+    else if @status.status is ""
+      @displayErrors("<li>Something took a long time.</li>")
     else if @status.id?
       setInterval (=> window.location = "/products/#{@status.id}"), 800
 

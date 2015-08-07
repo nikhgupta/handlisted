@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ProductScraperJob, type: :job do
-  include ActiveSupport::Testing::TimeHelpers
-
   let(:user) { create :confirmed_user }
   let(:echo_url){ PRODUCTS_LIST[:amazon_echo][:url] }
   let(:echo_pid){ PRODUCTS_LIST[:amazon_echo][:pid] }

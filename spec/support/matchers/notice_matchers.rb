@@ -3,6 +3,10 @@ RSpec::Matchers.define :have_notice_with_text do |text|
     expect(page).to have_css(".alert-success,.alert-info", text)
   end
 
+  match_when_negated do |page|
+    expect(page).to have_no_css(".alert-success,.alert-info", text)
+  end
+
   failure_message do |page|
     "expected #{page.current_path} to have notice with text: #{text}"
   end
@@ -21,6 +25,10 @@ RSpec::Matchers.define :have_alert_with_text do |text|
     expect(page).to have_css(".alert-danger", text)
   end
 
+  match_when_negated do |page|
+    expect(page).to have_no_css(".alert-danger", text)
+  end
+
   failure_message do |page|
     "expected #{page.current_path} to have alert with text: #{text}"
   end
@@ -37,6 +45,10 @@ end
 RSpec::Matchers.define :have_warning_with_text do |text|
   match do |page|
     expect(page).to have_css(".alert-warning", text)
+  end
+
+  match_when_negated do |page|
+    expect(page).to have_no_css(".alert-warning", text)
   end
 
   failure_message do |page|

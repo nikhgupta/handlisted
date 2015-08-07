@@ -13,14 +13,20 @@
         <span class="panel-title"><%= fa_icon 'rocket' %> Uh oh! We're sorry!</span>
       </div>
       <div class="panel-body">
-        <h3>We're having some troubles importing that product!</h3>
-        <ul class='errors'></ul>
-        <h3>This is embarassing. We've taken a note. Here is what we will do:</h4>
+        Hey<%= current_user ? " #{current_user.name}" : '' %>,<br/><br/>
+        <strong>This seems odd. The product you were trying to share seems a bit shy.</strong><br/>
+        <strong>We tried to convince it. We tried to pamper it. It just won't listen to us!</strong><br/>
+        <strong>It kept on saying:</strong><br/>
+        <ul class='errors'></ul> <br/>
+        <strong>Seems like, we will have to bribe it, a bit!<br/>Here is what we will do:</strong>
         <ol>
-          <li>We will import the product manually, if required.</li>
+          <li>One of the team members will look into what went wrong.</li>
+          <li>We will try to import the product manually.</li>
           <li>You will be credited for finding this product.</li>
-          <li>We will look into why we could not import the product, in the first place.</li>
         </ol>
+        <br/>
+        Regards,<br/>
+        CuratedShop Team.
       </div>
     </div>
   </div>

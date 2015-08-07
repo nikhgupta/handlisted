@@ -25,7 +25,7 @@ module LoginHelpers
   end
 
   def sign_out_if_logged_in
-    click_on_button("Logout") if page.has_button?("Logout")
+    # click_on_button("Logout") if page.has_button?("Logout")
     visit destroy_user_session_path
   end
 

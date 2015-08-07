@@ -53,11 +53,13 @@ RSpec.describe ProductsController, type: :controller do
 
     it "assigns products matching a given query when search is requested" do
       product = Product.create! valid_attributes
-      get :index, { product: { search: 'random keyword' } }, valid_session
-      expect(assigns(:products)).to be_empty
-
       get :index, { product: { search: 'moto x' } }, valid_session
       expect(assigns(:products)).to eq([product])
+    end
+
+    it "alerts user when no product matching query are found" do
+      get :index, { product: { search: 'random keyword' } }, valid_session
+      expect(flash[:alert]).to include("No matching products were found")
     end
   end
 

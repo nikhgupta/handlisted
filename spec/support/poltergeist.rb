@@ -3,7 +3,7 @@ require 'capybara/poltergeist'
 Capybara.configure do |config|
   config.current_driver = :poltergeist if ENV['COVERAGE'] || ENV['WITH_JS']
   config.javascript_driver = :poltergeist
-  config.default_wait_time = 1
+  config.default_wait_time = 10
   config.app_host = "http://localhost:3000"
   config.server_host = "localhost"
   config.server_port = "3000"

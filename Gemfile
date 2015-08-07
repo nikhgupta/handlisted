@@ -22,8 +22,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'pry-rails'
   gem 'dotenv-rails'
-  gem 'vcr'
-  gem 'webmock'
 end
 
 group :test do
@@ -33,6 +31,8 @@ group :test do
   gem 'simplecov', require: false
   gem 'poltergeist'
   gem 'email_spec', require: true
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

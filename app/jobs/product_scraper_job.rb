@@ -15,6 +15,9 @@ class ProductScraperJob
 
     store id: response[:id]
     store_errors response[:errors] if response[:errors]
+  rescue Mechanize::ResponseCodeError => e
+    raise unless e.response_code =~ /^(4|5)\d\d$/
+    store_errors "There is no product over here."
   rescue ProductScraper::Error => e
     store_errors e.message
     raise

@@ -13,8 +13,7 @@ module DriverAgnosticHelpers
 
   def wait_for_traffic
     return if rack_test?
-    sleep 0.1 while page.driver.network_traffic.collect(&:response_parts).any?(&:empty?)
-    sleep 0.2
+    sleep 0.05 while page.driver.network_traffic.collect(&:response_parts).any?(&:empty?)
   end
 
   def rack_test?
