@@ -64,8 +64,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     if example.metadata[:type] == :feature and example.exception.present?
       save_and_open_page if ENV['DEBUG'].present?
-      save_and_open_screenshot if example.metadata[:js] && ENV['DEBUG'] == 'open'
+      save_and_open_screenshot if example.metadata[:js] && ENV['DEBUG'].present?
     end
   end
 end
-
