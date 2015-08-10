@@ -12,7 +12,15 @@ module ApplicationHelper
   end
 
   def static_page?
-    controller.is_a?(HighVoltage::PagesController)
+    controller.is_a? HighVoltage::PagesController
+  end
+
+  def product_page?
+    controller.is_a? ProductsController
+  end
+
+  def home_page?
+    request.path == root_path
   end
 
   # TODO: link tp image logo

@@ -30,8 +30,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/monitor'
   end
 
-  # root to: "products#index"
-  root to: 'high_voltage/pages#show', id: 'home'
+  root to: "products#index"
+  # root to: 'high_voltage/pages#show', id: 'home'
 
   resources :products, only: [:index, :show, :create] do
     collection do

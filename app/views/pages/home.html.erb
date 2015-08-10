@@ -1,9 +1,0 @@
-<div class="row">
-<% Product.all.sample(12).each do |product| %>
-  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-  <%= render "products/card", product: product, presenter: present(product) %>
-</div>
-<% end %>
-</div>
-<p class="bg-header">Load More</p>
-

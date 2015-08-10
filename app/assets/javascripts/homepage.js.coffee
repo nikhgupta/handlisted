@@ -2,7 +2,7 @@
 
 $ ->
 
-  if $('body').hasClass('static-page')
+  if $('body').hasClass('home-page')
     $("#sidebar_left").hide()
     $('#toggle_sidemenu_l').hide()
     $("#content_wrapper").css("margin-left", "0")

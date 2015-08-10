@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <%= render 'shared/head' %>
-  <body class="<%= static_page? ? 'static-page sb-l-o' : 'sb-l-o' %> sb-r-c">
+  <body class="<%= product_page? ? 'product-page sb-l-o' : 'sb-l-o' %> <%= home_page? ? 'home-page' : '' %> sb-r-c">
     <div id="main">
       <%= render 'shared/navbar' %>
       <%= render 'shared/sidebar' %>
-      <%= render 'shared/home_page/slider' if request.path == root_path %>
+      <%= render 'shared/home_page/slider' if home_page? %>
       <section id="content_wrapper">
         <%= render 'shared/topbar' %>
         <section id="content" class="animated fadeIn">
