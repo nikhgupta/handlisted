@@ -21,7 +21,7 @@ class ProductPresenter < ApplicationPresenter
 
   def affiliate_link_action_button(options = {})
     return if model.url.blank?
-    options[:class] = options.fetch :class, (model.available? ? "system" : "danger")
+    options[:class] = options.fetch(:class) { (model.available? ? "system" : "danger") }
     options[:class] = "btn btn-large light fs28 affiliate-button btn-#{options[:class]}"
     options = { target: "_blank" }.merge(options)
     h.link_to affiliate_link_text, h.visit_product_path(model), options

@@ -7,7 +7,7 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
       content_tag :div, class: 'section' do
         label(name, options[:label].to_s.html_safe, class: "field-label text-muted fs18 mb10") +
           label(name, class: "field prepend-icon") do
-          super(name, *args) + label(name, fa_icon(options.fetch(:icon, :user)), class: "field-icon")
+          super(name, *args) + label(name, fa_icon(options[:icon] || :user), class: "field-icon")
         end
       end
     end

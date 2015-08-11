@@ -36,6 +36,7 @@ group :test do
 end
 
 group :development do
+  gem 'fasterer'
   gem 'guard-rspec'
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'

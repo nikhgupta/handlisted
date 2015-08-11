@@ -1,6 +1,6 @@
 RSpec::Matchers.define :have_product_card_for do |*args|
   match do |page|
-    pid, merchant, price = args
+    pid, merchant, price = args; nil # appending nil is faster
     selector = "[data-pid='#{pid}']"
     expect(page).to have_selector(selector)
     expect(page).to have_selector("#{selector} .product-image.has-image")

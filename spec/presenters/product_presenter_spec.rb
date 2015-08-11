@@ -29,7 +29,7 @@ describe ProductPresenter do
 
   it "provides helper to add cover image for product" do
     html = Capybara.string presenter.cover_image_tag(width: 40)
-    image, name = product.cover_image, presenter.name
+    image, name = product.cover_image, presenter.name; nil
     selector = "img[src='#{image}'][alt='#{name}'][width='40']"
     expect(html).to have_selector(selector)
   end
