@@ -5881,7 +5881,7 @@ form.hide-list-label .bootstrap-duallistbox-container label {
   filter: alpha(opacity=0);
   opacity: 0;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .cropper-point.point-se {
     width: 15px;
     height: 15px;
@@ -5951,7 +5951,7 @@ form.hide-list-label .bootstrap-duallistbox-container label {
   max-height: 466px;
   margin-bottom: 20px;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .img-container {
     min-height: 466px;
   }
@@ -8493,7 +8493,7 @@ p {
   font-weight: 300;
   line-height: 1.4;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .lead {
     font-size: 19.5px;
   }
@@ -8796,7 +8796,7 @@ pre code {
   padding-left: 11px;
   padding-right: 11px;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .container {
     width: 742px;
   }
@@ -9000,7 +9000,7 @@ pre code {
 .col-xs-offset-0 {
   margin-left: 0%;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left;
   }
@@ -9751,7 +9751,7 @@ table th[class*="col-"] {
 .table-hover > tbody > tr.default:hover > th {
   background-color: #fcfcfc;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 539px) {
   .table-responsive {
     width: 100%;
     margin-bottom: 14.25px;
@@ -10271,7 +10271,7 @@ select[multiple].input-lg {
   margin-bottom: 10px;
   color: #a6a6a6;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -10334,7 +10334,7 @@ select[multiple].input-lg {
   margin-left: -11px;
   margin-right: -11px;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
@@ -10345,12 +10345,12 @@ select[multiple].input-lg {
   top: 0;
   right: 11px;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .form-horizontal .form-group-lg .control-label {
     padding-top: 14.3px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .form-horizontal .form-group-sm .control-label {
     padding-top: 6px;
   }
@@ -11269,7 +11269,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   top: auto;
   left: auto;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .nav-tabs.nav-justified > li {
     display: table-cell;
     width: 1%;
@@ -11287,7 +11287,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs.nav-justified > .active > a:focus {
   border: 1px solid #dddddd;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .nav-tabs.nav-justified > li > a {
     border-bottom: 1px solid #dddddd;
     border-radius: 4px 4px 0 0;
@@ -11400,7 +11400,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   top: auto;
   left: auto;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .nav-justified > li {
     display: table-cell;
     width: 1%;
@@ -11421,7 +11421,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs-justified > .active > a:focus {
   border: 1px solid #dddddd;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .nav-tabs-justified > li > a {
     border-bottom: 1px solid #dddddd;
     border-radius: 4px 4px 0 0;
@@ -11690,7 +11690,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-top: 5.5px;
   margin-bottom: 5.5px;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .navbar-form .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -12270,7 +12270,7 @@ a.list-group-item.active > .badge,
 .jumbotron .container {
   max-width: 100%;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 540px) {
   .jumbotron {
     padding-top: 48px;
     padding-bottom: 48px;
@@ -14847,7 +14847,7 @@ ol.timeline-list li.timeline-item .timeline-date {
   height: 50px;
   overflow: scroll;
 }
-@media (min-width: 768px) {
+@media (min-width: 540px) {
   .modal-dialog {
     width: 600px;
     margin: 30px auto;
@@ -15282,7 +15282,7 @@ ol.timeline-list li.timeline-item .timeline-date {
 .carousel-caption .btn {
   text-shadow: none;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 540px) {
   .carousel-control .glyphicon-chevron-left,
   .carousel-control .glyphicon-chevron-right,
   .carousel-control .icon-prev,
@@ -15414,7 +15414,7 @@ ol.timeline-list li.timeline-item .timeline-date {
 @-ms-viewport {
   width: device-width;
 }
-@media (max-width: 768px) {
+@media (max-width: 540px) {
   h1 {
     font-size: 25px;
   }
@@ -15449,7 +15449,7 @@ ol.timeline-list li.timeline-item .timeline-date {
 .visible-xl-inline-block {
   display: none !important;
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .visible-xs {
     display: block !important;
   }
@@ -15464,22 +15464,22 @@ ol.timeline-list li.timeline-item .timeline-date {
     display: table-cell !important;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .visible-xs-block {
     display: block !important;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .visible-xs-inline {
     display: inline !important;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .visible-xs-inline-block {
     display: inline-block !important;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 540px) and (max-width: 991px) {
   .visible-sm {
     display: block !important;
   }
@@ -15494,17 +15494,17 @@ ol.timeline-list li.timeline-item .timeline-date {
     display: table-cell !important;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 540px) and (max-width: 991px) {
   .visible-sm-block {
     display: block !important;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 540px) and (max-width: 991px) {
   .visible-sm-inline {
     display: inline !important;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 540px) and (max-width: 991px) {
   .visible-sm-inline-block {
     display: inline-block !important;
   }
@@ -15599,12 +15599,12 @@ ol.timeline-list li.timeline-item .timeline-date {
     display: inline-block !important;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 540px) and (max-width: 991px) {
   .hidden-sm {
     display: none !important;
   }
@@ -15966,7 +15966,7 @@ ol.timeline-list li.timeline-item .timeline-date {
     float: none;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 539px) {
   .table-layout.table-clear-xs,
   .table-layout.table-clear-xs > div,
   .table-layout.table-clear-xs > aside,
@@ -20145,7 +20145,7 @@ body.sb-l-m.mobile-view .nano > .nano-pane {
   /* Adjust Navbar Logo/Branding - Adjust Width */
   body.sb-l-o .navbar-branding,
   body.sb-l-m .navbar-branding {
-    max-width: 45px;
+    /* max-width: 45px; */
     margin-right: 5px;
   }
   /* Adjust Navbar Toggle - Sidebar Open */
@@ -24894,7 +24894,7 @@ body.timeline-page .panel-clone {
 }
 /* Adds top padding to md columns as a spacer
  * when they are mobile stacked */
-@media (max-width: 991px) {
+@media (max-width: 539px) {
   #content .col-md-2 + .col-md-2,
   #content .col-md-2 + .col-md-4,
   #content .col-md-2 + .col-md-6,
