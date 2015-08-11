@@ -49,7 +49,7 @@
 
   &.shout-out, .shout-out {
     position: relative;
-    padding: 40px 40px 60px;
+    padding: 40px 0px 60px;
     text-align: center;
     margin-bottom: 30px;
     border-bottom: 1px solid #d8d8d8;
@@ -69,5 +69,18 @@
         padding: 0;
       }
     }
+  }
+}
+
+@media (max-width: 786px) {
+  .promotion.shout-out {
+    padding: 20px 0px 30px;
+    h1 { font-size: 19px; }
+  }
+}
+@media (max-width: 360px) {
+  .promotion.shout-out {
+    padding: 10px 0px 20px;
+    h1 { font-size: 16px; }
   }
 }

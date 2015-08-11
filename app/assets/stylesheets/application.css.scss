@@ -109,3 +109,11 @@ body.sb-l-c {
     }
   }
 }
+
+@media (max-width: 299px)  { .extra-300  { display: none !important; } }
+@media (max-width: 359px)  { .extra-360  { display: none !important; } }
+@media (max-width: 479px)  { .extra-480  { display: none !important; } }
+@media (max-width: 539px)  { .extra-540  { display: none !important; } }
+@media (max-width: 785px)  { .extra-786  { display: none !important; } }
+@media (max-width: 991px)  { .extra-992  { display: none !important; } }
+@media (max-width: 1199px) { .extra-1200 { display: none !important; } }
