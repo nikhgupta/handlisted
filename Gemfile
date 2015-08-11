@@ -36,9 +36,12 @@ group :test do
 end
 
 group :development do
-  gem 'fasterer'
-  gem 'brakeman'
-  gem 'bundler-audit'
+  gem 'fasterer', require: false
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
+  gem 'rubycritic', require: false
+  gem 'metric_fu', require: false
+
   gem 'guard-rspec'
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'

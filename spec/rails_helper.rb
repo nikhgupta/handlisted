@@ -13,6 +13,7 @@ if ENV['COVERAGE'] || ENV['FULL']
     add_group 'Admin',      'app/admin'
   end
   SimpleCov.command_name 'RSpec'
+  SimpleCov.coverage_dir 'tmp/simplecov/output'
 end
 
 require File.expand_path('../../config/environment', __FILE__)
