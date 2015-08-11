@@ -18,7 +18,7 @@ $ ->
 
     $(window).scroll ->
       url = $(".pagination a[rel='next']").attr('href')
-      if url && $(window).scrollTop() > $(document).height() - $(window).height() - 100
+      if url && $(window).scrollTop() > $(document).height() - $(window).height() - 200
         $('.pagination').html("<img src='/assets/ajax-loader.gif' width='30'/>")
         $.getScript(url, -> cardifyProducts())
     $(window).scroll(-> cardifyProducts())

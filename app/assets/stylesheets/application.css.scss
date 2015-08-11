@@ -77,3 +77,56 @@ header.navbar {
     margin: 20px 5%;
   }
 }
+
+footer#site-wide-footer {
+  color: #AAA;
+  overflow: hidden;
+  position: absolute;
+  padding: 60px 60px 30px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #DDD;
+  transition: margin 0.2s ease;
+  transition: margin 0.2s ease;
+  width: 100%;
+  margin: 0;
+  ul {
+    padding-left: 0;
+    li {
+      display: inline-block;
+      padding: 5px 20px 5px 0;
+    }
+  }
+  h1,h2,h3,p,ul li { line-height: 1.6em; }
+  h3, p.action { color: #777; }
+  .social-links li a, .footer-links li a { color: #aaa; }
+  .footer-about { border-right: 2px solid #dedede; }
+  .footer-promotion {
+    padding-left: 60px;
+    .subscription-form {
+      .panel {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
+        .panel-body {
+          padding: 25px 0 0;
+          width: 80%;
+        }
+        .panel-footer {
+          background-color: transparent;
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+.bg-header {
+  text-align: center;
+  margin: 40px -30px 0;
+  background-color: #e0e0e0;
+  padding: 20px 0;
+  font-size: 18px;
+}
+
+#content { padding-bottom: 0; }
+p.action { font-size: 18px; }
