@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.2'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -37,6 +37,8 @@ end
 
 group :development do
   gem 'fasterer'
+  gem 'brakeman'
+  gem 'bundler-audit'
   gem 'guard-rspec'
   gem 'terminal-notifier'
   gem 'terminal-notifier-guard'
@@ -48,7 +50,7 @@ end
 
 gem 'devise'
 gem 'pundit'
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin', '~> 1.0.0.pre1' # github: 'activeadmin'
 gem 'sidekiq'
 gem 'sidekiq-status'
 gem 'sinatra', require: false
