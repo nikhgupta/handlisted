@@ -1,0 +1,73 @@
+.promotion {
+  transition: all 0.2s ease;
+
+  // TODO: probably can be defined better using a macro or something.
+  &.promotion-primary {
+    color: white;
+    background-color: #57aae1;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-success {
+    color: white;
+    background-color: #8cd481;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-info {
+    color: white;
+    background-color: #5dbde0;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-warning {
+    color: white;
+    background-color: #f8c969;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-danger {
+    color: white;
+    background-color: #e57563;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-system {
+    color: white;
+    background-color: #50ccad;
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.08), 0px 2px 0px 0px rgba(0,0,0,0.02);
+  }
+
+  &.promotion-alert {
+    color: white;
+    background-color: #b09ae4;
+  }
+
+  p.action {
+    font-size: 18px;
+  }
+
+  &.shout-out, .shout-out {
+    position: relative;
+    padding: 40px 40px 60px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #d8d8d8;
+  }
+
+  .subscription-form, &.subscription-form {
+    .panel {
+      border: 0;
+      background-color: transparent;
+      box-shadow: none;
+      .panel-body {
+        padding: 25px 0 0;
+        width: 80%;
+      }
+      .panel-footer {
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@
  *= require absolute-admin/plugins/magnific/magnific-popup
  *= require identities
  *= require products
- *= require homepage
+ *= require promotion
  *= require_self
  */
 
@@ -100,24 +100,7 @@ footer#site-wide-footer {
   h3, p.action { color: #777; }
   .social-links li a, .footer-links li a { color: #aaa; }
   .footer-about { border-right: 2px solid #dedede; }
-  .footer-promotion {
-    padding-left: 60px;
-    .subscription-form {
-      .panel {
-        border: 0;
-        background-color: transparent;
-        box-shadow: none;
-        .panel-body {
-          padding: 25px 0 0;
-          width: 80%;
-        }
-        .panel-footer {
-          background-color: transparent;
-          padding: 0;
-        }
-      }
-    }
-  }
+  .promotion { padding-left: 60px; }
 }
 
 .bg-header {
@@ -129,4 +112,11 @@ footer#site-wide-footer {
 }
 
 #content { padding-bottom: 0; }
-p.action { font-size: 18px; }
+
+body.sb-l-c {
+  #toggle_sidemenu_l { display: none; }
+  .navbar-branding {
+    width: auto;
+    .navbar-brand { display: block; }
+  }
+}
