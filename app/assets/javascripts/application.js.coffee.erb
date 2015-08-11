@@ -20,6 +20,7 @@
 #= require products
 #= require homepage
 #= require product_adder
+#= require product_card
 #= require_self
 
 $(document).ajaxError (e, XHR, options) ->
@@ -51,3 +52,4 @@ $ ->
       check: "/products/create/check.json"
       add: "/products.json"
   ).init()
+

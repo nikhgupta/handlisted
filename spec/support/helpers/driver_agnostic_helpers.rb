@@ -5,6 +5,12 @@ module DriverAgnosticHelpers
     wait_for_traffic
   end
 
+  def click_on_link(*args)
+    return click_on(*args) if rack_test?
+    find_link(*args).trigger('click')
+    wait_for_traffic
+  end
+
   def click_on_selector(*args)
     return find(*args).click if rack_test?
     find(*args).trigger(:click)

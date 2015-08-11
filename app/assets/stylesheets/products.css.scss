@@ -103,3 +103,10 @@ a[data-like='off'] .fa { color: grey; }
   left: 0;
   right: 0;
 }
+
+.paginator {
+  text-align: center;
+  .pagination.bg-header {
+    display: block;
+  }
+}

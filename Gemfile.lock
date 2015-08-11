@@ -486,6 +486,7 @@ DEPENDENCIES
   high_voltage
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   kramdown
   launchy
   meta_request

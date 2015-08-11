@@ -8,9 +8,12 @@ module LoginHelpers
 
   def sign_in_as(factory, attributes = {})
     pass = attributes["password"] || "password"
-    attributes["password_confirmation"] = pass
+    user = User.find_by(attributes)
+    if !user
+      attributes["password_confirmation"] = pass
+      user = create(factory, attributes)
+    end
 
-    user = create(factory, attributes)
     sign_in_with user.email, pass
     user
   end

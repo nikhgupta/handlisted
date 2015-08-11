@@ -30,10 +30,14 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/monitor'
   end
 
+  concern :paginatable do
+    get '(page/:page)', action: :index, on: :collection, as: ''
+  end
+
   root to: "products#index"
   # root to: 'high_voltage/pages#show', id: 'home'
 
-  resources :products, only: [:index, :show, :create] do
+  resources :products, only: [:index, :show, :create], concerns: :paginatable do
     collection do
       post 'create/status' => 'products#status', defaults: { format: :json }, constraints: { format: :json }
       post 'create/check' => 'products#parseable', defaults: { format: :json }, constraints: { format: :json }

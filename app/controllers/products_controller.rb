@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
       scope = Product.order(updated_at: :desc)
       flash[:alert] = "No matching products were found. Showing all products."
     end
-    @products = scope.all.limit(30)
+    @products = scope.all.page params[:page]
   end
 
   def show

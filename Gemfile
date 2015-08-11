@@ -77,6 +77,7 @@ gem 'pg_search'
 gem 'foreman'
 gem 'thin'
 
+gem 'kaminari'
 # # Future additions
 # gem 'omniauth'
 # gem 'activerecord-reputation-system'

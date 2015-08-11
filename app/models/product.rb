@@ -62,11 +62,11 @@ class Product < ActiveRecord::Base
   end
 
   def cover_image
-    images.first
+    images.try :first
   end
 
   def images
-    super.map do |image|
+    super.try :map do |image|
       image.start_with?('http') ? image : merchant.image_for_key(image)
     end
   end
