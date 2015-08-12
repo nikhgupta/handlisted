@@ -12,6 +12,18 @@
     z-index: 1;
     font-weight: 600;
   }
+  .error {
+    background-color: #ffe;
+    padding: 10px;
+    color: #df5640;
+    display: none;
+    font-size: 12px;
+    z-index: 1000;
+    position: absolute;
+    bottom: -9px;
+    left: 0;
+    right: 0;
+  }
   .product-image {
     .container {
       opacity: 1;
