@@ -4,19 +4,13 @@ class @ProductCard
 
   init: ->
     @markAsInitialized()
-    @addBackgroundImage()
     @attachModal()
 
   markAsInitialized: ->
     @card.addClass('cardified')
 
-  addBackgroundImage: ->
-    image = @card.find('.product-image:not(.has-image)')
-    image.css 'background-image', "url('#{image.attr("data-image")}')"
-    image.addClass('has-image').removeAttr("data-image")
-
   attachModal: ->
-    @card.find('.panel-body').on 'click', (e) =>
+    @card.find('.product-image').on 'click', (e) =>
       # Preventing default action will make links unusable inside .panel-body
       # e.preventDefault()
       $.magnificPopup.open

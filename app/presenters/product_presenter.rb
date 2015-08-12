@@ -8,7 +8,7 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price
-    h.humanized_money_with_symbol model.price
+    model.price.to_i > 0 ? h.humanized_money_with_symbol(model.price) : "N/A"
   end
 
   def marked_price
@@ -35,6 +35,12 @@ class ProductPresenter < ApplicationPresenter
 
   def liked_by_current_user?
     h.current_user.try :liking?, model
+  end
+
+  def price_badge
+    badge_type = model.prioritized? ? 'success' : 'warning'
+    badge_type = 'danger' if model.price.to_i < 1
+    h.content_tag(:span, class: "price bg-#{badge_type}") { price }
   end
 
 private
