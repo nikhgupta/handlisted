@@ -117,3 +117,15 @@ body.sb-l-c {
 @media (max-width: 785px)  { .extra-786  { display: none !important; } }
 @media (max-width: 991px)  { .extra-992  { display: none !important; } }
 @media (max-width: 1199px) { .extra-1200 { display: none !important; } }
+
+.admin-form {
+  .btn-icon { width: 46px; }
+  @media (max-width: 539px) {
+    .section {
+      margin-bottom: 12px;
+      .switch {
+        font-size: 12px;
+      }
+    }
+  }
+}

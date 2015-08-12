@@ -11,6 +11,10 @@ module ApplicationHelper
     # super.presenter_for(self) unless super.nil?
   end
 
+  def path_is?(path)
+    request.path == path
+  end
+
   def static_page?
     controller.is_a? HighVoltage::PagesController
   end
