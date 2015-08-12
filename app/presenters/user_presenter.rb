@@ -7,13 +7,13 @@ class UserPresenter < ApplicationPresenter
     h.link_to(h.image_tag(avatar, class: "img-responsive", alt: name), *args)
   end
 
-private
-
   def avatar
     model.image.present? ? model.image : default_avatar
   end
 
+private
+
   def default_avatar
-    h.image_path "absolute-admin/avatars/3.jpg"
+    h.image_path "avatars/missing.jpg"
   end
 end

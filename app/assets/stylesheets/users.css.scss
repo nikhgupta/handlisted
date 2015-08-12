@@ -1,17 +1,25 @@
-div.add_identities {
-  float: left;
-  width: 30%;
+.user-box {
+  .avatar {
+    border: 5px solid rgba(0,0,0,0.15);
+  }
+  .media-heading {
+    color: #fff;
+    small {
+      color: #d8d8d8;
+    }
+  }
+  .lead {
+    color: #fff;
+    font-weight: 400;
+    span.level { font-weight: 600;}
+  }
+}
+
+.add_identities {
   margin: 0;
   padding: 0;
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      display: inline;
-      .fa {
-        margin: 20px;
-      }
-    }
+  .btn-social {
+    overflow: hidden;
   }
 }
 
