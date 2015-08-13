@@ -20145,7 +20145,7 @@ body.sb-l-m.mobile-view .nano > .nano-pane {
   /* Adjust Navbar Logo/Branding - Adjust Width */
   body.sb-l-o .navbar-branding,
   body.sb-l-m .navbar-branding {
-    max-width: 45px;
+    /* max-width: 45px; */
     margin-right: 5px;
   }
   /* Adjust Navbar Toggle - Sidebar Open */
@@ -24894,7 +24894,7 @@ body.timeline-page .panel-clone {
 }
 /* Adds top padding to md columns as a spacer
  * when they are mobile stacked */
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   #content .col-md-2 + .col-md-2,
   #content .col-md-2 + .col-md-4,
   #content .col-md-2 + .col-md-6,

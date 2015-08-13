@@ -1,0 +1,16 @@
+.user-box {
+  .avatar {
+    border: 5px solid rgba(0,0,0,0.15);
+  }
+  .media-heading {
+    color: #fff;
+    small {
+      color: #d8d8d8;
+    }
+  }
+  .lead {
+    color: #fff;
+    font-weight: 400;
+    span.level { font-weight: 600;}
+  }
+}

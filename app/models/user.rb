@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     name
   end
 
+  def has_identity?(name)
+    identities.where(provider: name).exists?
+  end
+
   def self.confirm_via_omniauth(auth)
     auth = Extractor::Base.load(auth)
     find_by(email: auth.email).tap do |user|

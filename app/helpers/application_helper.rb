@@ -11,6 +11,10 @@ module ApplicationHelper
     # super.presenter_for(self) unless super.nil?
   end
 
+  def path_is?(path)
+    request.path == path
+  end
+
   def static_page?
     controller.is_a? HighVoltage::PagesController
   end
@@ -26,7 +30,7 @@ module ApplicationHelper
   # TODO: link tp image logo
   def link_logo_to(path, options = {})
     # html = image_tag("logo.png", class: "img-responsive w250")
-    html = "<span><strong>Curated</strong> Shop</span>"
+    html = "<span><strong>Curated</strong>Shop</span>"
     link_to html.html_safe, path, options
   end
 

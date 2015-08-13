@@ -24,9 +24,9 @@
             </div>
             <div class="col-xs-6 text-right va-b pr5">
               <div class="login-links">
-                <%= link_to "Log In", new_user_session_path, class: "active", title: "Log In" %>
+                <%= link_to "Log In", new_user_session_path, class: path_is?(new_user_session_path) ? "active" : '', title: "Log In" %>
                 <span class="text-white"> | </span>
-                <%= link_to "Register", new_user_registration_path, class: "", title: "Register" %>
+                <%= link_to "Register", new_user_registration_path, class: path_is?(new_user_registration_path) ? "active" : '', title: "Register" %>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <div class="panel-heading heading-border bg-white">
               <span class="panel-title hidden"> <%= fa_icon('sign-in') %>Register</span>
               <div class="section row mn">
-                <%= render "devise/shared/omniauth_links", locals: { col_size: "sm" } %>
+                <%= render "devise/shared/omniauth_links" %>
               </div>
             </div>
 

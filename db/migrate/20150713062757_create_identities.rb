@@ -3,7 +3,7 @@ class CreateIdentities < ActiveRecord::Migration
     create_table :identities do |t|
       t.references :user,              index: true, foreign_key: true
       t.string   :provider,            null: false, limit: 16
-      t.string   :uid,                 null: false, limit: 20
+      t.string   :uid,                 null: false, limit: 55
       t.string   :name
       t.string   :username
       t.string   :email

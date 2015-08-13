@@ -10,70 +10,152 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require bootstrap-generators
  *= require absolute-admin/admin-forms
  *= require absolute-admin/theme
  *= require absolute-admin/plugins/magnific/magnific-popup
- *= require identities
+ *= require theme-overrides
  *= require products
- *= require homepage
+ *= require users
  *= require_self
  */
 
-body#devise-page {
-  a.navbar-brand {
-    display: block;
-    font-size: 1.7em;
-    color: white;
-    text-decoration: none;
-    padding: 25px 0 0;
+body {
+  &#devise-page {
+    a.navbar-brand {
+      display: block;
+      font-size: 1.7em;
+      color: white;
+      text-decoration: none;
+      padding: 25px 0 0;
+    }
   }
 }
 
-header.navbar {
-  .navbar-nav {
+header{
+  &.navbar {
+    .navbar-nav {
+      li {
+        a.btn-login {
+          background-color: #55BADF !important;
+          color: white !important;
+          font-weight: bold;
+        }
+        a.btn-register {
+          background-color: #48C9A9 !important;
+          color: white !important;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.promotion {
+  p.action {
+    font-size: 18px;
+  }
+
+  &.shout-out, .shout-out {
+    position: relative;
+    padding: 40px 20px 60px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #d8d8d8;
+    h3 { line-height: 1.6em; }
+    @media (max-width: 786px) {
+      padding: 20px 0px 30px;
+    }
+    @media (max-width: 400px) {
+      padding: 10px 0px 20px;
+      h1 { font-size: 20px; }
+    }
+  }
+}
+
+#content {
+  .bg-header {
+    text-align: center;
+    margin: 40px -30px 0;
+    background-color: #e0e0e0;
+    padding: 20px 0;
+    font-size: 18px;
+  }
+}
+
+footer#site-wide-footer {
+  color: #AAA;
+  overflow: hidden;
+  position: absolute;
+  padding: 20px 20px 10px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #DDD;
+  transition: margin 0.2s ease;
+  transition: margin 0.2s ease;
+  width: 100%;
+  margin: 0;
+
+  ul {
+    padding-left: 0;
     li {
-      a.btn-login {
-        background-color: #55BADF !important;
-        color: white !important;
-        font-weight: bold;
-      }
-      a.btn-register {
-        background-color: #48C9A9 !important;
-        color: white !important;
-        font-weight: bold;
-      }
+      display: inline-block;
+      padding: 5px 10px 5px 0;
     }
   }
-  .navbar-form.navbar-search {
-    .form-group {
-      input {
-        width: 400px;
+
+  ul.social-links li {
+    padding: 5px 40px 5px 0;
+  }
+  ul.social-links li a, ul.footer-links li a {
+    color: #aaa;
+  }
+
+  h1,h2,h3,p,ul li {
+    line-height: 1.6em;
+  }
+
+  h3, p.action {
+    color: #777; 
+  }
+
+  @media (min-width: 480px) and (max-width: 767px) {
+    padding: 5px 60px 15px;
+  }
+  @media (min-width: 992px) {
+    padding: 60px 60px 30px;
+    .promotion {
+      border-right: 2px solid #dedede; 
+    }
+    .footer-about {
+      padding-left: 60px; 
+    }
+  }
+}
+
+.admin-form {
+  .subscription-form, &.subscription-form {
+    .panel {
+      border: 0;
+      background-color: transparent;
+      box-shadow: none;
+      .panel-body {
+        padding: 25px 0 0;
+      }
+      .panel-footer {
+        background-color: transparent;
+        padding: 0;
       }
     }
   }
 }
 
-#sidebar_left {
-  .sidebar-header {
-    .media {
-      .media-links {
-        color: #AAA;
-      }
-    }
-  }
-}
+// for the like button
+a[data-like='on']  .fa { color: #df5640; }
+a[data-like='off'] .fa { color: grey; }
 
-.progress {
-  background-color: #ddd;
-}
-
-.popup-full {
-  margin: auto;
-  .mfp-close {
-    right: 5%;
-  }
-  .panel {
-    margin: 20px 5%;
+// pagination centered
+.paginator {
+  text-align: center;
+  .pagination.bg-header {
+    display: block;
   }
 }

@@ -18,7 +18,6 @@
 #= require absolute-admin/theme-core
 #= require absolute-admin/plugins/magnific/jquery.magnific-popup
 #= require products
-#= require homepage
 #= require product_adder
 #= require product_card
 #= require_self
@@ -32,17 +31,6 @@ $ ->
 
   Core.init()
 
-  $('.navbar-search input').on 'focus', ->
-    width = 0
-    $("header.navbar > *:not('.navbar-search')").each -> width += $(@).width()
-    $(@).attr "data-width", $(@).css('width')
-    $(@).css 'width', $('header.navbar').width() - width - 100 + 'px'
-    $(@).val "" if $(@).val() == $(@).attr("placeholder")
-  $('.navbar-search input').on 'blur', ->
-    $(@).css 'width', $(@).attr("data-width")
-    $(@).removeAttr("data-width")
-    $(@).val($(@).attr("placeholder")) unless $(@).val()?
-
   # Sidekiq Queue results on Search/Add Product Page
   new ProductAdder(
     form:  '.navbar-search',
@@ -52,4 +40,3 @@ $ ->
       check: "/products/create/check.json"
       add: "/products.json"
   ).init()
-

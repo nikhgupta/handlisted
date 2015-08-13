@@ -1,13 +1,16 @@
 <div class="panel">
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-6 product-image-large">
-        <%= presenter.cover_image_tag %>
+      <div class="product-image col-sm-6" data-link="<%= product_path(product) %>">
+        <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
       </div>
-      <div class="col-md-6 product-details">
-        <h1><%= product.name %></h3>
-        <h3>By <%= product.brand_name %></h4>
-        <br/><br/>
+      <div class="col-sm-6 product-details mb20 text-center">
+        <div class="text-center text-info">
+          <h1 class="product-name"><%= product.name %></h3>
+          <% if product.brand.present? %>
+            <h3 class="product-brand text-muted">By <span class="text-dark"><%= product.brand_name %></span></h4>
+          <% end %>
+        </div>
         <%= presenter.affiliate_link_action_button target: '_blank' %>
       </div>
     </div>

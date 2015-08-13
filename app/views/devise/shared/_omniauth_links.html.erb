@@ -1,9 +1,13 @@
-<% col_size = "md" unless col_size %>
 <% providers = { "google-plus" => "Google+", "twitter" => "Twitter", "facebook" => "Facebook" } %>
 <% providers.each do |provider, title| %>
-  <div class="col-<%= col_size %>-4">
+  <div class="col-sm-4 hidden-xs">
     <%= link_to "<span>#{fa_icon provider}</span> #{title}".html_safe,
       omniauth_authorize_path(:user, provider.to_s.underscore),
       class: "button btn-social btn-block #{provider.underscore.camelize.parameterize} span-left mr5" %>
+  </div>
+  <div class="col-xs-4 visible-xs-block text-center">
+    <%= link_to fa_icon(provider),
+      omniauth_authorize_path(:user, provider.to_s.underscore),
+      class: "btn btn-social btn-icon #{provider.underscore.camelize.parameterize}" %>
   </div>
 <% end %>

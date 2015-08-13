@@ -1,0 +1,81 @@
+$colors: (
+  primary: #4A89DC,
+  success: #70CA63,
+  info:    #3BAFDA,
+  warning: #F6BB42,
+  danger:  #E9573F,
+  alert:   #967ADC,
+  system:  #37BC9B,
+  dark:    #3B3F4F
+);
+
+// several break points that help us hide the content as we deem fit
+@each $bp in 240, 320, 360, 400, 480, 540, 600, 660, 720, 900, 1050, 1200, 1400 {
+  .hidden-#{$bp} { display: inline-block; }
+  @media (max-width: #{$bp - 1}px) {
+    .hidden-#{$bp} { display: none !important; }
+  }
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1440px;
+  &.sb-l-c {
+    .navbar-branding {
+      width: auto;
+      .navbar-brand { display: block; }
+    }
+    #toggle_sidemenu_l { display: none; }
+  }
+}
+header.navbar {
+  @media (max-width: 500px) {
+    .navbar-branding { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    ul.nav li {
+      span { display: none; }
+      @media (min-width: 360px) {
+        i.fa { font-size: 2em; line-height: 0.6em; }
+      }
+    }
+  }
+
+  @media (min-width: 900px) {
+    .navbar-search .form-group input { width: 300px; }
+  }
+  @media (min-width: 1000px) {
+    .navbar-search .form-group input { width: 400px; }
+  }
+  @media (min-width: 1100px) {
+    .navbar-search .form-group input { width: 500px; }
+  }
+  @media (min-width: 1200px) {
+    .navbar-search .form-group input { width: 600px; }
+  }
+}
+
+#content {
+  padding-bottom: 0;
+}
+
+.mfp-zoomIn.mfp-ready.mfp-bg {
+  opacity: 0.6;
+}
+
+.progress {
+  background-color: #ddd;
+}
+
+.admin-form {
+  .btn-icon { width: 46px; }
+  @media (max-width: 539px) {
+    .section {
+      margin-bottom: 12px;
+      .switch {
+        font-size: 12px;
+      }
+    }
+  }
+}

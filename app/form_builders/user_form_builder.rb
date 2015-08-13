@@ -14,8 +14,10 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def switch_box(name, *args)
-    html_classes = "switch ib switch-primary pull-left input-align mt10"
-    label name, class: html_classes do
+    label_html   = args.last.delete(:label_html) if args.last.is_a?(Hash)
+    label_html ||= {}
+    html_classes = "switch switch-primary input-align mt10 #{label_html[:class]}"
+    label name, label_html.merge(class: html_classes) do
       check_box(name, *args)
     end
   end
