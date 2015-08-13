@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="panel main">
   <div class="panel-body">
     <div class="row">
       <div class="product-image col-sm-6" data-link="<%= product_path(product) %>">
@@ -17,11 +17,11 @@
   </div>
 </div>
 <% if presenter.marked_description.present? %>
-  <div class="panel">
-    <div class="panel-heading">
+  <div class="panel panel-alert">
+    <div class="panel-heading text-center">
       <h3>Description</h3>
     </div>
-    <div class="panel-body description">
+    <div class="panel-body description" style='overflow-y: scroll !important'>
       <div class='markdown'>
         <%= presenter.marked_description.try :html_safe %>
       </div>
