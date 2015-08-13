@@ -23,6 +23,6 @@ describe UserPresenter do
     html = Capybara.string(presenter.link_avatar_to '#', class: 'test')
     expect(html).to have_selector('a.test[href="#"]')
     expect(html).to have_selector("a img.img-responsive[alt='#{user.name}']")
-    expect(html.find('img')[:src]).to include("avatars/3.jpg")
+    expect(html.find('img')[:src]).to include("avatars/missing.jpg")
   end
 end

@@ -15,8 +15,6 @@ feature "user registers with omniauth provider", :omniauth do
 
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Facebook User")
-    expect(page).to have_field("Image", with: "http://url.to/profile-image.jpg")
-    expect(page).to have_selector('a[href="https://facebook.com/testuser"]')
   end
 
   scenario "using google+" do
@@ -29,8 +27,6 @@ feature "user registers with omniauth provider", :omniauth do
 
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Google User")
-    expect(page).to have_field("Image", with: "http://url.to/profile-image.jpg")
-    expect(page).to have_selector('a[href="http://plus.google.com/some-profile-id"]')
   end
 
   scenario "using twitter" do
@@ -56,8 +52,6 @@ feature "user registers with omniauth provider", :omniauth do
 
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Twitter User"
-    expect(page).to have_field "Image", with: "http://url.to/profile-image.jpg"
-    expect(page).to have_selector('a[href="https://twitter.com/testusername"]')
   end
 
   scenario "without specifying email" do
@@ -120,7 +114,6 @@ feature "user logins using omniauth provider", :omniauth do
   context "when logged in" do
     background do
       @user = sign_in_as :confirmed_user, email: "user@example.com"
-      current_user_has_already_authenticated_via_provider_identity :twitter
       visit edit_profile_path
     end
 
@@ -131,7 +124,16 @@ feature "user logins using omniauth provider", :omniauth do
     end
 
     scenario "adding identity already attached with this user" do
-      add_provider_via_profile :twitter
+      current_user_has_already_authenticated_via_provider_identity :twitter
+
+      selector = "a.btn-social.twitter"
+      expect(page).to have_selector(selector, text: "Authenticated via Twitter")
+
+      element = find(selector)
+      expect(element[:href]).to eq "#"
+      expect(element[:style]).to include("opacity: 0.")
+
+      visit user_omniauth_authorize_path(:twitter)
       expect(current_path).to eq edit_profile_path
       expect(page).to have_notice_with_text "already linked"
     end

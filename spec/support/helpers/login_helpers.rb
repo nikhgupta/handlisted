@@ -39,7 +39,8 @@ module LoginHelpers
   end
 
   def add_provider_via_profile(provider)
-    click_on_selector ".add_identities .icon-#{provider}", match: :first
+    selector = "a.btn-social.#{provider.to_s.camelize.parameterize}"
+    click_on_selector selector, match: :first
   end
 
   # TODO: preferably, restore login and url path

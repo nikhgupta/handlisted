@@ -23,7 +23,7 @@ feature "user edit his profile" do
 
     scenario "without supplying password" do
       fill_in "Name", with: "Another Smith"
-      click_on_button "Update User"
+      click_on_button "Update info"
       expect(page).to have_notice_with_text("successfully updated")
       expect(page).to have_field("Name", with: "Another Smith")
     end
@@ -32,7 +32,7 @@ feature "user edit his profile" do
       fill_in "Name", with: "Another Smith"
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newpassword"
-      click_on_button "Update User"
+      click_on_button "Update info"
       expect(page).to have_notice_with_text("successfully updated")
       expect(current_path).to eq(root_path)
 
@@ -49,7 +49,7 @@ feature "user edit his profile" do
       fill_in "Name", with: "Another Smith"
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newwrongpassword"
-      click_on_button "Update User"
+      click_on_button "Update info"
       expect(page).to have_alert_with_text("Password confirmation doesn't match")
       expect(current_path).to eq edit_profile_path
     end
