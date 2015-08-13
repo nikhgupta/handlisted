@@ -10,122 +10,152 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require bootstrap-generators
  *= require absolute-admin/admin-forms
  *= require absolute-admin/theme
  *= require absolute-admin/plugins/magnific/magnific-popup
+ *= require theme-overrides
  *= require products
  *= require users
- *= require promotion
- *= require footer
  *= require_self
  */
 
 body {
-  margin: 0 auto;
-  max-width: 1440px;
-}
-body#devise-page {
-  a.navbar-brand {
-    display: block;
-    font-size: 1.7em;
-    color: white;
-    text-decoration: none;
-    padding: 25px 0 0;
+  &#devise-page {
+    a.navbar-brand {
+      display: block;
+      font-size: 1.7em;
+      color: white;
+      text-decoration: none;
+      padding: 25px 0 0;
+    }
   }
 }
 
-header.navbar {
-  .navbar-nav {
+header{
+  &.navbar {
+    .navbar-nav {
+      li {
+        a.btn-login {
+          background-color: #55BADF !important;
+          color: white !important;
+          font-weight: bold;
+        }
+        a.btn-register {
+          background-color: #48C9A9 !important;
+          color: white !important;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.promotion {
+  p.action {
+    font-size: 18px;
+  }
+
+  &.shout-out, .shout-out {
+    position: relative;
+    padding: 40px 20px 60px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #d8d8d8;
+    h3 { line-height: 1.6em; }
+    @media (max-width: 786px) {
+      padding: 20px 0px 30px;
+    }
+    @media (max-width: 400px) {
+      padding: 10px 0px 20px;
+      h1 { font-size: 20px; }
+    }
+  }
+}
+
+#content {
+  .bg-header {
+    text-align: center;
+    margin: 40px -30px 0;
+    background-color: #e0e0e0;
+    padding: 20px 0;
+    font-size: 18px;
+  }
+}
+
+footer#site-wide-footer {
+  color: #AAA;
+  overflow: hidden;
+  position: absolute;
+  padding: 20px 20px 10px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #DDD;
+  transition: margin 0.2s ease;
+  transition: margin 0.2s ease;
+  width: 100%;
+  margin: 0;
+
+  ul {
+    padding-left: 0;
     li {
-      a.btn-login {
-        background-color: #55BADF !important;
-        color: white !important;
-        font-weight: bold;
-      }
-      a.btn-register {
-        background-color: #48C9A9 !important;
-        color: white !important;
-        font-weight: bold;
-      }
+      display: inline-block;
+      padding: 5px 10px 5px 0;
+    }
+  }
+
+  ul.social-links li {
+    padding: 5px 40px 5px 0;
+  }
+  ul.social-links li a, ul.footer-links li a {
+    color: #aaa;
+  }
+
+  h1,h2,h3,p,ul li {
+    line-height: 1.6em;
+  }
+
+  h3, p.action {
+    color: #777; 
+  }
+
+  @media (min-width: 480px) and (max-width: 767px) {
+    padding: 5px 60px 15px;
+  }
+  @media (min-width: 992px) {
+    padding: 60px 60px 30px;
+    .promotion {
+      border-right: 2px solid #dedede; 
+    }
+    .footer-about {
+      padding-left: 60px; 
     }
   }
 }
-
-#sidebar_left {
-  .sidebar-header {
-    .media {
-      .media-links {
-        color: #AAA;
-      }
-    }
-  }
-}
-
-.progress {
-  background-color: #ddd;
-}
-
-.popup-full {
-  margin: auto;
-  .mfp-close {
-    right: 5%;
-  }
-  .panel {
-    margin: 20px 5%;
-  }
-}
-
-body.sb-l-c {
-  #toggle_sidemenu_l { display: none; }
-  .navbar-branding {
-    width: auto;
-    .navbar-brand { display: block; }
-  }
-}
-
-.navbar {
-  @media (min-width: 900px) {
-    .navbar-search .form-group input { width: 300px; }
-  }
-  @media (min-width: 1000px) {
-    .navbar-search .form-group input { width: 400px; }
-  }
-  @media (min-width: 1100px) {
-    .navbar-search .form-group input { width: 500px; }
-  }
-  @media (min-width: 1200px) {
-    .navbar-search .form-group input { width: 600px; }
-  }
-  @media (max-width: 500px) {
-    .navbar-branding { display: none; }
-  }
-  @media (max-width: 640px) {
-    ul.nav li {
-      span { display: none; }
-      @media (min-width: 360px) {
-        i.fa { font-size: 2em; line-height: 0.6em; }
-      }
-    }
-  }
-}
-
-@media (max-width: 299px)  { .extra-300  { display: none !important; } }
-@media (max-width: 359px)  { .extra-360  { display: none !important; } }
-@media (max-width: 479px)  { .extra-480  { display: none !important; } }
-@media (max-width: 539px)  { .extra-540  { display: none !important; } }
-@media (max-width: 785px)  { .extra-786  { display: none !important; } }
-@media (max-width: 991px)  { .extra-992  { display: none !important; } }
-@media (max-width: 1199px) { .extra-1200 { display: none !important; } }
 
 .admin-form {
-  .btn-icon { width: 46px; }
-  @media (max-width: 539px) {
-    .section {
-      margin-bottom: 12px;
-      .switch {
-        font-size: 12px;
+  .subscription-form, &.subscription-form {
+    .panel {
+      border: 0;
+      background-color: transparent;
+      box-shadow: none;
+      .panel-body {
+        padding: 25px 0 0;
+      }
+      .panel-footer {
+        background-color: transparent;
+        padding: 0;
       }
     }
+  }
+}
+
+// for the like button
+a[data-like='on']  .fa { color: #df5640; }
+a[data-like='off'] .fa { color: grey; }
+
+// pagination centered
+.paginator {
+  text-align: center;
+  .pagination.bg-header {
+    display: block;
   }
 }
