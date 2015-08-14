@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801050841) do
+ActiveRecord::Schema.define(version: 20150814182618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20150801050841) do
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider",        limit: 16,                 null: false
-    t.string   "uid",             limit: 20,                 null: false
+    t.string   "uid",             limit: 55,                 null: false
     t.string   "name"
     t.string   "username"
     t.string   "email"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 20150801050841) do
     t.integer  "found_products_count",   default: 0,     null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.boolean  "fake_personna",          default: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
