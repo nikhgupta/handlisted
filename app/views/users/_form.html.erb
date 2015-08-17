@@ -13,9 +13,20 @@
         </div>
       <% end %>
 
+      <!--
       <div class="row">
         <div class="col-md-6">
-          <%= f.text_field :name, autofocus: true, placeholder: "Enter email", class: "gui-input", icon: 'user' %>
+          <%= f.text_field :username, class: "gui-input", icon: 'user', disabled: true %>
+        </div>
+        <div class="col-md-6">
+          <%= f.label_for_profile %>
+        </div>
+      </div>
+      -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.text_field :name, placeholder: "Enter email", class: "gui-input", icon: 'user' %>
         </div>
         <div class="col-md-6">
           <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'user' %>

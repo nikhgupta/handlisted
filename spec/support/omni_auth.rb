@@ -42,7 +42,7 @@ MOCK_OMNIAUTH_CONFIG = {
     uid: "12345",
     info: {
       name: "Test Google User",
-      email: "testuser@google_plus.com",
+      email: "testuser@gmail.com",
       image: "http://url.to/profile-image.jpg",
       urls: {
         Google: "http://plus.google.com/some-profile-id"

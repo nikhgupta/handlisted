@@ -1,25 +1,8 @@
-<div class="page-heading user-box bg-success">
-  <div class="media clearfix">
-    <div class="media-left pr30">
-      <%= image_tag current_user.avatar, class: "media-object mw200 avatar", alt: current_user.name %>
-    </div>
-    <div class="media-body va-m">
-      <h2 class="media-heading"><%= current_user.name %><small class="hidden-xs"> - Profile</small></h2>
-      <p class="lead">
-        <span class='level'>Beta User</span><br/>
-        <br class="visible-xs-block" />
-        Found 123 products,<br class="visible-sm-block visible-xs-block" /> and likes 875 products.<br/>
-        <span class="hidden-xs">With us, since last 213 days.</span>
-      </p>
-    </div>
-  </div>
-</div>
+<%= render "profile_box", presenter: current_user %>
 
 <div class="page-header">
-  <%= link_to root_path, class: 'btn btn-default pull-right' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Home
-  <% end %>
+  <%= current_user.profile_link fa_icon('male') + " View Profile As Others", class: 'btn btn-default pull-right' %>
+  <%= link_to fa_icon('home') + " Home", root_path, class: 'btn btn-default pull-right mr10' %>
   <h2>Edit Profile</h2>
 </div>
 

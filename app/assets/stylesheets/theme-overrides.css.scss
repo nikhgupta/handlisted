@@ -70,6 +70,7 @@ header.navbar {
 
 .admin-form {
   .btn-icon { width: 46px; }
+  .gui-input[disabled] { color: #999; }
   @media (max-width: 539px) {
     .section {
       margin-bottom: 12px;

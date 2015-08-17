@@ -6,33 +6,82 @@ feature "user registers with omniauth provider", :omniauth do
   end
 
   scenario "using facebook" do
+    email  = "testuser@facebook.com"
+
     sign_in_with_provider :facebook
+    expect(current_path).to eq new_user_registration_path
+    expect(page).to have_field "Name", with: "Test Facebook User"
+    expect(page).to have_field "Email", with: email
+
+    fill_in "Username", with: "john"
+    fill_in "Password (8 characters minimum)", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on_button "Sign up"
+
+    user   = User.find_by(email: email)
+    emails = unread_emails_for(email)
+
+    expect(emails.size).to be 0
+    expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
     expect(page).to have_notice_with_text("authenticated from Facebook")
 
-    user = User.find_by(email: "testuser@facebook.com")
-    expect(user).to be_persisted.and be_confirmed
-
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Facebook User")
+
+    sign_out_if_logged_in
+    sign_in_with_provider :facebook
+    expect(page).to have_notice_with_text("Signed in via Facebook")
+  end
+
+  scenario "sign up using provider but changed email address" do
+    email = "testuser@facebook.com"
+    newemail = "john@example.com"
+
+    sign_in_with_provider :facebook
+    expect(current_path).to eq new_user_registration_path
+    expect(page).to have_field "Email", with: email
+
+    fill_in "Username", with: "john"
+    fill_in "Email", with: newemail
+    fill_in "Password (8 characters minimum)", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on_button "Sign up"
+
+    user = User.find_by(email: newemail)
+
+    expect(user).to be_persisted
+    expect(user).not_to be_confirmed
+    expect(open_last_email).to be_delivered_to(user.email)
   end
 
   scenario "using google+" do
     sign_in_with_provider :google_plus
+
+    email  = "testuser@gmail.com"
+    user   = User.find_by(email: email)
+    emails = unread_emails_for(email)
+
+    expect(emails.size).to be 0
+    expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
     expect(page).to have_notice_with_text("authenticated from Google Plus")
 
-    user = User.find_by(email: "testuser@google_plus.com")
-    expect(user).to be_persisted.and be_confirmed
-
     visit edit_profile_path
+    expect(page).to have_content("@testuser - Test Google User")
     expect(page).to have_field("Name", with: "Test Google User")
+    expect(page).to have_field("Email", with: "testuser@gmail.com")
+
+    sign_out_if_logged_in
+    sign_in_with_provider :google_plus
+    expect(page).to have_notice_with_text("Signed in via Google Plus")
   end
 
   scenario "using twitter" do
     sign_in_with_provider :twitter
     expect(current_path).to eq new_user_registration_path
     expect(page).to have_field "Name", with: "Test Twitter User"
+    expect(page).to have_field "Username", with: "testusername"
 
     email = "john@smith.com"
     fill_in "Email", with: email
@@ -52,6 +101,10 @@ feature "user registers with omniauth provider", :omniauth do
 
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Twitter User"
+
+    sign_out_if_logged_in
+    sign_in_with_provider :twitter
+    expect(page).to have_notice_with_text("Signed in via Twitter")
   end
 
   scenario "without specifying email" do
@@ -63,13 +116,13 @@ feature "user registers with omniauth provider", :omniauth do
     expect(current_path).to eq new_user_registration_path
     expect(page).to have_field "Name", with: "Test Facebook User"
 
-    email = "john@smith.com"
-    fill_in "Email", with: email
+    fill_in "Username", with: "john"
+    fill_in "Email", with: "john@smith.com"
     fill_in "Password (8 characters minimum)", with: "password"
     fill_in "Password confirmation", with: "password"
     click_on_button "Sign up"
 
-    user = User.find_by(email: email)
+    user = User.find_by(email: "john@smith.com")
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
     expect(open_last_email).to be_delivered_to(user.email)
@@ -85,22 +138,6 @@ feature "user registers with omniauth provider", :omniauth do
 end
 
 feature "user logins using omniauth provider", :omniauth do
-  when_already_signed_with_provider :facebook do
-    scenario "with facebook" do
-      sign_in_with_provider :facebook
-      expect(current_path).to eq root_path
-      expect(page).to have_notice_with_text "Signed in via Facebook!"
-    end
-  end
-
-  when_already_signed_with_provider :google_plus do
-    scenario "with google+" do
-      sign_in_with_provider :google_plus
-      expect(current_path).to eq root_path
-      expect(page).to have_notice_with_text "Signed in via Google Plus!"
-    end
-  end
-
   scenario "confirms email address" do
     user = create(:user, email: "testuser@facebook.com")
     expect(user).not_to be_confirmed
@@ -149,7 +186,7 @@ feature "user logins using omniauth provider", :omniauth do
     end
 
     scenario "adding identity whose email is associated with another user" do
-      create(:user, email: "testuser@google_plus.com")
+      create(:user, email: "testuser@gmail.com")
 
       add_provider_via_profile :google_plus
       expect(current_path).to eq edit_profile_path
@@ -159,7 +196,7 @@ feature "user logins using omniauth provider", :omniauth do
 
     scenario "adding identity with user's current email" do
       sign_out_if_logged_in
-      sign_in_as :confirmed_user, email: "testuser@google_plus.com"
+      sign_in_as :confirmed_user, email: "testuser@gmail.com"
 
       visit edit_profile_path
       add_provider_via_profile :google_plus

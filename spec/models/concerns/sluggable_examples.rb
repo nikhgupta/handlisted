@@ -5,8 +5,8 @@ shared_examples_for "sluggable" do |options = {}|
   let(:slug_field){ options[:slug_field] || :name }
 
   it "generates a slug when missing" do
-    instance = create(model, slug_field => "Some Model Name", slug: nil)
-    expect(instance.slug).to eq("some-model-name")
+    instance = create(model, slug_field => "SomeModelName", slug: nil)
+    expect(instance.slug).to eq("somemodelname")
   end
 
   it "auto guesses field names to be used for slug generation" do
@@ -19,7 +19,7 @@ shared_examples_for "sluggable" do |options = {}|
   end
 
   it "moves invalidation errors to appropriate name/title field" do
-    instance = build(model, slug_field => "Some Model Name", slug: nil)
+    instance = build(model, slug_field => "SomeModelName", slug: nil)
     expect(instance).to be_valid
 
     instance.update_attributes(slug: "")

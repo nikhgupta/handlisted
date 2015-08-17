@@ -1,5 +1,5 @@
 class UserFormBuilder < ActionView::Helpers::FormBuilder
-  delegate :content_tag, :tag, :fa_icon, to: :@template
+  delegate :content_tag, :tag, :fa_icon, :concat, to: :@template
 
   %w[text_field password_field email_field text_area].each do |method_name|
     define_method(method_name) do |name, *args|
@@ -10,6 +10,24 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
           super(name, *args) + label(name, fa_icon(options[:icon] || :user), class: "field-icon")
         end
       end
+    end
+  end
+
+  def label_for_profile
+    url = Rails.application.config.host_url + "/"
+    username_str = object.new_record? ? "..." : object.username
+    content_tag :div, class: "section profile-info-text" do
+      concat(
+        content_tag(:label, class: "field-label text-muted") do
+          "Your profile #{object.new_record? ? 'will be' : 'is'} available at:"
+        end
+      )
+      concat(
+        content_tag(:label, class: "field-label text-dark url") do
+          concat url
+          concat content_tag(:span, username_str, class: "text-primary")
+        end
+      )
     end
   end
 

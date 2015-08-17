@@ -9,8 +9,8 @@ class GooglePlusExtractor < Extractor::Base
   end
 
   def username
-    match = email.match(/^(.*)@gmail\.com/)
-    match[1] if match
+    match = email.match(/^(.*)@(?:gmail|google|googlemail)\.com/)
+    match[1] if match.present?
   end
 
   # present if user provided email permission

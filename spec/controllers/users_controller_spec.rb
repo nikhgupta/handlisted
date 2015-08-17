@@ -24,12 +24,12 @@ RSpec.describe UsersController, type: :controller do
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { name: "Test", email: "test@example.com",
+    { name: "Test", email: "test@example.com", username: "test",
       password: "password", password_confirmation: "password"}
   }
 
   let(:invalid_attributes) {
-    { name: nil, email: "test@example.com",
+    { name: nil, email: "test@example.com", username: "test",
       password: "password", password_confirmation: "password"}
   }
 
@@ -38,8 +38,17 @@ RSpec.describe UsersController, type: :controller do
   # UsersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #edit" do
+  describe "GET #show" do
     it "assigns the user as @user" do
+      sign_in nil
+      user = User.create! valid_attributes
+      get :show, { username: user.to_param }, valid_session
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+
+  describe "GET #edit" do
+    it "assigns the current user as @user" do
       user = User.create! valid_attributes
       sign_in user
       get :edit, { id: user.to_param }, valid_session

@@ -2,7 +2,7 @@ require 'rails_helper'
 require "models/concerns/sluggable_examples.rb"
 
 RSpec.describe User, type: :model do
-  it_behaves_like "sluggable"
+  it_behaves_like "sluggable", slug_field: :username
 
   it {
     is_expected.to have_many(
@@ -10,12 +10,12 @@ RSpec.describe User, type: :model do
     ).class_name("Product").dependent(:nullify).autosave(true)
   }
 
-  it "uses name for string representation" do
-    user = build(:user, name: "Test User")
-    expect(user.to_s).to eq("Test User")
+  it "uses username for string representation" do
+    user = build(:user, username: "testuser")
+    expect(user.to_s).to eq("testuser")
   end
 
-  describe ".confirm_via_omniauth" do
+  describe ".confirm_via_omniauth", :omniauth do
     it "confirms an existing user from omniauth data" do
       auth = OmniAuth.config.mock_auth[:facebook]
       record = described_class.confirm_via_omniauth(auth)
@@ -30,31 +30,30 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe ".create_from_omniauth" do
+  describe ".create_from_omniauth", :omniauth do
     it "creates a new user from omniauth data" do
-      auth = OmniAuth.config.mock_auth[:facebook]
+      auth = OmniAuth.config.mock_auth[:google_plus]
       record = described_class.create_from_omniauth(auth)
       expect(record).to be_a(User)
       expect(record).to be_persisted
       expect(record.email).to eq(auth["info"]["email"])
+      expect(record.username).to eq("testuser")
     end
   end
 
-  describe ".new_with_session" do
+  describe ".new_with_session", :omniauth do
     def build_new_user_with_session attributes = {}
       user = build(:user_with_full_info, attributes)
       described_class.new_with_session(user.attributes, @session)
     end
     before do
       @session ||= {}
-      @auth = OmniAuth.config.mock_auth[:facebook]
-      @session["devise.oauth_data"] = FacebookExtractor.new(@auth).attributes_data
+      @auth = OmniAuth.config.mock_auth[:google_plus]
+      @session["devise.oauth_data"] = GooglePlusExtractor.new(@auth).attributes_data
     end
     it "merges information from omniauth session data when missing" do
       data = {
-        name: nil, email: nil, image: nil,
-        gender: "female", language: "fr",
-        timezone_offset: (3.5*3600).to_i
+        name: nil, email: nil, username: "testuser", image: nil, gender: "female"
       }
       data.each do |field, value|
         value ||= @auth['info'][field]
@@ -72,7 +71,7 @@ RSpec.describe User, type: :model do
       user = build_new_user_with_session
       identity = user.identities.last
       expect(identity).not_to be_persisted
-      expect(identity.provider).to eq("facebook")
+      expect(identity.provider).to eq("google_plus")
 
       # save the user as if the form was submitted
       user.password = user.password_confirmation = Devise.friendly_token[0,20]

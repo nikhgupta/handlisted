@@ -19,7 +19,6 @@ RSpec.configure do |config|
   # custom helpers
   config.include LoginHelpers
   config.include ProductHelpers
-  config.extend  LoginHelpers::Macros
   config.include DriverAgnosticHelpers
 
   # lint factories, and drop all database tables as required

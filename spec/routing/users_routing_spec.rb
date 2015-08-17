@@ -4,15 +4,19 @@ RSpec.describe UsersController, type: :routing do
   describe "routing" do
 
     it "does not route to #index" do
-      expect(get: "/users").not_to be_routable
+      expect(get: "/users").not_to route_to("users#index")
     end
 
     it "does not route to #new" do
       expect(get: "/users/new").not_to be_routable
     end
 
-    it "does not route to #show" do
+    it "does not route to #show with an id" do
       expect(get: "/users/1").not_to be_routable
+    end
+
+    it "routes to #show with username" do
+      expect(get: "/someuser").to route_to("users#show", username: "someuser")
     end
 
     it "does not route to #create" do

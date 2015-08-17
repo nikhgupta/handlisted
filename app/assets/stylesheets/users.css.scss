@@ -1,5 +1,6 @@
 .user-box {
   .avatar {
+    max-width: 150px !important;
     border: 5px solid rgba(0,0,0,0.15);
   }
   .media-heading {
@@ -12,5 +13,19 @@
     color: #fff;
     font-weight: 400;
     span.level { font-weight: 600;}
+  }
+}
+
+.profile-info-text {
+  .field-label {
+    font-size: 18px;
+  }
+  label:not(.url) {
+    margin-bottom: 10px;
+  }
+  label.url {
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #d8d8d8;
   }
 }

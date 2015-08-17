@@ -3,8 +3,13 @@ FactoryGirl.define do
     "user#{n}@example.com"
   end
 
+  sequence :username do |n|
+    "user#{n}"
+  end
+
   factory :user, aliases: [:founder] do
     email
+    username
     password "password"
     password_confirmation { password }
     sequence(:name){ |n| "User #{n}" }

@@ -1,11 +1,20 @@
 require 'rails_helper'
 
 feature "user login" do
-  scenario "with correct credentials" do
-    user = create(:confirmed_user, password: "password")
-    sign_in_with user.email, "password"
-    expect(current_path).to eq(root_path)
-    expect(page).to have_notice_with_text("Signed in successfully")
+  context "with correct credentials" do
+    background do
+      @user = create(:confirmed_user, password: "password")
+    end
+    scenario "allows logging in with email" do
+      sign_in_with @user.email, "password"
+      expect(current_path).to eq(root_path)
+      expect(page).to have_notice_with_text("Signed in successfully")
+    end
+    scenario "allows logging in with username" do
+      sign_in_with @user.username, "password"
+      expect(current_path).to eq(root_path)
+      expect(page).to have_notice_with_text("Signed in successfully")
+    end
   end
 
   scenario "with invalid password" do
@@ -24,7 +33,7 @@ end
 
 feature "User registration" do
   background do
-    sign_up_with "John Smith", "john@smith.com", "password"
+    sign_up_with "john", "John Smith", "john@smith.com", "password"
     @user = User.find_by(email: "john@smith.com")
   end
 
@@ -59,6 +68,7 @@ feature "User registration" do
     expect(page).to have_notice_with_text("Signed in successfully")
 
     visit edit_profile_path
+    expect(page).to have_content("@john")
     expect(page).to have_field("Name", with: "John Smith")
   end
 end

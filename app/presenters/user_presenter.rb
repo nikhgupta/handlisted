@@ -11,6 +11,15 @@ class UserPresenter < ApplicationPresenter
     model.image.present? ? model.image : default_avatar
   end
 
+  def avatar_tag(options = {})
+    klass = "#{options.delete(:class)} media-object avatar"
+    h.image_tag avatar, { alt: name, class: klass }.merge(options)
+  end
+
+  def profile_link(text, *args)
+    h.link_to(text, h.profile_path(model), *args)
+  end
+
 private
 
   def default_avatar

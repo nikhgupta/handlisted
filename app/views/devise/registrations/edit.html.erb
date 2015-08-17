@@ -2,6 +2,14 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
+  <div class="section row">
+    <div class="col-md-6">
+      <%= f.text_field :username, autofocus: true, placeholder: "How would you like to be known?", class: "gui-input", icon: 'user' %>
+    </div>
+    <div class="col-md-6">
+      <p>Your profile will be available at: <%= Rails.application.config.host_name %>/<span></span></p>
+    </div>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />

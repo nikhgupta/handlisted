@@ -1,7 +1,7 @@
 module LoginHelpers
-  def sign_in_with(email, password)
+  def sign_in_with(email_or_username, password)
     visit new_user_session_path
-    fill_in "Email", with: email
+    fill_in "Login", with: email_or_username
     fill_in "Password", with: password
     click_on_button 'Log in'            # driver agnostic
   end
@@ -18,9 +18,10 @@ module LoginHelpers
     user
   end
 
-  def sign_up_with(name, email, password)
+  def sign_up_with(username, name, email, password)
     visit new_user_registration_path
     fill_in "Name", with: name
+    fill_in "Username", with: username
     fill_in "Email", with: email
     fill_in "Password (8 characters minimum)", with: password, exact: true
     fill_in "Password confirmation", with: password
@@ -47,7 +48,7 @@ module LoginHelpers
   def another_user_has_authenticated_via_provider_identity(provider)
     sign_out_if_logged_in
     visit new_user_session_path
-    sign_in_with_provider provider
+    send "sign_in_with_#{provider}"
     sign_out_if_logged_in
   end
 
@@ -56,18 +57,30 @@ module LoginHelpers
     add_provider_via_profile provider
   end
 
-  module Macros
-    def when_already_signed_with_provider(provider)
-      context "when user has already signed in with provider #{provider} in past" do
-        background do
-          sign_in_with_provider(provider)
-          @user = User.find_by(email: "testuser@#{provider}.com")
-          expect(@user).to be_persisted.and be_confirmed
-          sign_out_if_logged_in
-        end
+  def sign_in_with_facebook
+    sign_in_with_provider :facebook
+    fill_in "Username", with: "john"
+    fill_in "Password (8 characters minimum)", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on_button "Sign up"
+    expect(page).to have_notice_with_text("authenticated from Facebook")
+  end
 
-        yield
-      end
-    end
+  def sign_in_with_google_plus
+    sign_in_with_provider :google_plus
+    expect(page).to have_notice_with_text("authenticated from Google Plus")
+  end
+
+  def sign_in_with_twitter
+    sign_in_with_provider :twitter
+    fill_in "Email", with: "john@example.com"
+    fill_in "Password (8 characters minimum)", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on_button "Sign up"
+
+    click_first_link_in_email
+
+    sign_in_with_provider :twitter
+    expect(page).to have_notice_with_text("authenticated from Facebook")
   end
 end

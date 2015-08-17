@@ -4,10 +4,18 @@
       <%= render "devise/shared/omniauth_links" %>
     </div>
     <%= devise_error_messages! %>
+    <div class="section row">
+      <div class="col-md-6">
+        <%= f.text_field :username, autofocus: true, placeholder: "How would you like to be known?", class: "gui-input", icon: 'user' %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label_for_profile %>
+      </div>
+    </div>
 
     <div class="section row">
       <div class="col-md-6">
-        <%= f.text_field :name, autofocus: true, placeholder: "Your name?", class: "gui-input", icon: 'user' %>
+        <%= f.text_field :name, placeholder: "Your name?", class: "gui-input", icon: 'user' %>
       </div>
       <div class="col-md-6">
         <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'envelope' %>
