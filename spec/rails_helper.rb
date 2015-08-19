@@ -1,20 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
-
-# simplecov configuration
-if ENV['COVERAGE'] || ENV['FULL']
-  require 'simplecov'
-  SimpleCov.start 'rails' do
-    add_filter 'vendor/'
-    add_group 'Presenters', 'app/presenters'
-    add_group 'Extractors', 'app/extractors'
-    add_group 'Services',   'app/services'
-    add_group 'Sidekiq',    'app/jobs'
-    add_group 'Admin',      'app/admin'
-  end
-  SimpleCov.command_name 'RSpec'
-  SimpleCov.coverage_dir 'tmp/simplecov/output'
-end
+require 'simplecov' if ENV['COVERAGE'] || ENV['FULL']
 
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
