@@ -45,6 +45,16 @@ RSpec.describe UsersController, type: :controller do
       get :show, { username: user.to_param }, valid_session
       expect(assigns(:user)).to eq(user)
     end
+
+    it "assigns product listings hash for the user as @products" do
+      user  = User.create! valid_attributes
+      liked = create(:product)
+      found = create(:product, founder: user)
+      user.like(liked)
+
+      get :show, { username: user.to_param }, valid_session
+      expect(assigns(:products)).to eq(liked: [liked], found: [found])
+    end
   end
 
   describe "GET #edit" do
@@ -53,6 +63,17 @@ RSpec.describe UsersController, type: :controller do
       sign_in user
       get :edit, { id: user.to_param }, valid_session
       expect(assigns(:user)).to eq(user)
+    end
+
+    it "assigns product listings hash for the user as @products" do
+      user  = User.create! valid_attributes
+      liked = create(:product)
+      found = create(:product, founder: user)
+      user.like(liked)
+
+      sign_in user
+      get :edit, { id: user.to_param }, valid_session
+      expect(assigns(:products)).to eq(liked: [liked], found: [found])
     end
   end
 
@@ -100,9 +121,14 @@ RSpec.describe UsersController, type: :controller do
         expect(assigns(:user)).to eq(@user)
       end
 
-      it "re-renders the 'edit' template" do
+      it "redirects to the 'edit' action" do
         put :update, {:id => @user.to_param, :user => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+        expect(response).to redirect_to edit_profile_path
+      end
+
+      it 'adds validation errors to @user' do
+        put :update, {:id => @user.to_param, :user => invalid_attributes}, valid_session
+        expect(@user.errors.full_messages).to eq(['Name can\'t be blank'])
       end
     end
   end

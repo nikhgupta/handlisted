@@ -1,1 +1,33 @@
 <%= render "users/profile_box", presenter: present(@user) %>
+
+<hr/>
+
+<div class="row">
+  <div class="col-md-12 text-center">
+    <ul class="nav nav-pills mb20">
+      <li class="active bg-danger">
+        <a href="#liked-products" data-toggle="tab" class="btn">Products He <%= fa_icon('heart') %></a>
+      </li>
+      <li class="bg-alert">
+        <a href="#found-products" data-toggle="tab" class="btn">Products He <%= fa_icon('search') %></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content br-n pn">
+  <div id="liked-products" class="tab-pane active">
+    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :liked } do %>
+      Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
+      <a href="#" class="alert-link">like some products</a>
+      for you to be able to discover his likes!
+    <% end %>
+  </div>
+  <div id="found-products" class="tab-pane">
+    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :found } do %>
+      Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
+      <a href="#" class="alert-link">find some products</a>
+      for you to be able to discover his taste!
+    <% end %>
+  </div>
+</div>

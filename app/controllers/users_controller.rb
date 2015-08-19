@@ -4,9 +4,19 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    key = 'devise.user_errors'
+    @user.errors.add(:base, *session.delete(key)) if session[key]
+    @products = {
+      liked: @user.liking.scope.page(params[:page]),
+      found: @user.found_products.scope.page(params[:page]),
+    }
   end
 
   def show
+    @products = {
+      liked: @user.liking.scope.page(params[:page]),
+      found: @user.found_products.scope.page(params[:page]),
+    }
   end
 
   # PATCH/PUT /users/1
@@ -17,7 +27,9 @@ class UsersController < ApplicationController
       elsif @user.update_without_password(user_params)
         format.html { redirect_to edit_profile_path, notice: 'User was successfully updated.' }
       else
-        format.html { render :edit }
+        # NOTE: This does not preserve changes made by the user
+        session['devise.user_errors'] = @user.errors.full_messages
+        format.html { redirect_to action: :edit }
       end
     end
   end

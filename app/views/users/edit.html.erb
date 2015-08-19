@@ -1,16 +1,59 @@
 <%= render "profile_box", presenter: current_user %>
 
-<div class="page-header">
-  <%= current_user.profile_link fa_icon('male') + " View Profile As Others", class: 'btn btn-default pull-right' %>
-  <%= link_to fa_icon('home') + " Home", root_path, class: 'btn btn-default pull-right mr10' %>
-  <h2>Edit Profile</h2>
-</div>
-
-<div class="row admin-form theme-success">
-  <div class="col-md-4 pb20">
-    <%= render 'identities' %>
+<div class="row admin-form">
+  <div class="col-md-4">
+    <div class="panel panel-alert">
+      <div class="panel-heading pn">
+        <div class="widget-menu pull-right mr10">
+          <%= link_to fa_icon('home') + " Home", root_path, class: 'btn btn-sm btn-default' %>
+          <%= current_user.profile_link fa_icon('male') + " View Profile As Others", class: 'btn btn-sm btn-default' %>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="theme-warning">
+          <%= render 'identities' %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-md-8">
     <%= render 'form' %>
+  </div>
+</div>
+
+<hr/>
+
+<div class="row">
+  <div class="col-md-12 text-center">
+    <ul class="nav nav-pills mb20">
+      <li class="active bg-danger">
+        <a href="#liked-products" data-toggle="tab" class="btn">Products You <%= fa_icon('heart') %></a>
+      </li>
+      <li class="bg-alert">
+        <a href="#found-products" data-toggle="tab" class="btn">Products You <%= fa_icon('search') %></a>
+      </li>
+      <!--
+      <li class="bg-info">
+        <a href="#tab18_3" data-toggle="tab" class="btn">Products You <%= fa_icon('download') %></a>
+      </li>
+      -->
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content br-n pn">
+  <div id="liked-products" class="tab-pane active">
+    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :liked } do %>
+      <strong>Oh snap!</strong> You seem a bit shy. You need to
+      <a href="#" class="alert-link">like some products</a>.
+      Come on! You'll be famous!
+    <% end %>
+  </div>
+  <div id="found-products" class="tab-pane">
+    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :found } do %>
+      <strong>Oh snap!</strong> You seem a bit shy. You need to
+      <a href="#" class="alert-link">find some products</a>.
+      Come on! You'll be famous!
+    <% end %>
   </div>
 </div>

@@ -1,10 +1,10 @@
 RSpec::Matchers.define :have_notice_with_text do |text|
   match do |page|
-    expect(page).to have_css(".alert-success,.alert-info", text)
+    expect(page).to have_css(".alert-success,.alert-info", text: text)
   end
 
   match_when_negated do |page|
-    expect(page).to have_no_css(".alert-success,.alert-info", text)
+    expect(page).to have_no_css(".alert-success,.alert-info", text: text)
   end
 
   failure_message do |page|
@@ -22,11 +22,11 @@ end
 
 RSpec::Matchers.define :have_alert_with_text do |text|
   match do |page|
-    expect(page).to have_css(".alert-danger", text)
+    expect(page).to have_css(".alert-danger", text: text)
   end
 
   match_when_negated do |page|
-    expect(page).to have_no_css(".alert-danger", text)
+    expect(page).to have_no_css(".alert-danger", text: text)
   end
 
   failure_message do |page|
@@ -44,11 +44,11 @@ end
 
 RSpec::Matchers.define :have_warning_with_text do |text|
   match do |page|
-    expect(page).to have_css(".alert-warning", text)
+    expect(page).to have_css(".alert-warning", text: text)
   end
 
   match_when_negated do |page|
-    expect(page).to have_no_css(".alert-warning", text)
+    expect(page).to have_no_css(".alert-warning", text: text)
   end
 
   failure_message do |page|

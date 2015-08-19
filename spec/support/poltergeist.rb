@@ -5,6 +5,7 @@ Capybara.configure do |config|
   config.javascript_driver = :poltergeist
   config.default_wait_time = 5
   config.app_host = "http://localhost:3000"
+  config.asset_host = "http://localhost:3000"
   config.server_host = "localhost"
   config.server_port = "3000"
 end

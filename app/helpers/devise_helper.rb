@@ -14,10 +14,6 @@ module DeviseHelper
 
   private
 
-  def devise_error?
-    flash.any?
-  end
-
   def resource_error?
     resource.errors.any?
   end
@@ -30,12 +26,10 @@ module DeviseHelper
 
   def error_detail
     case
-    when error_message =~ /invalid email/i
-      "<br/>" + link_to("You can reset your password here.",
-        edit_user_password_path, class: "alert-link")
+    when error_message =~ /invalid.*password/i
+      "<br/>" + link_to("You can reset your password here.", edit_user_password_path, class: "alert-link")
     when error_message =~ /confirm.*email/i
-      link_to "Didn't receive confirmation email?",
-        new_user_confirmation_path, class: "alert-link"
+      link_to "Didn't receive confirmation email?", new_user_confirmation_path, class: "alert-link"
     end
   end
 
@@ -49,14 +43,6 @@ module DeviseHelper
     when :alert   then :danger
     when :notice  then :info
     when :warning then "warning dark"
-    else error_type
-    end
-  end
-
-  def error_icon
-    case error_type
-    when :alert then :ban
-    when :notice then :info
     else error_type
     end
   end

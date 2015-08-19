@@ -41,3 +41,28 @@ $ ->
       check: "/products/create/check.json"
       add: "/products.json"
   ).init()
+
+  jQuery.validator.addMethod 'allowed', ((value, element, params) ->
+    # allow any non-whitespace characters as the host part
+    regex  = ''
+    regex += '0-9'    if params.match /number/
+    regex += 'a-z'    if params.match /lowercase/
+    regex += 'A-Z'    if params.match /uppercase/
+    regex += 'a-zA-Z' if params.match /alphabet/
+    regex  = new RegExp("^[#{regex}]+$")
+    @optional(element) or regex.test(value)
+  ), 'Please enter a valid value with <strong>{0}</strong> only.'
+
+  $('.admin-form form, form.admin-form').validate
+    errorClass: "state-error"
+    validClass: "state-success"
+    errorElement: "em"
+    highlight: (element, errorClass, validClass) ->
+      $(element).closest('.field').addClass(errorClass).removeClass validClass
+    unhighlight: (element, errorClass, validClass) ->
+      $(element).closest('.field').removeClass(errorClass).addClass validClass
+    errorPlacement: (error, element) ->
+      if element.is(':radio') or element.is(':checkbox')
+        element.closest('.option-group').after error
+      else
+        error.insertAfter element.parent()

@@ -45,12 +45,21 @@ feature "user edit his profile" do
       expect(page).to have_empty_field("Password confirmation")
     end
 
-    scenario "with wrong password confirmation" do
+    scenario "invalidates with wrong password confirmation on page refresh with js disabled" do
       fill_in "Name", with: "Another Smith"
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newwrongpassword"
       click_on_button "Update info"
       expect(page).to have_alert_with_text("Password confirmation doesn't match")
+      expect(current_path).to eq edit_profile_path
+    end
+
+    scenario "invalidates with wrong password confirmation", :js do
+      fill_in "Name", with: "Another Smith"
+      fill_in "Password", with: "newpassword", exact: true
+      fill_in "Password confirmation", with: "newwrongpassword"
+      click_on_button "Update info"
+      expect(page).to have_validation_error("Please enter the same value again.")
       expect(current_path).to eq edit_profile_path
     end
   end

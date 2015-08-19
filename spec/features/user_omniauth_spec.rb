@@ -12,6 +12,7 @@ feature "user registers with omniauth provider", :omniauth do
     expect(current_path).to eq new_user_registration_path
     expect(page).to have_field "Name", with: "Test Facebook User"
     expect(page).to have_field "Email", with: email
+    expect(page).to have_notice_with_text("complete your sign up")
 
     fill_in "Username", with: "john"
     fill_in "Password (8 characters minimum)", with: "password"
@@ -24,7 +25,7 @@ feature "user registers with omniauth provider", :omniauth do
     expect(emails.size).to be 0
     expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
-    expect(page).to have_notice_with_text("authenticated from Facebook")
+    expect(page).to have_notice_with_text("signed up successfully")
 
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Facebook User")

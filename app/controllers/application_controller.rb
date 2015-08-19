@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  # :nocov:
   def alpha_access_only
     return if Rails.env.test?
     authenticate_or_request_with_http_basic('Alpha Access Only') do |email, pass|
@@ -22,4 +23,5 @@ class ApplicationController < ActionController::Base
       user.present? && user.admin? && user.valid_password?(pass)
     end
   end
+  # :nocov:
 end

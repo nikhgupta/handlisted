@@ -79,4 +79,38 @@ header.navbar {
       }
     }
   }
+  .state-error + em {
+    position: absolute;
+  }
+}
+
+.nav-pills {
+  & > li {
+    display: inline-block;
+    float: none;
+  }
+  & > li.active {
+    border-radius: 4px;
+    & > a.btn {
+      background-color: inherit;
+    }
+  }
+  & > li:not(.active) > a {
+    border: #666;
+    background-color: #ccc;
+    padding: 8px 15px;
+    border-radius: 0;
+  }
+}
+
+.tab-content {
+  .alert {
+    margin-bottom: 60px;
+  }
+  @media (min-width: 1140px) {
+    .alert {
+      width: 80%;
+      margin: 0 auto 60px;
+    }
+  }
 }

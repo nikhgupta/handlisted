@@ -1,5 +1,5 @@
-<div class="panel heading-border panel-success">
-  <div class="panel-body bg-light">
+<div class="panel heading-border panel-alert">
+  <div class="panel-body light">
     <%= form_for(@user, url: edit_profile_path, html: { class: "form-horizontal", role: "form" }, builder: UserFormBuilder) do |f| %>
       <% if @user.errors.any? %>
         <div class="alert alert-danger alert-dismissable" role="alert">
@@ -13,34 +13,23 @@
         </div>
       <% end %>
 
-      <!--
       <div class="row">
         <div class="col-md-6">
-          <%= f.text_field :username, class: "gui-input", icon: 'user', disabled: true %>
+          <%= f.text_field :name, placeholder: "Enter email", class: "gui-input", icon: 'user', required: true %>
         </div>
         <div class="col-md-6">
-          <%= f.label_for_profile %>
-        </div>
-      </div>
-      -->
-
-      <div class="row">
-        <div class="col-md-6">
-          <%= f.text_field :name, placeholder: "Enter email", class: "gui-input", icon: 'user' %>
-        </div>
-        <div class="col-md-6">
-          <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'user' %>
+          <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'user', required: true, email: true %>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock' %>
+          <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', minlength: 4, maxlength: 32 %>
         </div>
         <div class="col-md-6">
-          <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock' %>
+          <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', minlength: 4, maxlength: 32, equalTo: "#user_password" %>
         </div>
       </div>
-      <%= f.submit 'Update info', class: "btn-success" %>
+      <%= f.submit 'Update info', class: "btn-alert" %>
     </div>
   <% end %>
 </div>

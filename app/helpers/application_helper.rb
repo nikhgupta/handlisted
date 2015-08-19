@@ -7,20 +7,11 @@ module ApplicationHelper
   end
 
   def current_user
-    present(super) unless super.nil?
-    # super.presenter_for(self) unless super.nil?
+    present(super) if super
   end
 
   def path_is?(path)
     request.path == path
-  end
-
-  def static_page?
-    controller.is_a? HighVoltage::PagesController
-  end
-
-  def product_page?
-    controller.is_a? ProductsController
   end
 
   def home_page?

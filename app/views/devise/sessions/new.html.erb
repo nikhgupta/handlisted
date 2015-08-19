@@ -4,8 +4,8 @@
       <div class="col-sm-7 pr30">
         <%= devise_error_messages! %>
 
-        <%= f.text_field :login, autofocus: true, placeholder: "Email or Username", class: "gui-input", icon: 'user' %>
-        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock' %>
+        <%= f.text_field :login, autofocus: true, placeholder: "Email or Username", class: "gui-input", icon: 'user', required: true, minlength: 4, maxlength: 20 %>
+        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 4, maxlength: 32 %>
       </div>
       <%= render "devise/shared/sign_up_benefits" %>
     </div>

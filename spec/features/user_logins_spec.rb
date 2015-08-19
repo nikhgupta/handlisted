@@ -21,17 +21,55 @@ feature "user login" do
     user = create(:confirmed_user, password: "password")
     sign_in_with user.email, "wrongpassword"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert_with_text("Invalid email or password")
+    expect(page).to have_alert_with_text("Invalid login or password")
   end
 
   scenario "with invalid email" do
     sign_in_with "random@example.com", "password"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert_with_text("Invalid email or password")
+    expect(page).to have_alert_with_text("Invalid login or password")
+    expect(page).to have_link("You can reset your password here.")
   end
 end
 
-feature "User registration" do
+feature "On user registration page" do
+  background do
+    visit user_registration_path
+  end
+
+  scenario "shows user URL to their profile that will be created", :js do
+    expect(page).to have_selector('label', text: "http://localhost:3000/...")
+
+    fill_in "Username", with: "te    s  "
+    expect(page).to have_selector('label', text: "http://localhost:3000/...")
+
+    fill_in "Username", with: "testuser"
+    expect(page).to have_selector('label', text: "http://localhost:3000/testuser")
+
+    fill_in "Username", with: "      test user   2       "
+    expect(page).to have_selector('label', text: "http://localhost:3000/testuser2")
+
+    # simulating empty fill requires us to send `keyup` event
+    fill_in 'Username', with: ''
+    page.find('#user_username').native.send_keys(:keyup)
+    expect(page).to have_selector('label', text: "http://localhost:3000/...")
+  end
+
+  context "notifies user of validation errors" do
+    scenario "from server side" do
+      sign_up_with "", "John Smith", "john@smith.com", "password"
+      expect(page).to have_warning_with_text("Username can't be blank")
+    end
+
+    scenario "from client side", :js do
+      fill_in "Username", with: "te s  "
+      expect(page).to have_selector('label.state-error #user_username')
+      expect(page).to have_selector('em.state-error', text: "valid value with alphabets and numbers only")
+    end
+  end
+end
+
+feature "When user registers" do
   background do
     sign_up_with "john", "John Smith", "john@smith.com", "password"
     @user = User.find_by(email: "john@smith.com")
@@ -52,6 +90,7 @@ feature "User registration" do
     sign_in_with @user.email, "password"
     expect(current_path).to eq(new_user_session_path)
     expect(page).to have_alert_with_text("confirm your email address before")
+    expect(page).to have_link("Didn't receive confirmation email?")
   end
 
   scenario "notifies user when email is confirmed" do

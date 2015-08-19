@@ -63,7 +63,7 @@ module LoginHelpers
     fill_in "Password (8 characters minimum)", with: "password"
     fill_in "Password confirmation", with: "password"
     click_on_button "Sign up"
-    expect(page).to have_notice_with_text("authenticated from Facebook")
+    expect(page).to have_notice_with_text("signed up successfully")
   end
 
   def sign_in_with_google_plus
@@ -81,6 +81,6 @@ module LoginHelpers
     click_first_link_in_email
 
     sign_in_with_provider :twitter
-    expect(page).to have_notice_with_text("authenticated from Facebook")
+    expect(page).to have_notice_with_text("signed up successfully")
   end
 end

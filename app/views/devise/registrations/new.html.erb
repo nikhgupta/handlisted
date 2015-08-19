@@ -6,7 +6,7 @@
     <%= devise_error_messages! %>
     <div class="section row">
       <div class="col-md-6">
-        <%= f.text_field :username, autofocus: true, placeholder: "How would you like to be known?", class: "gui-input", icon: 'user' %>
+        <%= f.text_field :username, autofocus: true, placeholder: "How would you like to be known?", class: "gui-input", icon: 'user', required: true, minlength: 4, maxlength: 20, allowed: "alphabets and numbers" %>
       </div>
       <div class="col-md-6">
         <%= f.label_for_profile %>
@@ -15,19 +15,19 @@
 
     <div class="section row">
       <div class="col-md-6">
-        <%= f.text_field :name, placeholder: "Your name?", class: "gui-input", icon: 'user' %>
+        <%= f.text_field :name, placeholder: "Your name?", class: "gui-input", icon: 'user', required: true %>
       </div>
       <div class="col-md-6">
-        <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'envelope' %>
+        <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'envelope', required: true, email: true %>
       </div>
     </div>
     <div class="section row">
       <div class="col-md-6">
-        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock',
+        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 4, maxlength: 32,
           label: (@minimum_password_length ? "Password <small>(#{@minimum_password_length} characters minimum)</small>" : nil) %>
       </div>
       <div class="col-md-6">
-        <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock' %>
+        <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 4, maxlength: 32, equalTo: '#user_password' %>
       </div>
     </div>
     <div class="section visible-xs-block text-center">

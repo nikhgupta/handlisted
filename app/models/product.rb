@@ -67,12 +67,13 @@ class Product < ActiveRecord::Base
 
   def images
     super.try :map do |image|
-      image.start_with?('http') ? image : merchant.image_for_key(image)
+      image.start_with?('http') ? image : "http://#{image}"
     end
   end
 
   def affiliate_link
-    merchant.affiliate_link_for(url)
+    scheme = Rails.application.secrets.affiliate_urls[merchant.identifier.to_s]
+    scheme.gsub("{url}", url)
   end
 
   private

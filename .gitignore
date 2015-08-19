@@ -11,16 +11,15 @@
 /log/*
 !/log/.keep
 /tmp
-
-config/secrets.yml
-config/database.yml
-
-coverage/*
-
-.env-heroku
-
 .pt
-
 doc
 .yardoc
 
+# Ignore coverage reports
+coverage/*
+
+# Ignore sensitive files
+.env
+.env-heroku
+config/secrets.yml
+config/database.yml

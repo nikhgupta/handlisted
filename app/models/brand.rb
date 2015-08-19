@@ -19,10 +19,6 @@ class Brand < ActiveRecord::Base
     name
   end
 
-  def to_param
-    "#{merchant.slug}/#{slug}"
-  end
-
   def slug_candidates
     [:name, [:merchant_name, :name]]
   end
