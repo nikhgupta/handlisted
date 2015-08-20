@@ -1,0 +1,27 @@
+---
+- participation:
+  - name: new-user
+    description: "Awarded to users who registered within the last 30 days."
+  - name: alpha-user
+    description: "Awarded to users who registered in the alpha phase."
+    special: true
+  - name: beta-user
+    description: "Awarded to users who registered in the beta phase."
+    special: true
+  - name: omega
+    unique: true
+    description: "Awarded to users who have helped us develop CuratedShop."
+  - name: autobiographer
+    description: "Awarded to users with completed profile information."
+    difficulty: bronze
+
+- discovery:
+  - name: pathfinder
+    description: "Awarded on first product discovery"
+    difficulty: bronze
+  - name: seeker
+    description: "Awarded on 5th product discovery"
+    difficulty: silver
+  - name: diviner
+    description: "Awarded on 25th product discovery"
+    difficulty: gold

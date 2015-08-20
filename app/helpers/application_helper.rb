@@ -18,6 +18,16 @@ module ApplicationHelper
     request.path == root_path
   end
 
+  def badge_tag_for(*args)
+    badge = args.first.is_a?(Merit::Badge) ? args.first : Merit::Badge.find_by_name_and_level(*args)
+    difficulty = badge.custom_fields["difficulty"]
+    unique  = badge.custom_fields["unique"]  ? fa_icon('bolt') : ''
+    special = unique.present? || badge.custom_fields["special"] ? 'special' : ''
+    content_tag :a, class: "badge #{difficulty} #{special}", title: badge.description do
+      unique + " " + badge.name.humanize.titleize
+    end.html_safe
+  end
+
   # TODO: link tp image logo
   def link_logo_to(path, options = {})
     # html = image_tag("logo.png", class: "img-responsive w250")
@@ -27,7 +37,7 @@ module ApplicationHelper
 
   def fa_icon(name, options = {})
     options[:class] = "fa fa-#{name} #{options[:class]}"
-    "<i #{options.map{|k,v| "#{k}=\"#{v}\""}.join(" ")}'></i>".html_safe
+    "<i #{options.map{|k,v| "#{k}=\"#{v}\""}.join(" ")}></i>".html_safe
   end
 
   def oauth_icon_for provider, options = {}

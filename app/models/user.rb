@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_merit
+
   include Sluggable
 
   has_many :found_products, dependent: :nullify, autosave: true, class_name: "Product", foreign_key: "founder_id"
@@ -94,6 +96,31 @@ class User < ActiveRecord::Base
         user.skip_confirmation! if auth["email"] && user.email == auth["email"]
       end
     end
+  end
+
+  # NOTE: following checks are used by Merit for awarding Badges.
+  # OPTIMIZE: Probably, it will be wise to put them into separate concern?
+  def is_developer?
+    CuratedShop::Facts::DEVELOPER_EMAILS.include? email
+  end
+
+  def is_alpha_user?
+    !is_developer? && created_at < CuratedShop::Facts::BETA_STARTED_ON
+  end
+
+  def is_beta_user?
+    !is_developer? && !is_alpha_user? &&
+      (created_at < CuratedShop::Facts::LAUNCHED_ON)
+  end
+
+  def is_new_user?
+    !is_developer? && !is_alpha_user? && !is_beta_user? &&
+      (sign_in_count < 10 || created_at > 30.days.ago)
+  end
+
+  def has_completed_profile_information?
+    profile_fields  = [:name, :email, :gender, :image]
+    profile_fields.all?{ |field| send(field).present? }
   end
 
   private

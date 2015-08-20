@@ -86,7 +86,7 @@ gem 'kaminari'
 # # Future additions
 # gem 'omniauth'
 # gem 'activerecord-reputation-system'
-# gem 'merit'
+gem 'merit'
 # gem 'recommendable'
 # gem 'acts-as-taggable-on', '~> 3.4'
 # gem 'public_activity'; gem 'unread'

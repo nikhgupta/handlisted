@@ -31,6 +31,10 @@ class UserPresenter < ApplicationPresenter
     model.image.present? ? model.image : default_avatar
   end
 
+  def badge_list
+    model.badges.map{|badge| h.badge_tag_for(badge) }.join(" ").html_safe
+  end
+
 private
 
   def default_avatar

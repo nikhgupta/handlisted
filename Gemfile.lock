@@ -68,6 +68,7 @@ GEM
       ice_nine (~> 0.11.0)
       memoizable (~> 0.4.0)
     addressable (2.3.8)
+    ambry (0.3.1)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.3)
@@ -287,6 +288,8 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
+    merit (2.3.2)
+      ambry (~> 0.3.0)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -626,6 +629,7 @@ DEPENDENCIES
   kaminari
   kramdown
   launchy
+  merit
   meta_request
   metric_fu
   monetize

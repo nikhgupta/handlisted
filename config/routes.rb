@@ -15,12 +15,12 @@ Rails.application.routes.draw do
   )
 
   as :user do
-    get 'login'     => 'devise/sessions#new',        as: :new_user_session
-    get 'logout'    => 'devise/sessions#destroy',    as: :logout_path
+    get 'login'     => 'users/sessions#new',         as: :new_user_session
+    get 'logout'    => 'users/sessions#destroy',     as: :logout_path
     get 'register'  => 'users/registrations#new',    as: :new_user_registration
-    post 'login'    => 'devise/sessions#create',     as: :user_session
+    post 'login'    => 'users/sessions#create',      as: :user_session
     post 'register' => 'users/registrations#create', as: :user_registration
-    delete 'logout' => 'devise/sessions#destroy',    as: :destroy_user_session
+    delete 'logout' => 'users/sessions#destroy',     as: :destroy_user_session
   end
 
   # devise_for :users, ActiveAdmin::Devise.config

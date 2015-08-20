@@ -1,5 +1,5 @@
 module LoginHelpers
-  def sign_in_with(email_or_username, password)
+  def sign_in_with(email_or_username, password = "password")
     visit new_user_session_path
     fill_in "Login", with: email_or_username
     fill_in "Password", with: password
@@ -8,10 +8,12 @@ module LoginHelpers
 
   def sign_in_as(factory, attributes = {})
     pass = attributes["password"] || "password"
-    user = User.find_by(attributes)
+    # NOTE: we check for values to be present on attributes hash, as this will
+    # filter out virtual_attributes.
+    user = User.find_by(attributes) if attributes.values.compact.any?
     if user && [:user, :confirmed_user].include?(factory)
       user.confirm
-    elsif user
+    elsif user.present?
       puts "\e[33mFound existing user.. Your `factory` setting might not be consistent.\e[0m"
     else
       attributes["password_confirmation"] = pass
@@ -22,7 +24,7 @@ module LoginHelpers
     @signed_in_user = user
   end
 
-  def sign_up_with(username, name, email, password)
+  def sign_up_with(username, name, email, password = "password")
     visit new_user_registration_path
     fill_in "Name", with: name
     fill_in "Username", with: username
@@ -35,6 +37,12 @@ module LoginHelpers
   def sign_out_if_logged_in
     # click_on_button("Logout") if page.has_button?("Logout")
     visit destroy_user_session_path
+  end
+
+  def with_logged_in(*args)
+    sign_in_with(*args)
+    yield if block_given?
+    sign_out_if_logged_in
   end
 
   def sign_in_with_provider(provider)
