@@ -17,13 +17,7 @@ class @ProductCard
       else
         # Preventing default action will make links unusable inside .panel-body
         # e.preventDefault()
-        $.magnificPopup.open
-          removalDelay: 500
-          items:
-            src: @card.find('.product-info')
-          callbacks: beforeOpen: (e) ->
-            @st.mainClass = "mfp-zoomIn"
-          midClick: true
+        $.getScript "#{@image.data('link')}.js"
 
 $.fn.productCardify = ->
   @each ->

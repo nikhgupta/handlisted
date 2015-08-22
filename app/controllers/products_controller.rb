@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :visit, :like]
-  before_action :authenticate_user!, only: [:like, :unlike, :create]
+  before_action :authenticate_user!, only: [:like, :create]
 
   # GET /products
   # GET /products.json
@@ -60,7 +60,14 @@ class ProductsController < ApplicationController
     status = Sidekiq::Status::status(id).to_s.camelize
     data = Sidekiq::Status::get_all id
     status = 'Failed' if data['errors'].present?
+    data['errors'] = 'Something took a long time.' if status.blank?
     response = { status: status, id: data['id'], errors: data['errors'] }
+    if data['errors']
+      response[:error_html] = render_to_string(
+        partial: 'status_errors', formats: [:html],
+        layout: false, locals: { errors: data['errors'] }
+      )
+    end
     render json: response.to_json
   end
 

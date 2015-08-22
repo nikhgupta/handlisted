@@ -49,7 +49,7 @@ RSpec.describe ProductScraperJob, type: :job do
     described_class.drain
 
     expect(Sidekiq::Status.status(jid)).to eq(:complete)
-    expect(Sidekiq::Status.get_all(jid)).to include('errors' => "<li>Name can't be blank</li>")
+    expect(Sidekiq::Status.get_all(jid)).to include('errors' => "Name can't be blank")
   end
 
   it 'catches scraper errors and returns them as error messages' do
@@ -59,6 +59,6 @@ RSpec.describe ProductScraperJob, type: :job do
     expect { described_class.drain }.to raise_error(ProductScraper::Error).with_message(err)
 
     expect(Sidekiq::Status.status(jid)).to eq(:failed)
-    expect(Sidekiq::Status.get_all(jid)).to include('errors' => "<li>#{err}</li>")
+    expect(Sidekiq::Status.get_all(jid)).to include('errors' => err)
   end
 end

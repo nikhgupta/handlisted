@@ -30,7 +30,7 @@ feature "add product from search bar", :slow, :vcr, js: true do
       sleep 1
       expect(progress_status).to be_within(0.1).of(status + 1)
     end
-    expect(page).to have_no_selector('header .progress-bar')
+    expect(page).not_to have_selector('header .progress-bar')
     product = Product.find_by(pid: PRODUCTS_LIST[:amazon_echo][:pid])
     expect(current_path).to eq product_path(product)
   end

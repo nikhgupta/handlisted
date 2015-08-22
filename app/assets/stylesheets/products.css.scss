@@ -75,7 +75,7 @@
 }
 
 .product-info {
-  margin: 5px;
+  margin: 5px auto;
   .panel-body {
     padding: 20px;
   }
@@ -89,15 +89,6 @@
     }
   }
   &.popup-full {
-    margin: 0 auto;
-    max-width: 100%;
-    @media (min-width: 768px) {
-      width: 96%;
-      margin: 0 auto;
-    }
-    @media (min-width: 992px) {
-      width: 90%;
-    }
     .mfp-close {
       top: 10px;
       right: 10px;

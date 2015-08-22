@@ -9,7 +9,6 @@ class @ProductAdder
     @input       = @form.find(@options.input)
     @endpoints   = @options.endpoints
     @progressbar = @form.find('.progress-bar')
-    @errorModal  = $('.product-adder-errors')
     return true
 
   init: ->
@@ -40,24 +39,18 @@ class @ProductAdder
       @response = null
 
   takeActionForCurrentStatus: ->
-    if @status.status is "Failed"
-      @displayErrors(@status.errors)
-    else if @status.status is ""
-      @displayErrors("<li>Something took a long time.</li>")
+    if @status.status in ["", "Failed"]
+      @displayErrors(@status.error_html)
     else if @status.id?
       setInterval (=> window.location = "/products/#{@status.id}"), 800
 
   displayErrors: (errors) ->
-    @errorModal.find('ul.errors').html(errors) if errors?.length > 0
-    $.magnificPopup.open
-      removalDelay: 500
-      items:
-        src: @errorModal
-      callbacks:
-        beforeOpen: (e) -> @st.mainClass = "mfp-slideDown"
-        beforeClose: (e) => @switchToSearchForm()
-
-      midClick: true
+    new magnificModal
+      html: errors
+      modalClass: "product-adder-errors"
+      animation: "slideDown"
+      callbacks: beforeClose: (e) => @switchToSearchForm()
+    .open()
 
   clearTimerIfComplete: ->
     clearInterval(@timer) if @status.status not in ["Queued", "Working"]

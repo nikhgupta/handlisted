@@ -1,12 +1,12 @@
 $colors: (
-  primary: #4A89DC,
-  success: #70CA63,
-  info:    #3BAFDA,
-  warning: #F6BB42,
-  danger:  #E9573F,
-  alert:   #967ADC,
-  system:  #37BC9B,
-  dark:    #3B3F4F
+primary: #4A89DC,
+success: #70CA63,
+info:    #3BAFDA,
+warning: #F6BB42,
+danger:  #E9573F,
+alert:   #967ADC,
+system:  #37BC9B,
+dark:    #3B3F4F
 );
 
 // several break points that help us hide the content as we deem fit
@@ -60,10 +60,6 @@ header.navbar {
   padding-bottom: 0;
 }
 
-.mfp-zoomIn.mfp-ready.mfp-bg {
-  opacity: 0.7;
-}
-
 .progress {
   background-color: #ddd;
 }
@@ -112,5 +108,20 @@ header.navbar {
       width: 80%;
       margin: 0 auto 60px;
     }
+  }
+}
+
+.mfp-zoomIn.mfp-ready.mfp-bg {
+  opacity: 0.7;
+}
+
+.popup-full {
+  margin: 0 auto;
+  max-width: 98%;
+  @media (min-width: 768px) {
+    width: 94%;
+  }
+  @media (min-width: 992px) {
+    width: 90%;
   }
 }
