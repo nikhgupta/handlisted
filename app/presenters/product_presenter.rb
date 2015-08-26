@@ -8,7 +8,11 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price
-    model.price.to_i > 0 ? h.humanized_money_with_symbol(model.price) : "N/A"
+    model.price.format(
+      no_cents: true,
+      display_free: "N/A",
+      south_asian_number_formatting: true
+    )
   end
 
   def marked_price
@@ -42,6 +46,10 @@ class ProductPresenter < ApplicationPresenter
     badge_type = model.prioritized? ? 'success' : 'warning'
     badge_type = 'danger' if model.price.to_i < 1
     h.content_tag(:span, class: "price bg-#{badge_type}") { price }
+  end
+
+  def merchant_name
+    model.merchant.name.titleize
   end
 
 private

@@ -4,7 +4,7 @@
     <%= presenter.price_badge %>
     <div class="product-image" data-link="<%= product_path(product) %>">
       <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
-      <div class="product-details">
+      <div class="product-details" style='display: none'>
         <div class='flexbox'>
           <div class="product-name"> <h3><%= presenter.name %></h3> </div>
           <br/>
@@ -12,17 +12,17 @@
             <% if presenter.brand.present? %>
               By <span class="brand"><%= presenter.brand %></span><br/>
             <% end %>
-          on <span class="merchant"><%= presenter.merchant %></span></p>
+          on <span class="merchant"><%= presenter.merchant_name %></span></p>
         </div>
       </div>
     </div>
-    <p class='error'></p>
+    <p class='error' style='display: none'></p>
   </div>
   <div class="panel-footer br-t p12">
     <span class="fs11">
       <div class="widget-menu pull-left ml10">
         <span class="label bg-primary mr10 label-<%= product.merchant.identifier %>">
-          <%= product.merchant.name %>
+          <%= presenter.merchant_name %>
         </span>
       </div>
       <span class="panel-title">&nbsp;</span>

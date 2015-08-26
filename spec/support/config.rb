@@ -19,7 +19,9 @@ RSpec.configure do |config|
   # custom helpers
   config.include LoginHelpers
   config.include ProductHelpers
+  config.include CapybaraSelectors
   config.include DriverAgnosticHelpers
+  config.include RSpecCustomMatchersForCuratedShop
 
   # lint factories, and drop all database tables as required
   config.before(:suite) do
