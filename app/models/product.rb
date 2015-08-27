@@ -69,7 +69,7 @@ class Product < ActiveRecord::Base
 
   def affiliate_link
     scheme = Rails.application.secrets.affiliate_urls[merchant.identifier.to_s]
-    scheme.gsub("{url}", url)
+    scheme.present? ? scheme.gsub("{url}", url) : url
   end
 
   private
