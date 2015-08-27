@@ -11,10 +11,10 @@ FactoryGirl.define do
     note nil
     available false
     prioritized false
-    price_cents 0
-    price_currency "USD"
-    marked_price_cents 0
-    marked_price_currency "USD"
+    price_cents { rand(100000) }
+    price_currency { %w[INR USD AUD GBP].sample }
+    marked_price_cents { price_cents + rand(40000) }
+    marked_price_currency { price_currency }
     url 'http://url.to/product/'
     url_hash { Digest::MD5.hexdigest url }
 

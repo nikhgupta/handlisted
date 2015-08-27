@@ -19,4 +19,4 @@ else
   end
   SimpleCov.command_name 'RSpec'
   SimpleCov.coverage_dir 'tmp/simplecov/output'
-end
+end if ENV['COVERAGE'] || ENV['FULL']
