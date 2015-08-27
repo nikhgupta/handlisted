@@ -12,15 +12,11 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price
-    model.price.format(
-      no_cents: true,
-      display_free: "N/A",
-      south_asian_number_formatting: true
-    )
+    model.price.format(no_cents: true, display_free: "N/A")
   end
 
   def marked_price
-    h.humanized_money_with_symbol model.marked_price
+    model.marked_price.format(no_cents: true, display_free: "N/A")
   end
 
   def marked_description

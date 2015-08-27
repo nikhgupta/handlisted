@@ -51,11 +51,7 @@ module RSpecCustomMatchersForCuratedShop
     end
 
     def has_price?
-      price = @expected.price.format(
-        no_cents: true,
-        display_free: "N/A",
-        south_asian_number_formatting: true
-      )
+      price = @expected.price.format(no_cents: true, display_free: "N/A")
       verify_selector ".price", text: price,
         message: "card has incorrect price information"
     end
