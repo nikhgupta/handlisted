@@ -43,9 +43,9 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price_badge
-    badge_type = model.prioritized? ? 'success' : 'warning'
-    badge_type = 'danger' if model.price.to_i < 1
-    h.content_tag(:span, class: "price bg-#{badge_type}") { price }
+    badge_type = model.prioritized? ? 'bg-success' : 'bg-warning'
+    badge_type = 'bg-light dark' if model.price.to_i < 1
+    h.content_tag(:span, class: "price #{badge_type}") { price }
   end
 
   def merchant_name
