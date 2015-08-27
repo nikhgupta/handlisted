@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def edit
     key = 'devise.user_errors'
     @user.errors.add(:base, *session.delete(key)) if session[key]
+    @kind = params[:kind]
     @products = {
       liked: @user.liking.scope.page(params[:page]),
       found: @user.found_products.scope.page(params[:page]),
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @kind = params[:kind]
     @products = {
       liked: @user.liking.scope.page(params[:page]),
       found: @user.found_products.scope.page(params[:page]),

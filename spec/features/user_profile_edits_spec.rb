@@ -9,7 +9,7 @@ feature "user edit his profile" do
     scenario "is redirected to login page" do
       visit edit_profile_path
       expect(current_path).to eq new_user_session_path
-      expect(page).to have_alert_with_text "need to sign in"
+      expect(page).to have_alert("need to sign in").as_error
     end
   end
 
@@ -24,7 +24,7 @@ feature "user edit his profile" do
     scenario "without supplying password" do
       fill_in "Name", with: "Another Smith"
       click_on_button "Update info"
-      expect(page).to have_notice_with_text("successfully updated")
+      expect(page).to have_alert("successfully updated").as_notice
       expect(page).to have_field("Name", with: "Another Smith")
     end
 
@@ -33,11 +33,11 @@ feature "user edit his profile" do
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newpassword"
       click_on_button "Update info"
-      expect(page).to have_notice_with_text("successfully updated")
+      expect(page).to have_alert("successfully updated").as_notice
       expect(current_path).to eq(root_path)
 
       sign_in_with @user.email, "newpassword"
-      expect(page).to have_notice_with_text("Signed in successfully")
+      expect(page).to have_alert("Signed in successfully").as_notice
 
       visit edit_profile_path
       expect(page).to have_field("Name", with: "Another Smith")
@@ -50,7 +50,7 @@ feature "user edit his profile" do
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newwrongpassword"
       click_on_button "Update info"
-      expect(page).to have_alert_with_text("Password confirmation doesn't match")
+      expect(page).to have_alert("Password confirmation doesn't match").as_error
       expect(current_path).to eq edit_profile_path
     end
 

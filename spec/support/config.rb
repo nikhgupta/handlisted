@@ -19,7 +19,9 @@ RSpec.configure do |config|
   # custom helpers
   config.include LoginHelpers
   config.include ProductHelpers
+  config.include CapybaraSelectors
   config.include DriverAgnosticHelpers
+  config.include RSpecCustomMatchersForCuratedShop
 
   # Allows running rspec using `--only-failures` option
   config.example_status_persistence_file_path = Rails.root.join("tmp", "rspec", "examples.txt")

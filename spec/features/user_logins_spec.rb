@@ -8,12 +8,12 @@ feature "user login" do
     scenario "allows logging in with email" do
       sign_in_with @user.email, "password"
       expect(current_path).to eq(root_path)
-      expect(page).to have_notice_with_text("Signed in successfully")
+      expect(page).to have_alert("Signed in successfully").as_notice
     end
     scenario "allows logging in with username" do
       sign_in_with @user.username, "password"
       expect(current_path).to eq(root_path)
-      expect(page).to have_notice_with_text("Signed in successfully")
+      expect(page).to have_alert("Signed in successfully").as_notice
     end
   end
 
@@ -21,13 +21,13 @@ feature "user login" do
     user = create(:confirmed_user, password: "password")
     sign_in_with user.email, "wrongpassword"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert_with_text("Invalid login or password")
+    expect(page).to have_alert("Invalid login or password").as_error
   end
 
   scenario "with invalid email" do
     sign_in_with "random@example.com", "password"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert_with_text("Invalid login or password")
+    expect(page).to have_alert("Invalid login or password").as_error
     expect(page).to have_link("You can reset your password here.")
   end
 end
@@ -58,7 +58,7 @@ feature "On user registration page" do
   context "notifies user of validation errors" do
     scenario "from server side" do
       sign_up_with "", "John Smith", "john@smith.com", "password"
-      expect(page).to have_warning_with_text("Username can't be blank")
+      expect(page).to have_alert("Username can't be blank").as_warning
     end
 
     scenario "from client side", :js do
@@ -77,7 +77,7 @@ feature "When user registers" do
 
   scenario "sends a confirmation email" do
     expect(current_path).to eq(root_path)
-    expect(page).to have_notice_with_text "activate your account"
+    expect(page).to have_alert("activate your account").as_notice
 
     expect(@user).to be_persisted
     expect(@user).not_to be_confirmed
@@ -89,14 +89,14 @@ feature "When user registers" do
   scenario "requires confirming email before allowing logging in" do
     sign_in_with @user.email, "password"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert_with_text("confirm your email address before")
+    expect(page).to have_alert("confirm your email address before").as_error
     expect(page).to have_link("Didn't receive confirmation email?")
   end
 
   scenario "notifies user when email is confirmed" do
     open_last_email
     click_first_link_in_email
-    expect(page).to have_notice_with_text("successfully confirmed")
+    expect(page).to have_alert("successfully confirmed").as_notice
   end
 
   scenario "logs in user after user has confirmed his email" do
@@ -104,7 +104,7 @@ feature "When user registers" do
 
     sign_in_with @user.email, "password"
     expect(current_path).to eq(root_path)
-    expect(page).to have_notice_with_text("Signed in successfully")
+    expect(page).to have_alert("Signed in successfully").as_notice
 
     visit edit_profile_path
     expect(page).to have_content("@john")

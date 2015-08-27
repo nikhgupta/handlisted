@@ -45,6 +45,8 @@ RSpec.describe ProductsController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
+    render_views
+
     it "assigns all products as @products when search is empty" do
       product = Product.create! valid_attributes
       get :index, {}, valid_session
@@ -59,7 +61,7 @@ RSpec.describe ProductsController, type: :controller do
 
     it "alerts user when no product matching query are found" do
       get :index, { product: { search: 'random keyword' } }, valid_session
-      expect(flash[:alert]).to include("No matching products were found")
+      expect(response.body).to include("No matching products were found")
     end
   end
 

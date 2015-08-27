@@ -12,7 +12,7 @@ feature "user registers with omniauth provider", :omniauth do
     expect(current_path).to eq new_user_registration_path
     expect(page).to have_field "Name", with: "Test Facebook User"
     expect(page).to have_field "Email", with: email
-    expect(page).to have_notice_with_text("complete your sign up")
+    expect(page).to have_alert("complete your sign up").as_notice
 
     fill_in "Username", with: "john"
     fill_in "Password (8 characters minimum)", with: "password"
@@ -25,14 +25,14 @@ feature "user registers with omniauth provider", :omniauth do
     expect(emails.size).to be 0
     expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
-    expect(page).to have_notice_with_text("signed up successfully")
+    expect(page).to have_alert("signed up successfully").as_notice
 
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Facebook User")
 
     sign_out_if_logged_in
     sign_in_with_provider :facebook
-    expect(page).to have_notice_with_text("Signed in via Facebook")
+    expect(page).to have_alert("Signed in via Facebook").as_notice
   end
 
   scenario "sign up using provider but changed email address" do
@@ -66,7 +66,7 @@ feature "user registers with omniauth provider", :omniauth do
     expect(emails.size).to be 0
     expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
-    expect(page).to have_notice_with_text("authenticated from Google Plus")
+    expect(page).to have_alert("authenticated from Google Plus").as_notice
 
     visit edit_profile_path
     expect(page).to have_content("@testuser - Test Google User")
@@ -75,7 +75,7 @@ feature "user registers with omniauth provider", :omniauth do
 
     sign_out_if_logged_in
     sign_in_with_provider :google_plus
-    expect(page).to have_notice_with_text("Signed in via Google Plus")
+    expect(page).to have_alert("Signed in via Google Plus").as_notice
   end
 
   scenario "using twitter" do
@@ -98,14 +98,14 @@ feature "user registers with omniauth provider", :omniauth do
     user.confirm
     sign_in_with_provider :twitter
     expect(current_path).to eq root_path
-    expect(page).to have_notice_with_text "Signed in via Twitter!"
+    expect(page).to have_alert("Signed in via Twitter!").as_notice
 
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Twitter User"
 
     sign_out_if_logged_in
     sign_in_with_provider :twitter
-    expect(page).to have_notice_with_text("Signed in via Twitter")
+    expect(page).to have_alert("Signed in via Twitter").as_notice
   end
 
   scenario "without specifying email" do
@@ -131,7 +131,7 @@ feature "user registers with omniauth provider", :omniauth do
     user.confirm
     sign_in_with_provider :facebook
     expect(current_path).to eq root_path
-    expect(page).to have_notice_with_text "Signed in via Facebook!"
+    expect(page).to have_alert("Signed in via Facebook!").as_notice
 
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Facebook User"
@@ -145,7 +145,7 @@ feature "user logins using omniauth provider", :omniauth do
 
     sign_out_if_logged_in
     sign_in_with_provider :facebook
-    expect(page).to have_notice_with_text "Confirmed email: testuser@facebook.com!"
+    expect(page).to have_alert("Confirmed email: testuser@facebook.com!").as_notice
     expect(user.reload).to be_confirmed
   end
 
@@ -158,7 +158,7 @@ feature "user logins using omniauth provider", :omniauth do
     scenario "adding new identity" do
       add_provider_via_profile :google_plus
       expect(current_path).to eq edit_profile_path
-      expect(page).to have_notice_with_text "Successfully linked"
+      expect(page).to have_alert("Successfully linked").as_notice
     end
 
     scenario "adding identity already attached with this user" do
@@ -173,7 +173,7 @@ feature "user logins using omniauth provider", :omniauth do
 
       visit user_omniauth_authorize_path(:twitter)
       expect(current_path).to eq edit_profile_path
-      expect(page).to have_notice_with_text "already linked"
+      expect(page).to have_alert("already linked").as_notice
     end
 
     scenario "adding identity associated with another user" do
@@ -183,7 +183,7 @@ feature "user logins using omniauth provider", :omniauth do
       visit edit_profile_path
       add_provider_via_profile :facebook
       expect(current_path).to eq edit_profile_path
-      expect(page).to have_alert_with_text "already associated with another"
+      expect(page).to have_alert("already associated with another").as_error
     end
 
     scenario "adding identity whose email is associated with another user" do
@@ -191,8 +191,8 @@ feature "user logins using omniauth provider", :omniauth do
 
       add_provider_via_profile :google_plus
       expect(current_path).to eq edit_profile_path
-      expect(page).to have_notice_with_text "Successfully linked"
-      expect(page).not_to have_alert_with_text "already associated"
+      expect(page).to have_alert("Successfully linked").as_notice
+      expect(page).to have_no_alert("already associated")
     end
 
     scenario "adding identity with user's current email" do
@@ -201,8 +201,8 @@ feature "user logins using omniauth provider", :omniauth do
 
       visit edit_profile_path
       add_provider_via_profile :google_plus
-      expect(page).to have_notice_with_text "Successfully linked"
-      expect(page).not_to have_alert_with_text "already linked"
+      expect(page).to have_alert("Successfully linked").as_notice
+      expect(page).to have_no_alert "already linked"
     end
   end
 end
