@@ -56,6 +56,6 @@ class ProductPresenter < ApplicationPresenter
 private
 
   def affiliate_link_text
-    model.available? ? "#{price} on #{merchant}" : "Maybe Unavailable"
+    model.available? && model.price > 0 ? "#{price} on #{merchant}" : "Maybe Unavailable"
   end
 end
