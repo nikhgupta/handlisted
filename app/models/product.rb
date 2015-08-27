@@ -61,10 +61,6 @@ class Product < ActiveRecord::Base
     [:to_s, [:to_s, :brand_name], [:to_s, :brand_name, :merchant_name]]
   end
 
-  def cover_image
-    images.try :first
-  end
-
   def images
     super.try :map do |image|
       image.start_with?('http') ? image : "http://#{image}"
@@ -73,7 +69,7 @@ class Product < ActiveRecord::Base
 
   def affiliate_link
     scheme = Rails.application.secrets.affiliate_urls[merchant.identifier.to_s]
-    scheme.gsub("{url}", url)
+    scheme.present? ? scheme.gsub("{url}", url) : url
   end
 
   private

@@ -3,20 +3,20 @@ class ProductPresenter < ApplicationPresenter
     model.name || model.original_name
   end
 
+  def cover_image
+    model.images && model.images.any? ? model.images.first : h.image_path("product-missing.png")
+  end
+
   def cover_image_tag(options = {})
-    h.image_tag model.cover_image, { alt: name }.merge(options)
+    h.image_tag cover_image, { alt: name }.merge(options)
   end
 
   def price
-    model.price.format(
-      no_cents: true,
-      display_free: "N/A",
-      south_asian_number_formatting: true
-    )
+    model.price.format(no_cents: true, display_free: "N/A")
   end
 
   def marked_price
-    h.humanized_money_with_symbol model.marked_price
+    model.marked_price.format(no_cents: true, display_free: "N/A")
   end
 
   def marked_description
@@ -26,10 +26,11 @@ class ProductPresenter < ApplicationPresenter
   def affiliate_link_action_button(options = {})
     return if model.url.blank?
     available = model.available? && model.price.to_i > 0
-    options[:class] = options.fetch(:class) { (available ? "system" : "danger") }
+    options[:class] = options.fetch(:class) { (available ? "system" : "light") }
     options[:class] = "btn btn-large light fs28 affiliate-button btn-#{options[:class]}"
     options = { target: "_blank" }.merge(options)
-    h.link_to affiliate_link_text, h.visit_product_path(model), options
+    text = (affiliate_link_text + " " + h.fa_icon('external-link')).html_safe
+    h.link_to text, h.visit_product_path(model), options
   end
 
   def like_button(options = {})
@@ -43,9 +44,9 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price_badge
-    badge_type = model.prioritized? ? 'success' : 'warning'
-    badge_type = 'danger' if model.price.to_i < 1
-    h.content_tag(:span, class: "price bg-#{badge_type}") { price }
+    badge_type = model.prioritized? ? 'bg-success' : 'bg-warning'
+    badge_type = 'bg-light dark' if model.price.to_i < 1
+    h.content_tag(:span, class: "price #{badge_type}") { price }
   end
 
   def merchant_name
@@ -55,6 +56,6 @@ class ProductPresenter < ApplicationPresenter
 private
 
   def affiliate_link_text
-    model.available? ? "#{price} on #{merchant}" : "Maybe Unavailable"
+    model.available? && model.price > 0 ? "#{price} on #{merchant}" : "Maybe Unavailable"
   end
 end

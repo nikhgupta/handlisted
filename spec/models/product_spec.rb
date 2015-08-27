@@ -71,8 +71,7 @@ RSpec.describe Product, type: :model do
     expect(product.merchant).to eq(product.brand.merchant)
   end
 
-  it "has a cover image and some other images" do
-    expect(subject.cover_image).to eq("http://url.to/image-1.jpg")
+  it "has images which are expanded to proper urls, if required" do
     expect(subject.images).to include("http://url.to/image-2.jpg")
     expect(subject.images.count).to eq(2)
   end

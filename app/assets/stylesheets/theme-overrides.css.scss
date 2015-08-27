@@ -125,3 +125,12 @@ header.navbar {
     width: 90%;
   }
 }
+
+.btn-light {
+  color: #747474;
+  background-color: #e8e8e8;
+  &.light   { background-color: #efefef; }
+  &.lighter { background-color: #f8f8f8; }
+  &.dark    { background-color: #d8d8d8; }
+  &.darker  { background-color: #c8c8c8; }
+}
