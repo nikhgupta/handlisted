@@ -1,8 +1,4 @@
-<div class="row product-index">
-  <% @products.each do |product| %>
-    <div class="col-sm-6 col-md-4">
-      <%= render "card", product: product, presenter: present(product) %>
-    </div>
-  <% end %>
-</div>
-<div class="paginator"> <%= paginate @products %> </div>
+<%= render layout: "products/listing", locals: { products: @products, kind: nil } do %>
+  Oh snap! <strong>No matching products were found for this search.</strong>
+  Perhaps, you would like to <a href="#" class='alert-link'>search again</a>?
+<% end %>

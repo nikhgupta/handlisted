@@ -17,14 +17,14 @@
 
 <div class="tab-content br-n pn">
   <div id="liked-products" class="tab-pane active">
-    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :liked } do %>
+    <%= render layout: "products/listing", locals: { products: @products[:liked], kind: :liked } do %>
       Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
       <a href="#" class="alert-link">like some products</a>
       for you to be able to discover his likes!
     <% end %>
   </div>
   <div id="found-products" class="tab-pane">
-    <%= render layout: "users/products", locals: { user: @user, products: @products, action: :found } do %>
+    <%= render layout: "products/listing", locals: { products: @products[:found], kind: :found } do %>
       Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
       <a href="#" class="alert-link">find some products</a>
       for you to be able to discover his taste!

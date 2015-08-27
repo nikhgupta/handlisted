@@ -3,6 +3,7 @@ module ProductHelpers
     url = PRODUCTS_LIST[url][:url] if url.is_a?(Symbol)
     ProductScraperJob.perform_async user.id, url
     ProductScraperJob.drain
+    Product.last
   end
 
   def add_product_via_sitewide_search(url)
