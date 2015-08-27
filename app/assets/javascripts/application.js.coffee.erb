@@ -33,6 +33,9 @@ $ ->
 
   Core.init()
 
+  $("#product_search").on "focus", -> $(@).val("") if $(@).val() is "Search.."
+  $("#product_search").on "blur",  -> $(@).val("Search..") if $(@).val() is ""
+
   # Sidekiq Queue results on Search/Add Product Page
   new ProductAdder(
     form:  '.navbar-search',
