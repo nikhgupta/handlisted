@@ -3,8 +3,12 @@ class ProductPresenter < ApplicationPresenter
     model.name || model.original_name
   end
 
+  def cover_image
+    model.images && model.images.any? ? model.images.first : h.image_path("product-missing.png")
+  end
+
   def cover_image_tag(options = {})
-    h.image_tag model.cover_image, { alt: name }.merge(options)
+    h.image_tag cover_image, { alt: name }.merge(options)
   end
 
   def price
