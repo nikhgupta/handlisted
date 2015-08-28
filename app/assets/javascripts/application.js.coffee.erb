@@ -66,7 +66,9 @@ $ ->
     unhighlight: (element, errorClass, validClass) ->
       $(element).closest('.field').removeClass(errorClass).addClass validClass
     errorPlacement: (error, element) ->
-      if element.is(':radio') or element.is(':checkbox')
+      if element.parents().has(".input-footer em.state-error").length
+        error_el = element.parents().find(".input-footer em.state-error")
+        error_el.replaceWith(error).promise().done -> error_el.show()
+      else if element.is(':radio') or element.is(':checkbox')
         element.closest('.option-group').after error
-      else
-        error.insertAfter element.parent()
+      else error.insertAfter element.parent()

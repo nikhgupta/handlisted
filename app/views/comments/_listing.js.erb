@@ -1,0 +1,12 @@
+$('.paging-links').html "
+  <%= j paginate comments, remote: true, params: { resource: :comments } %>
+"
+$('.paging-info').html "
+  <%= j page_entries_info comments %>
+"
+
+$('.comments-index').html "
+  <% comments.each do |comment| %>
+    <%= j render "comments/card", comment: comment, user: present(comment.user) %>
+  <% end %>
+"

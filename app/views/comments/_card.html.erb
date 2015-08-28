@@ -1,0 +1,12 @@
+<div class="media">
+  <div class="media-left">
+    <%= user.link_avatar_to "$" %>
+  </div>
+  <div class="media-body">
+    <span class="media-status"></span>
+    <h5 class="media-heading"><%= user.name %>
+      <small> - <%= time_ago_in_words(comment.created_at) %> ago</small>
+    </h5>
+    <span class='comment'><%= comment.comment %></span>
+  </div>
+</div>

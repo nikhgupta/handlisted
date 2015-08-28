@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  include Commentable
+
   before_action :set_product, only: [:show, :visit, :like]
   before_action :authenticate_user!, only: [:like, :create]
 

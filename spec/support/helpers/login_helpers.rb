@@ -9,13 +9,17 @@ module LoginHelpers
   def sign_in_as(factory, attributes = {})
     pass = attributes["password"] || "password"
     user = User.find_by(attributes)
-    if !user
+    if user && [:user, :confirmed_user].include?(factory)
+      user.confirm
+    elsif user
+      puts "\e[33mFound existing user.. Your `factory` setting might not be consistent.\e[0m"
+    else
       attributes["password_confirmation"] = pass
       user = create(factory, attributes)
     end
 
     sign_in_with user.email, pass
-    user
+    @signed_in_user = user
   end
 
   def sign_up_with(username, name, email, password)

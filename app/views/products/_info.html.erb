@@ -16,15 +16,25 @@
     </div>
   </div>
 </div>
+
 <% if presenter.marked_description.present? %>
-  <div class="panel panel-alert">
+  <div class="panel panel-warning panel-description">
     <div class="panel-heading text-center">
       <h3>Description</h3>
     </div>
-    <div class="panel-body description" style='overflow-y: scroll !important'>
+    <div class="panel-body" style='overflow-y: scroll !important'>
       <div class='markdown'>
         <%= presenter.marked_description.try :html_safe %>
       </div>
     </div>
   </div>
 <% end %>
+
+<div class="panel panel-success panel-comments">
+  <div class="panel-heading text-center">
+    <h3>Comments</h3>
+  </div>
+  <div class="panel-body chat-widget">
+    <%= render "comments/listing", comments: @comments %>
+  </div>
+</div>

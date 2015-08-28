@@ -135,14 +135,16 @@
       }
     }
   }
-  .description {
-    overflow-y: scroll;
-    margin-bottom: 40px;
-    border-bottom: 0;
-    .markdown {
-      margin-top: 0px;
-      margin: 20px 6%;
-      max-height: 300px;
+  .panel-description {
+    .panel-body {
+      overflow-y: scroll;
+      margin-bottom: 40px;
+      border-bottom: 0;
+      .markdown {
+        margin-top: 0px;
+        margin: 20px 6%;
+        max-height: 300px;
+      }
     }
   }
 }

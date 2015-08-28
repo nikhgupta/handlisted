@@ -12,6 +12,7 @@ class @ProductCard
 
   attachModal: ->
     @image.on 'click', (e) =>
+      console.log @image
       if $(window).width() < 540
         window.location = @image.data("link")
       else

@@ -1,6 +1,8 @@
 class Product < ActiveRecord::Base
   include Sluggable
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   belongs_to :founder, class_name: "User", validate: true, counter_cache: :found_products_count
   belongs_to :brand, validate: true, counter_cache: true
   belongs_to :category, validate: true, counter_cache: true
@@ -20,7 +22,6 @@ class Product < ActiveRecord::Base
 
   scope :featured, ->{ Product.order(created_at: :desc) }
 
-  acts_as_commentable
   acts_in_relation role: :target, source: :user, action: :like
 
   monetize :price_cents, with_model_currency: :price_currency
@@ -70,6 +71,10 @@ class Product < ActiveRecord::Base
   def affiliate_link
     scheme = Rails.application.secrets.affiliate_urls[merchant.identifier.to_s]
     scheme.present? ? scheme.gsub("{url}", url) : url
+  end
+
+  def paginated_comments(page: 1, per_page: 5)
+    comments.recent.page(page).per(per_page)
   end
 
   private

@@ -1,12 +1,16 @@
 class Comment < ActiveRecord::Base
-  include ActsAsCommentable::Comment
-
   belongs_to :user
-  belongs_to :commentable, :polymorphic => true
+  belongs_to :commentable, polymorphic: true
 
-  default_scope -> { order('created_at ASC') }
+  scope :recent, -> { order(created_at: :desc) }
 
-  # NOTE: install the acts_as_votable plugin if you
-  # want user to vote on the quality of comments.
-  #acts_as_voteable
+  validates :comment, length: { minimum: 20 }
+
+  before_save :strip_whitespace
+
+  private
+
+  def strip_whitespace
+    self.comment = self.comment.strip
+  end
 end

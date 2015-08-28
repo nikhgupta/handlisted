@@ -60,7 +60,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_commentable (4.0.2)
     acts_in_relation (0.2.2)
       caller_class
       rails
@@ -602,7 +601,6 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (~> 1.0.0.pre1)
-  acts_as_commentable
   acts_in_relation
   awesome_nested_set
   better_errors

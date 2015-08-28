@@ -5,7 +5,7 @@ $ ->
 
   cardifyProducts()
 
-  if $(".pagination").length
+  if $(".product-index + .paginator .pagination").length
     url = $(".pagination a[rel='next']").attr("href")
     $('.pagination').replaceWith("<div class='bg-header pagination'><a class='load-more' href='#{url}'>Load More</a></div>")
     $('.pagination a.load-more').on 'click', (e) ->

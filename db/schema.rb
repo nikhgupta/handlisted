@@ -64,14 +64,13 @@ ActiveRecord::Schema.define(version: 20150814210608) do
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.string   "title",            limit: 50, default: ""
-    t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.integer  "user_id",                                          null: false
-    t.string   "role",                        default: "comments"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+    t.integer  "user_id",                               null: false
+    t.text     "comment",                               null: false
+    t.string   "role",             default: "comments"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree

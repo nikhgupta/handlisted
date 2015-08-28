@@ -67,7 +67,6 @@ gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 
 gem 'acts_in_relation'
-gem 'acts_as_commentable'
 gem 'awesome_nested_set'
 
 gem 'monetize'

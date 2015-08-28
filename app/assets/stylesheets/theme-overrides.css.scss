@@ -75,8 +75,19 @@ header.navbar {
       }
     }
   }
-  .state-error + em {
-    position: absolute;
+  .state-error {
+    .gui-textarea {
+      border: 0;
+    }
+    & + em {
+      position: absolute;
+    }
+  }
+  .gui-textarea:focus, .gui-textarea:hover {
+    border-color: #DDD;
+    & ~ .input-footer {
+      border-color: #DDD;
+    }
   }
 }
 
@@ -133,4 +144,16 @@ header.navbar {
   &.lighter { background-color: #f8f8f8; }
   &.dark    { background-color: #d8d8d8; }
   &.darker  { background-color: #c8c8c8; }
+}
+
+.chat-widget {
+  .media-body {
+    width: 100%;
+    &.bg-active {
+      background-color: #ffe;
+    }
+  }
+  .media-left + .media-body.bg-active:before, .media-left + .media-body.bg-active:after {
+    border: 0;
+  }
 }
