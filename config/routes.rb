@@ -51,6 +51,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:new, :create]
   end
 
+  get '/shop/categories' => "categories#index", as: :shop
+  get '/shop/:id' => "categories#show", as: :category
+
   get '/:username' => 'users#show', as: :profile
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

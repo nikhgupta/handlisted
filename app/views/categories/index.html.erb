@@ -1,0 +1,9 @@
+<div class="row category-index">
+  <% @categories.each do |category| %>
+    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 card-container">
+      <%= render "categories/card", category: category, presenter: present(category),
+        product: category.cover_product, product_presenter: present(category.cover_product) %>
+    </div>
+  <% end %>
+</div>
+<div class="paginator"> <%= paginate @categories %> </div>

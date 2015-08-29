@@ -17,6 +17,10 @@ dark:    #3B3F4F
   }
 }
 
+@media (max-width: 539px) {
+  .col-xxs-12 { width: 100%; }
+}
+
 body {
   margin: 0 auto;
   max-width: 1440px;

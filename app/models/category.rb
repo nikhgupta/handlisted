@@ -13,4 +13,8 @@ class Category < ActiveRecord::Base
       last    = current
     end
   end
+
+  def cover_product
+    self_and_descendants.detect{ |cat| cat.products_count > 0 }.products.first
+  end
 end

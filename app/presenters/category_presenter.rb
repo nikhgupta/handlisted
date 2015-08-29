@@ -1,0 +1,2 @@
+class CategoryPresenter < ApplicationPresenter
+end

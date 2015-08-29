@@ -1,0 +1,35 @@
+.category-index {
+  width: 90%;
+  margin: 10px auto 27px;
+  .card-container {
+    margin: 0;
+    padding: 0;
+    .category-card {
+      margin-bottom: 0;
+      border-radius: 0;
+      overflow-y: hidden;
+      .category-name h3 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .category-image {
+        height: 200px;
+        .container {
+          width: 60%;
+          height: 60%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          transition: all 0.2s ease-in-out;
+        }
+      }
+    }
+  }
+}
