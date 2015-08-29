@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150814210608) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
+    t.string   "slug",                       null: false
     t.integer  "parent_id"
     t.integer  "lft",                        null: false
     t.integer  "rgt",                        null: false
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150814210608) do
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
+  add_index "categories", ["slug"], name: "index_categories_on_slug", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id"

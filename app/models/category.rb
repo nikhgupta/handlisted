@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  include Sluggable
+
   acts_as_nested_set
   has_many :products
 
@@ -14,7 +16,16 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def to_param
+    slug
+  end
+
   def cover_product
-    self_and_descendants.detect{ |cat| cat.products_count > 0 }.products.first
+    self_and_descendants_products.first
+  end
+
+  def self_and_descendants_products
+    ids = self_and_descendants.pluck(:id)
+    Product.where(category_id: ids)
   end
 end
