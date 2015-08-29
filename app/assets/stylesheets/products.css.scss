@@ -98,7 +98,7 @@
       right: 10px;
     }
     .panel {
-      margin: 0;
+      margin-bottom: 10px;
       border: 0;
       border-radius: 0;
       &.main { margin-top: 40px; }
@@ -140,7 +140,6 @@
   .panel-description {
     .panel-body {
       overflow-y: scroll;
-      margin-bottom: 40px;
       border-bottom: 0;
       .markdown {
         margin-top: 0px;
