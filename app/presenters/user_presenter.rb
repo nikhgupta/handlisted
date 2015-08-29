@@ -12,20 +12,23 @@ class UserPresenter < ApplicationPresenter
   end
 
   def link_avatar_to(*args)
-    h.link_to(h.image_tag(avatar, class: "img-responsive", alt: name), *args)
+    h.link_to(avatar_tag(class: "img-responsive"), *args)
   end
 
-  def avatar
-    model.image.present? ? model.image : default_avatar
-  end
-
+  # NOTE: Obtrusive JS is present, since that is the only reliable way to ensure
+  # broken avatar images are not present even when avatars are loaded via AJAX.
   def avatar_tag(options = {})
     klass = "#{options.delete(:class)} media-object avatar"
-    h.image_tag avatar, { alt: name, class: klass }.merge(options)
+    on_error = "this.onerror=null;this.src='#{default_avatar}';"
+    h.image_tag avatar, { alt: name, class: klass, onError: on_error }.merge(options)
   end
 
   def profile_link(text, *args)
     h.link_to(text, h.profile_path(model), *args)
+  end
+
+  def avatar
+    model.image.present? ? model.image : default_avatar
   end
 
 private

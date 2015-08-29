@@ -13,7 +13,7 @@ feature "listings on user's public profile", :js do
 
   background do
     @per_page = Kaminari.config.default_per_page
-    @user  = create(:user, name: "John Smith", username: "johnsmith")
+    @user  = create(:user, name: "John Smith", username: "johnsmith", image: "/some-broken-image")
     @random = create(:product)
   end
 
@@ -23,6 +23,15 @@ feature "listings on user's public profile", :js do
     expect(page).to have_content("Likes 1 product")
     expect(page).to have_content("Found 2 products")
   end
+
+  # NOTE: test for checking replacement of broken avatar images,
+  # but this fails since poltergeist still returns the actual image's src tag.
+  #
+  # scenario 'missing avatar is displayed for broken avatar images', :js do
+  #   create(:user_with_full_info, name: "Stupid user", username: "stupiduser")
+  #   visit '/stupiduser'
+  #   expect(page).to have_selector("img[src='/images/avatars/missing.jpg']")
+  # end
 
   scenario 'lists the product that the user likes' do
     liked, found = setup @user, likes: 1, found: 2, visit: true

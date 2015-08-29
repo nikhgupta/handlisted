@@ -8,6 +8,3 @@ $ ->
       value = username_field.val().trim().replace(/[^a-z0-9]/ig, '')
       value = '...' if value.length < 4
       url_field.html(value)
-
-  # Display missing avatar instead of broken avatar images
-  $('.user.mini-card img, img.avatar').one 'error', -> @src = "/images/avatars/missing.jpg"
