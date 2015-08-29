@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20150814210608) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.integer  "parent_id",                  null: false
+    t.integer  "parent_id"
     t.integer  "lft",                        null: false
     t.integer  "rgt",                        null: false
     t.integer  "depth",          default: 0, null: false

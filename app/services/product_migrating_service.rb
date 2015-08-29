@@ -22,6 +22,8 @@ class ProductMigratingService
     product = merchant.products.build data
     product.founder = user
     product.brand   = brand if brand.present?
+    product.category = categories.last if categories.present? && categories.any?
+
     return { id: product.to_param } if product.save
     return { errors: product.errors.full_messages }
   end
