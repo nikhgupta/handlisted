@@ -1,4 +1,3 @@
-<%= render "comments/add" %>
 <% if comments.any? %>
   <% if comments.next_page %>
     <div class="paginator row">
@@ -16,7 +15,7 @@
     <% end %>
   </div>
 <% else %>
-  <div class="alert alert-sm alert-dark pastel mt20">
+  <div class="alert alert-sm alert-dark pastel mt20 no-comments">
     <i class="fa fa-cubes pr10"></i>
     Oh snap! <strong>No comments were found for this product.</strong>
     Perhaps, you would like to post a new comment?

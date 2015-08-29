@@ -3,26 +3,18 @@ class CommentsController < ApplicationController
 
   def create
     @commentable = find_commentable
-    @comment = @commentable.comments.build(comment_params)
+    @comment = @commentable.comments.create(comment_params)
+    @comments = @commentable.reload.paginated_comments(page: params[:page])
+
+    @error  = "Encountered an error while adding your comment."
+    @error += " #{@comment.errors.full_messages.first}." if @comment.errors.any?
+    @error  = nil if @comment.persisted?
+
+    options = @comment.persisted? ? { notice: "Your comment has been added." } : { alert: @error }
+
     respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @commentable, notice: "Your comment has been added." }
-        format.js do
-          render partial: "comments/add", locals: {
-            error: nil,
-            comments: @commentable.reload.paginated_comments(page: params[:page]),
-          }
-        end
-      else
-        message  = "Encountered an error while adding your comment."
-        message += " #{@comment.errors.full_messages.first}." if @comment.errors.any?
-        format.html { redirect_to @commentable, alert: message }
-        format.js do
-          render partial: "comments/add", locals: {
-            comment: @comment, commentable: @commentable, error: message
-          }
-        end
-      end
+      format.js
+      format.html { redirect_to @commentable, options }
     end
   end
 

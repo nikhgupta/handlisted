@@ -22,6 +22,10 @@ module ProductHelpers
     bar["aria-valuenow"].to_i if bar
   end
 
+  def click_for_product_info_modal(product)
+    find("[data-pid='#{product.pid}'] .product-image").trigger("click")
+  end
+
   # Add a product by given URL (or symbol), ensures that the Queued status is
   # reflected, and optionally, accepts a block to execute before the real
   # execution of job.

@@ -18,10 +18,10 @@
         <% end %>
         <div class="founder-info">
           Found by <%= present(product.founder).username_link %>
-        </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <% if presenter.marked_description.present? %>
@@ -42,6 +42,11 @@
     <h3>Comments</h3>
   </div>
   <div class="panel-body chat-widget">
-    <%= render "comments/listing", comments: @comments %>
+    <% self.formats = [:html] %>
+    <%= render "comments/add" %>
+    <%# NOTE: for product info modal, content type is JS, but we want to render HTML. %>
+    <div class="listing">
+      <%= render "comments/listing", comments: @comments %>
+    </div>
   </div>
 </div>

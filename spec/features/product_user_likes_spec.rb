@@ -34,7 +34,7 @@ feature "user likes on product pages" do
 
   scenario "likes are displayed on info modal box", :js do
     visit products_path
-    find("[data-pid='#{@product.pid}'] .product-image").trigger("click")
+    click_for_product_info_modal @product
     expect(page).to have_selector(".users.mini-list .user.mini-card.highlight")
   end
 end
