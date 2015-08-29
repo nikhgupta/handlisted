@@ -25,6 +25,7 @@ feature "product comments" do
     visit product_path(@product)
     expect(page).to have_no_selector(".panel-comments .comment-form")
     expect(page).to have_content("login to add comments")
+    expect(page).to have_no_content("No comments were found")
   end
 
   scenario "product profile allows commenting on product when logged in" do

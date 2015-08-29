@@ -14,7 +14,7 @@
       <%= render "comments/card", comment: comment, user: present(comment.user) %>
     <% end %>
   </div>
-<% else %>
+<% elsif current_user.present? %>
   <div class="alert alert-sm alert-dark pastel mt20 no-comments">
     <i class="fa fa-cubes pr10"></i>
     Oh snap! <strong>No comments were found for this product.</strong>
