@@ -11,7 +11,7 @@ Capybara.configure do |config|
 end
 
 Capybara.register_driver :poltergeist do |app|
-  options = { js_errors: true, window_size: [1300, 1000],
+  options = { js_errors: true, window_size: [1300, 1000], timeout: 10,
     phantomjs_options: ['--load-images=no', '--ignore-ssl-errors=yes'] }
   options = options.merge(debug: true, inspector: true) if ENV['DEBUG'] == 'js'
   Capybara::Poltergeist::Driver.new(app, options)

@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @products = @category.self_and_descendants_products.page(params[:page])
+    @products = @category.products_for(:self_and_descendants).page(params[:page])
   end
 
   private

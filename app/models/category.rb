@@ -21,11 +21,11 @@ class Category < ActiveRecord::Base
   end
 
   def cover_product
-    self_and_descendants_products.first
+    products_for(:self_and_descendants).first
   end
 
-  def self_and_descendants_products
-    ids = self_and_descendants.pluck(:id)
+  def products_for(relation)
+    ids = send(relation).map(&:self_and_descendants).flatten.uniq.map(&:id)
     Product.where(category_id: ids)
   end
 end

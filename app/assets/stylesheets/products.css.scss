@@ -181,3 +181,12 @@
     padding: 10px 20px;
   }
 }
+
+.product.mini-card {
+  &:hover {
+    opacity: 0.8;
+  }
+  .product-image {
+    height: 200px;
+  }
+}

@@ -77,6 +77,11 @@ class Product < ActiveRecord::Base
     comments.recent.page(page).per(per_page)
   end
 
+  def related_products
+    return self.class.where(id: nil) if category.blank?
+    category.products_for(:self_and_descendants).where("id != '?'", self.id)
+  end
+
   private
 
   def brand_belongs_to_merchant?
