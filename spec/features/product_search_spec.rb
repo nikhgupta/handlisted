@@ -26,7 +26,7 @@ feature "search products from search bar", :js, :slow do
   end
 
   scenario "search should list only matching products" do
-    search_using_sitewide_search('echo')
+    search_using_sitewide_search('amazon echo')
     expect(page).to have_product_card_for(@echo)
     expect(page).not_to have_product_card_for(@moto)
     expect(page).to have_no_alert("No matching products were found")

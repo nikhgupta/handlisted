@@ -44,7 +44,10 @@ class ProductsController < ApplicationController
 
   # Quick-dirty API check to see if the search term is indeed a Merchant URL?
   def parseable
-    hash = ProductScraper.url_hash_for(params[:search])
+    hash = begin
+             ProductScraper.url_hash_for(params[:search])
+           rescue ProductScraper::Error
+           end
     existing = Product.find_by(url_hash: hash) if hash
     existing = existing ? product_path(existing) : nil
     respond_to do |format|

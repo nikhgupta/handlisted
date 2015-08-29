@@ -179,11 +179,11 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "returns product's status and any errors, if so" do
-      stub_status!(jid, 'Working', errors: ["Name can't be blank"])
+      stub_status!(jid, 'Working', errors: "Name can't be blank")
 
       post :status, { job_id: jid, format: :json }, valid_session
       expect(response).to be_successful
-      expect(response).to have_json('status' => 'Failed', 'id' => nil, 'errors' => ['Name can\'t be blank'])
+      expect(response).to have_json('status' => 'Failed', 'id' => nil, 'errors' => 'Name can\'t be blank')
     end
   end
 end

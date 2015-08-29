@@ -25,8 +25,6 @@ class ProductScraperJob
 
 private
   def store_errors(errors)
-    store errors: [errors].flatten.uniq
-    # html = "<li>#{errors.join('</li><li>')}</li>"
-    # store errors: html
+    store errors: [errors].flatten.uniq.first
   end
 end

@@ -1,9 +1,11 @@
 module ProductHelpers
   def add_product(user, url)
-    url = PRODUCTS_LIST[url][:url] if url.is_a?(Symbol)
+    pid, url = PRODUCTS_LIST[url][:pid], PRODUCTS_LIST[url][:url]
     ProductScraperJob.perform_async user.id, url
     ProductScraperJob.drain
-    Product.last
+    product = Product.find_by(pid: pid)
+    expect(product).to be_persisted
+    product
   end
 
   def add_product_via_sitewide_search(url)

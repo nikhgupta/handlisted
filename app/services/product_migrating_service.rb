@@ -16,6 +16,9 @@ class ProductMigratingService
     brand = @data.delete(:brand)
     brand = merchant.brands.find_or_create_by(name: brand[:name]) if brand.present?
 
+    categories = @data.delete(:categories).select{ |cat| cat.present? }
+    categories = Category.create_hierarchy categories
+
     product = merchant.products.build data
     product.founder = user
     product.brand   = brand if brand.present?
