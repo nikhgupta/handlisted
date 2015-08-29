@@ -9,5 +9,5 @@ $ ->
       value = '...' if value.length < 4
       url_field.html(value)
 
-  $('.user.mini-card img, img.avatar').one 'error', ->
-    @src = "/images/avatars/missing.jpg"
+  # Display missing avatar instead of broken avatar images
+  $('.user.mini-card img, img.avatar').one 'error', -> @src = "/images/avatars/missing.jpg"

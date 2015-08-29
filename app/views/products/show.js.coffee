@@ -1,5 +1,5 @@
 <% if @pagination_for == "comments" %>
-<%= render "comments/listing", comments: @comments %>
+<%= render("comments/listing", comments: @comments) %>
 <% else %>
 new magnificModal
   html: "<%= j render('info', product: @product, presenter: present(@product)) %>"
