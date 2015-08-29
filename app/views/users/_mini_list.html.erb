@@ -1,0 +1,21 @@
+<% if users.any? || primary.present? %>
+  <div class="users mini-list">
+    <div class="wrapper">
+      <%= render "users/mini_card", user: primary, presenter: present(primary), primary: true %>
+      <% (users - [primary]).take(10).each do |user| %>
+        <%= render "users/mini_card", user: user, presenter: present(user), primary: false %>
+      <% end %>
+      <% if users.count > 12 %>
+        <div class="user mini-card counter-card">
+          <span>+<%= users.count - 10 %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% elsif block_given? %>
+  <div class="alert alert-sm alert-warning pastel mt40">
+    <i class="fa fa-warning pr10"></i>
+    <%= yield %>
+  </div>
+<% end %>
+

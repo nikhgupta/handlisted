@@ -106,6 +106,8 @@
     }
   }
   .product-details {
+    text-align: center;
+    @media (min-width: 768px) { text-align: left; }
     .product-name {
       padding: 20px;
       margin: 25px 0 0;

@@ -31,3 +31,53 @@
     display: table;
   }
 }
+
+.users.mini-list {
+  margin: 40px auto 10px;
+  width: 100%;
+  .wrapper {
+    width: 282px;
+    margin: 0 auto;
+    @media (min-width: 540px) { width: 340px; }
+    @media (min-width: 600px) { width: 450px; }
+    @media (min-width: 768px) { width: 340px; margin: 0; }
+    @media (min-width: 1140px) { width: 450px; }
+  }
+  .user.mini-card {
+    width: 52px;
+    float: left;
+    border: 3px solid #f8f8f8;
+    margin: 2px;
+    img {
+      width: 48px;
+      height: 48px;
+      background-color: #ddd;
+    }
+    &.counter-card {
+      width: 52px;
+      height: 54px;
+      font-weight: bold;
+      font-size: 1.3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: #f8f8f8;
+    }
+    &.highlight {
+      width: 110px;
+      border: 3px solid #3bafda;
+      img {
+        width: 104px;
+        height: 104px;
+      background-color: #3bafda; 
+    }
+    }
+  }
+}
+.founder-info {
+  clear: both;
+  padding-top: 15px;
+  font-size: 1.4em;
+  font-weight: bold;
+}
