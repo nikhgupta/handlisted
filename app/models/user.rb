@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    username
+    username.downcase
   end
 
   def login=(login)
