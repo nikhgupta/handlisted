@@ -8,7 +8,7 @@ class Category < ActiveRecord::Base
 
   def self.create_hierarchy(*categories)
     categories = [categories].flatten
-    return if categories.empty?
+    return [] if categories.empty?
     last = nil
     categories.map do |category|
       current = Category.find_or_create_by(name: category, parent: last)
@@ -25,7 +25,7 @@ class Category < ActiveRecord::Base
   end
 
   def products_for(relation)
-    ids = send(relation).map(&:self_and_descendants).flatten.uniq.map(&:id)
+    ids = send(relation).pluck(:id)
     Product.where(category_id: ids)
   end
 end

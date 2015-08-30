@@ -30,7 +30,7 @@ shared_examples_for "sluggable" do |options = {}|
 
   it "makes sure generated slugs are unique" do
     instance1 = create(model)
-    instance2 = build(model, instance1.attributes.except("id", "slug"))
+    instance2 = build(model, instance1.attributes.except("id", "slug", "lft", "rgt", "depth"))
     instance2.valid? # triggers slug generation
     expect(instance2.slug).not_to eq(instance1.slug)
   end
