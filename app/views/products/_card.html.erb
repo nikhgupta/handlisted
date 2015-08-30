@@ -3,7 +3,7 @@
     <%= presenter.price_badge %>
     <div class="product-image" data-link="<%= product_path(product) %>">
       <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
-      <div class="product-details" style='display: none'>
+      <div class="product-details">
         <div class='flexbox'>
           <div class="product-name"> <h3><%= presenter.name %></h3> </div>
           <br/>
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <p class='error' style='display: none'></p>
+    <p class='error'></p>
   </div>
   <div class="panel-footer br-t p12">
     <span class="fs11">
