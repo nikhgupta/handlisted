@@ -1,8 +1,9 @@
 <div class="row category-index">
   <% @categories.each do |category| %>
     <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 card-container">
-      <%= render "categories/card", category: category, presenter: present(category),
-        product: category.cover_product, product_presenter: present(category.cover_product) %>
+      <% cover = category.cover_product %>
+      <%= render "categories/card", category: category,
+        product_presenter: present(cover) if cover.present? %>
     </div>
   <% end %>
 </div>

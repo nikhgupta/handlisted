@@ -1,5 +1,5 @@
 <div class="category-header bg-alert">
-  <h3><%= @category.name %></h3>
+  <h3><%= @category.name.titleize %></h3>
 </div>
 <%= render layout: "products/listing", locals: { products: @products, kind: nil } do %>
   Oh snap! <strong>No products were found for this category.</strong>
