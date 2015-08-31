@@ -61,13 +61,9 @@ header.navbar {
   }
 }
 
-#content {
-  padding-bottom: 0;
-}
-
-.progress {
-  background-color: #ddd;
-}
+#content { padding-bottom: 0; }
+.page-heading { margin: 0; }
+.progress { background-color: #ddd; }
 
 .admin-form {
   .btn-icon { width: 46px; }

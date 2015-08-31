@@ -5,7 +5,11 @@
     <div id="main">
       <%= render 'shared/navbar' %>
       <%# <%= render 'shared/sidebar' if current_user.present? %1> %>
-      <%= render 'shared/promotions/header_shout_out' if home_page? && current_user.blank? %>
+      <% if home_page? && current_user.blank? %>
+        <%= render 'shared/promotions/header_shout_out' %>
+      <% else %>
+        <%= yield :primary_box %>
+      <% end %>
       <section id="content_wrapper">
         <%= render 'shared/topbar' %>
         <section id="content" class="animated fadeIn">

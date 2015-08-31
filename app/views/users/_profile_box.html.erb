@@ -1,6 +1,7 @@
 <%
   found = presenter.found_products_count
   liked = presenter.likes.count
+  content_for(:primary_box) do
 %>
 <div class="page-heading user-box bg-success">
   <div class="media clearfix">
@@ -20,3 +21,4 @@
     </div>
   </div>
 </div>
+<% end %>
