@@ -37,15 +37,14 @@ feature "listings on user's public profile", :js do
     liked, found = setup @user, likes: 1, found: 2, visit: true
 
     expect(page).to have_linkhref("#liked-products")
-    expect(page).to have_product_card_for(liked[0])
-    expect(page).not_to have_product_card_for(found[0])
+    expect(page).to have_product_card_for(found[0])
+    expect(page).not_to have_product_card_for(liked[0])
     expect(page).not_to have_product_card_for(@random)
 
     expect(page).to have_linkhref("#found-products")
-    find(:linkhref, "#found-products").trigger('click')
-
-    expect(page).to have_product_card_for(found[0])
-    expect(page).not_to have_product_card_for(liked[0])
+    find(:linkhref, "#liked-products").trigger('click')
+    expect(page).to have_product_card_for(liked[0])
+    expect(page).not_to have_product_card_for(found[0])
     expect(page).not_to have_product_card_for(@random)
   end
 
