@@ -9,7 +9,7 @@ describe FacebookExtractor, :omniauth do
       provider: "facebook",
       name: "Test Facebook User",
       email: "testuser@facebook.com",
-      image: "http://url.to/profile-image.jpg",
+      image: "http://url.to/profile-image.jpg?height=400",
       verified: true,
       username: nil,
       gender: "female",

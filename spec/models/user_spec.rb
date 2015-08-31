@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
 
   describe ".confirm_via_omniauth", :omniauth do
     it "confirms an existing user from omniauth data" do
-      auth = OmniAuth.config.mock_auth[:facebook]
+      auth = Extractor::Base.load OmniAuth.config.mock_auth[:facebook]
       record = described_class.confirm_via_omniauth(auth)
       expect(record).to be_nil
 
@@ -32,11 +32,11 @@ RSpec.describe User, type: :model do
 
   describe ".create_from_omniauth", :omniauth do
     it "creates a new user from omniauth data" do
-      auth = OmniAuth.config.mock_auth[:google_plus]
+      auth = Extractor::Base.load OmniAuth.config.mock_auth[:google_plus]
       record = described_class.create_from_omniauth(auth)
       expect(record).to be_a(User)
       expect(record).to be_persisted
-      expect(record.email).to eq(auth["info"]["email"])
+      expect(record.email).to eq(auth.email)
       expect(record.username).to eq("testuser")
     end
   end

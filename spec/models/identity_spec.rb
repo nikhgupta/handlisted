@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Identity, :omniauth, type: :model do
-  before do
-    @auth = OmniAuth.config.mock_auth[:facebook]
-  end
   subject{ build(:identity) }
 
   it { is_expected.to belong_to(:user).dependent(:destroy) }
@@ -11,15 +8,16 @@ RSpec.describe Identity, :omniauth, type: :model do
   it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider).with_message('already exists for this provider') }
 
   it 'finds or initializes identity with given omniauth data' do
-    identity = described_class.find_with_omniauth(@auth)
+    auth = Extractor::Base.load OmniAuth.config.mock_auth[:facebook]
+    identity = described_class.find_with_omniauth(auth)
     expect(identity).to be_nil
 
     identity = create(:identity, user: create(:user), provider: "facebook", uid: "12345")
-    expect(described_class.find_with_omniauth(@auth)).to eq(identity)
-    expect(described_class.find_or_initialize_with_omniauth(@auth)).to eq(identity)
+    expect(described_class.find_with_omniauth(auth)).to eq(identity)
+    expect(described_class.find_or_initialize_with_omniauth(auth)).to eq(identity)
 
     identity.delete
-    identity = described_class.find_or_initialize_with_omniauth(@auth)
+    identity = described_class.find_or_initialize_with_omniauth(auth)
     expect(identity.user).to be_nil
     expect(identity).to be_new_record
     expect(identity).not_to be_valid

@@ -3,6 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def all(auth = nil)
     @auth ||= request.env['omniauth.auth']
+    @auth   = Extractor::Base.load(@auth)
     @identity = Identity.find_or_initialize_with_omniauth(@auth)
     link_identity_with_signed_in_user || login_or_create_user_from_identity
   end
@@ -21,7 +22,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif @identity.linked?
       redirect_to edit_profile_path, alert: "This identity is already associated with another account!"
     else
-      @identity.link_with!(current_user)
+      @identity.link_with!(current_user, @auth)
       redirect_to edit_profile_path, notice: "Successfully linked the identity with this account!"
     end
   end
@@ -38,12 +39,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       user = User.create_from_omniauth(@auth)
       if user.persisted?
-        @identity.link_with!(user)
+        @identity.link_with!(user, @auth)
         sign_in_and_redirect user, event: :authentication #this will throw if user is not activated
         set_flash_message(:notice, :success, kind: @auth.provider.titleize) if is_navigational_format?
       else
         sign_out
-        session["devise.oauth_data"] = Extractor::Base.load(@auth).attributes_data
+        session["devise.oauth_data"] = @auth.attributes_data
         redirect_to new_user_registration_url, flash: { info: "Please, complete your sign up below." }
       end
     end

@@ -17,7 +17,7 @@ class FacebookExtractor < Extractor::Base
   end
 
   def image
-    auth["info"]["image"]
+    auth["info"]["image"] + "?height=400"
   end
 
   def credentials

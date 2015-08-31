@@ -69,7 +69,6 @@ class User < ActiveRecord::Base
   end
 
   def self.confirm_via_omniauth(auth)
-    auth = Extractor::Base.load(auth)
     find_by(email: auth.email).tap do |user|
       if user.present?
         user.confirm
@@ -79,7 +78,6 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_omniauth(auth)
-    auth = Extractor::Base.load(auth)
     new(email: auth.email, name: auth.name, username: auth.username).tap do |user|
       user.password = user.password_confirmation = Devise.friendly_token[0,20]
       user.skip_confirmation! if user.email.present?

@@ -156,9 +156,11 @@ feature "user logins using omniauth provider", :omniauth do
     end
 
     scenario "adding new identity" do
+      expect(@user.image).to be_nil
       add_provider_via_profile :google_plus
       expect(current_path).to eq edit_profile_path
       expect(page).to have_alert("Successfully linked").as_notice
+      expect(@user.reload.image).to be_present
     end
 
     scenario "adding identity already attached with this user" do

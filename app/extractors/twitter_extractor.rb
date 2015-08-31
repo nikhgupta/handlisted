@@ -16,7 +16,7 @@ class TwitterExtractor < Extractor::Base
   def email; end
 
   def image
-    auth["info"]["image"]
+    auth["info"]["image"].gsub("_normal", "")
   end
 
   def credentials

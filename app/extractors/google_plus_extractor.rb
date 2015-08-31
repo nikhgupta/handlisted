@@ -19,7 +19,7 @@ class GooglePlusExtractor < Extractor::Base
   end
 
   def image
-    auth["info"]["image"]
+    auth["info"]["image"].gsub(/\/s50-c\//, "/s400-c/")
   end
 
   def credentials

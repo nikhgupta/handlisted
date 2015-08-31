@@ -10,11 +10,11 @@ class Identity < ActiveRecord::Base
   }
 
   def self.find_with_omniauth(auth)
-    find_by Extractor::Base.load(auth).signature
+    find_by auth.signature
   end
 
   def self.initialize_with_omniauth(auth)
-    new Extractor::Base.load(auth).attributes_data
+    new auth.attributes_data
   end
 
   def self.find_or_initialize_with_omniauth(auth)
@@ -31,14 +31,15 @@ class Identity < ActiveRecord::Base
     linked? && self.user == user
   end
 
-  def link_with(user)
+  def link_with(user, auth_data = nil)
     return false if linked?
     self.user = user
+    user.merge_data_from_omniauth(auth_data).save if auth_data
     save
   end
 
-  def link_with!(user)
+  def link_with!(user, auth_data = nil)
     self.user = nil
-    link_with user
+    link_with user, auth_data
   end
 end
