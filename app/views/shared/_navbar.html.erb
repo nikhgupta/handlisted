@@ -10,23 +10,15 @@
   </ul>
   <%= render 'shared/navbar/form' %>
   <ul class="nav navbar-nav navbar-right">
-    <li>
-      <div class="navbar-btn btn-group">
-        <% if current_user.present? %>
-          <%= link_to "Profile", edit_profile_path, class: "btn btn-sm" %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path, class: "btn btn-sm btn-login" %>
-        <% end %>
-      </div>
-    </li>
-    <li>
-      <div class="navbar-btn btn-group">
-        <% if current_user.present? %>
-          <%= link_to "Logout", destroy_user_session_path, class: "btn btn-sm" %>
-        <% else %>
-          <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-register" %>
-        <% end %>
-      </div>
-    </li>
+    <% if current_user.present? %>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Profile", edit_profile_path, class: "btn btn-sm" %> </div> </li>
+      <% if current_user.admin? %>
+        <li> <div class="navbar-btn btn-group"> <%= link_to fa_icon('gear'), admin_dashboard_path, class: "btn btn-sm" %> </div> </li>
+      <% end %>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Logout", destroy_user_session_path, class: "btn btn-sm" %> </div> </li>
+    <% else %>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Login", new_user_session_path, class: "btn btn-sm btn-login" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-register" %> </div> </li>
+    <% end %>
   </ul>
 </header>
