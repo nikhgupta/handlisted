@@ -23,10 +23,8 @@ Rails.application.routes.draw do
     delete 'logout' => 'users/sessions#destroy',     as: :destroy_user_session
   end
 
-  # devise_for :users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-
   authenticate :user, lambda { |u| u.admin? } do
+    ActiveAdmin.routes(self)
     mount Sidekiq::Web => '/monitor'
   end
 

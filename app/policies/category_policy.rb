@@ -1,5 +1,4 @@
-class ProviderPolicy < ApplicationPolicy
-
+class CategoryPolicy < ApplicationPolicy
   def index?
     user.admin?
   end

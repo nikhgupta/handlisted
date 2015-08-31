@@ -10,11 +10,31 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "badges";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
-#footer {
-  p { display: none; }
+
+.active_admin {
+  .card {
+    .image {
+      width: 60px;
+      float: left;
+    }
+    .info {
+      width: calc(100% - 60px);
+      float: right;
+    }
+  }
+  #footer {
+    p { display: none; }
+  }
+  .badge {
+    padding: 2px 8px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
 }
