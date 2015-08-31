@@ -16,7 +16,7 @@
         <br class="visible-xs-block" />
         <%= "Found #{pluralize(found, "product")}.".html_safe if found > 0 %>
         <%= "Likes #{pluralize(liked, "product")}.".html_safe if liked > 0 %>
-        With us, since last <%= time_ago_in_words(presenter.created_at) %>.
+        With us, since <%= time_ago_in_words(presenter.created_at) %>.
       </p>
     </div>
   </div>
