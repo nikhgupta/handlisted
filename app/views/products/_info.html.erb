@@ -8,7 +8,9 @@
         <div class="text-info">
           <h1 class="product-name pln"><%= presenter.name %></h3>
           <% if product.brand.present? %>
-            <h3 class="product-brand text-muted">By <span class="text-dark"><%= product.brand_name %></span></h4>
+            <h3 class="product-brand text-muted">
+              By <%= link_to product.brand.name, brand_path(product.brand.merchant, product.brand), class: "text-dark" %>
+            </h4>
           <% end %>
         </div>
         <%= presenter.affiliate_link_action_button target: '_blank' %>

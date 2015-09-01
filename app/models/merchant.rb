@@ -11,6 +11,10 @@ class Merchant < ActiveRecord::Base
     name.try :titleize
   end
 
+  def to_param
+    slug
+  end
+
   def identifier
     to_s.parameterize.to_sym
   end

@@ -19,6 +19,14 @@ class Brand < ActiveRecord::Base
     name
   end
 
+  def to_param
+    slug
+  end
+
+  def cover_product
+    products.first
+  end
+
   def slug_candidates
     [:name, [:merchant_name, :name]]
   end

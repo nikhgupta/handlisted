@@ -49,6 +49,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:new, :create]
   end
 
+  # resources :merchants, only: [:index, :show] do
+  #   resources :brands, only: [:index, :show]
+  # end
+
+  get '/brands/:merchant' => "brands#index", as: :merchant_brands
+  get '/brands/:merchant/:brand' => "brands#show", as: :brand
+
   get '/shop/categories' => "categories#index", as: :shop
   get '/shop/:id' => "categories#show", as: :category
 
