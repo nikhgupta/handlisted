@@ -18,4 +18,8 @@ class Merchant < ActiveRecord::Base
   def identifier
     to_s.parameterize.to_sym
   end
+
+  def cover_product
+    products.first
+  end
 end

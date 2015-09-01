@@ -1,0 +1,8 @@
+<div class="merchant-header bg-alert">
+  <h3><span>Products from</span> <%= @merchant.name.titleize %></h3>
+</div>
+<%= render layout: "products/listing", locals: { products: @products, kind: nil } do %>
+  Oh snap! <strong>No products were found for this merchant.</strong>
+  Perhaps, you wandered off to a strange shop?
+<% end %>
+

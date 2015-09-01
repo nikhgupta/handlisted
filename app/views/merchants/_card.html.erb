@@ -1,0 +1,15 @@
+<div class="panel panel-tile text-center br-a br-grey merchant-card">
+  <div class="panel-body">
+    <a href="<%= merchant_path(merchant) %>">
+      <div class="merchant-image">
+        <div class="container" style='background-image: url("<%= product_presenter.cover_image %>")'></div>
+      </div>
+    </a>
+    <div class="merchant-details">
+      <div class='flexbox'>
+        <div class="merchant-name"> <h3><%= merchant.name.titleize %></h3> </div>
+      </div>
+    </div>
+  </div>
+</div>
+

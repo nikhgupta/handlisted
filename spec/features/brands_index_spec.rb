@@ -4,8 +4,8 @@ feature "brands index" do
   background do
     @per_page  = Kaminari.config.default_per_page
 
-    @merchant1  = create :merchant, name: "Merchant X"
-    @brand1     = create :brand, name: "Brand Y", merchant: @merchant1
+    @merchant1 = create :merchant, name: "Merchant X"
+    @brand1    = create :brand, name: "Brand Y", merchant: @merchant1
     @product1  = create :product, brand: @brand1, merchant: @merchant1
 
     merchant2  = create :merchant, name: "Merchant A"

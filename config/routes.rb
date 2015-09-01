@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   #   resources :brands, only: [:index, :show]
   # end
 
+  resources :merchants, only: [:index, :show]
+
   get '/brands/:merchant' => "brands#index", as: :merchant_brands
   get '/brands/:merchant/:brand' => "brands#show", as: :brand
 
