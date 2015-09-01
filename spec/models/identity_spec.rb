@@ -3,9 +3,19 @@ require 'rails_helper'
 RSpec.describe Identity, :omniauth, type: :model do
   subject{ build(:identity) }
 
-  it { is_expected.to belong_to(:user).dependent(:destroy) }
+  it { is_expected.to belong_to(:user) }
   it { is_expected.to validate_presence_of(:user) }
   it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider).with_message('already exists for this provider') }
+
+  it 'deletes all identities when user is deleted' do
+    user = create(:user)
+    identity = create :identity, user: user, provider: "facebook", uid: "12345"
+    product = create :product, founder: user
+
+    expect(user).not_to receive(:destroy)
+    expect { user.reload.identities.destroy_all }.not_to raise_error
+    expect(user.reload.identities).to be_empty
+  end
 
   it 'finds or initializes identity with given omniauth data' do
     auth = Extractor::Base.load OmniAuth.config.mock_auth[:facebook]

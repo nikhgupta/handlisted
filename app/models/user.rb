@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   include Sluggable
 
   has_many :found_products, dependent: :nullify, autosave: true, class_name: "Product", foreign_key: "founder_id"
-  has_many :identities
+  has_many :identities, dependent: :destroy
 
   acts_in_relation role: :self, action: :follow, target: :user
   acts_in_relation role: :source, target: :product, action: :like
