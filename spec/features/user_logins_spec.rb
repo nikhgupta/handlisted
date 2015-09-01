@@ -58,7 +58,7 @@ feature "On user registration page" do
   context "notifies user of validation errors" do
     scenario "from server side" do
       sign_up_with "", "John Smith", "john@smith.com", "password"
-      expect(page).to have_alert("Username can't be blank").as_warning
+      expect(page).to have_alert("Username can't be blank").as_error
     end
 
     scenario "from client side", :js do

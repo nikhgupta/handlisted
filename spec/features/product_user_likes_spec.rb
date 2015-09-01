@@ -1,5 +1,42 @@
 require 'rails_helper'
 
+feature "liking a product" do
+  background do
+    @user = create :confirmed_user
+    @product = create :product
+  end
+
+  it "requires user to login", :js do
+    visit products_path
+    expect(page).to have_product_card_for(@product)
+
+    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+    wait_for_traffic
+
+    expect(current_path).to eq new_user_session_path
+    expect(page).to have_alert("need to sign in").as_error
+  end
+
+  it "toggles like for the user", :js do
+    sign_in_with @user.email
+
+    visit products_path
+    expect(page).to have_product_card_for(@product)
+
+    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+
+    expect(page).to have_selector("[data-pid='#{@product.pid}'] a[data-like='on']")
+    expect(current_path).to eq products_path
+    expect(@user).to be_liking(@product)
+
+    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+
+    expect(page).to have_selector("[data-pid='#{@product.pid}'] a[data-like='off']")
+    expect(current_path).to eq products_path
+    expect(@user).not_to be_liking(@product)
+  end
+end
+
 feature "user likes on product pages" do
   def add_likers(total: 5)
     total -= @product.likers.count

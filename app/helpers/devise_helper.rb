@@ -34,7 +34,7 @@ module DeviseHelper
   end
 
   def error_type
-    return :warning if resource_error?
+    return :alert if resource_error?
     flash.first.first.to_sym
   end
 
