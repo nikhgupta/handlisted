@@ -42,7 +42,6 @@ module DeviseHelper
     case error_type
     when :alert   then :danger
     when :notice  then :info
-    when :warning then "warning dark"
     else error_type
     end
   end
