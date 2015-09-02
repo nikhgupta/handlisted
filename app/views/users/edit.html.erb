@@ -2,19 +2,7 @@
 
 <div class="row admin-form">
   <div class="col-md-4">
-    <div class="panel panel-alert">
-      <div class="panel-heading pn">
-        <div class="widget-menu pull-right mr10">
-          <%= link_to fa_icon('home') + " Home", root_path, class: 'btn btn-sm btn-default' %>
-          <%= current_user.profile_link fa_icon('male') + " View Profile As Others", class: 'btn btn-sm btn-default' %>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="theme-warning">
-          <%= render 'identities' %>
-        </div>
-      </div>
-    </div>
+    <%= render 'identities' %>
   </div>
   <div class="col-md-8">
     <%= render 'form' %>
