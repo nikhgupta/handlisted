@@ -114,10 +114,10 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
-  describe "POST #parseable" do
+  describe "POST #verify_url" do
     it "checks if the url provided to search is parseable by the scraper" do
       url = PRODUCTS_LIST[:amazon_echo][:url]
-      post :parseable, { search: url, format: :json }, valid_session
+      post :verify_url, { search: url, format: :json }, valid_session
       expect(response).to be_successful
       json = JSON.parse response.body
       expect(json['valid']).to be_truthy
@@ -126,15 +126,12 @@ RSpec.describe ProductsController, type: :controller do
 
     it "returns existing product path if url provided has already been scraped" do
       product = create(:moto_x)
-      post :parseable, { search: product.url, format: :json }, valid_session
+      post :verify_url, { search: product.url, format: :json }, valid_session
       expect(response).to be_successful
       json = JSON.parse response.body
       expect(json['valid']).to be_truthy
       expect(json['existing']).to eq(product_path(product))
     end
-  end
-
-  describe "POST #status" do
   end
 
   describe "POST #create" do
@@ -160,12 +157,12 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
-  describe "POST #status" do
+  describe "POST #fetch_status" do
     let(:jid) { 'aa045b92xxxxxxxx8baa1b13' }
     it "returns product's status from Sidekiq queue" do
       stub_status!(jid, 'Working')
 
-      post :status, { job_id: jid, format: :json }, valid_session
+      post :fetch_status, { job_id: jid, format: :json }, valid_session
       expect(response).to be_successful
       expect(response).to have_json('status' => 'Working', 'id' => nil, 'errors' => nil)
     end
@@ -173,7 +170,7 @@ RSpec.describe ProductsController, type: :controller do
     it "returns product's status and ID of the new product when created" do
       stub_status!(jid, 'Completed', id: 1)
 
-      post :status, { job_id: jid, format: :json }, valid_session
+      post :fetch_status, { job_id: jid, format: :json }, valid_session
       expect(response).to be_successful
       expect(response).to have_json('status' => 'Completed', 'id' => 1, 'errors' => nil)
     end
@@ -181,7 +178,7 @@ RSpec.describe ProductsController, type: :controller do
     it "returns product's status and any errors, if so" do
       stub_status!(jid, 'Working', errors: "Name can't be blank")
 
-      post :status, { job_id: jid, format: :json }, valid_session
+      post :fetch_status, { job_id: jid, format: :json }, valid_session
       expect(response).to be_successful
       expect(response).to have_json('status' => 'Failed', 'id' => nil, 'errors' => 'Name can\'t be blank')
     end

@@ -1,8 +1,10 @@
 class ProductsController < ApplicationController
-  include Commentable
-
   before_action :set_product, only: [:show, :visit, :like]
   before_action :authenticate_user!, only: [:like, :create]
+
+  include Commentable
+  include Sidekiq::Statusable
+  include ProductScraper::Checkable
 
   # GET /products
   # GET /products.json
@@ -33,43 +35,15 @@ class ProductsController < ApplicationController
     end
   end
 
-  # if product exists, redirect to it, else queue it.
+  # NOTE: this action simply queues the given product inside Sidekiq. When
+  # sidekiq reports that the product has been imported (maybe, already), the
+  # user is then redirected to product page using JS.
   def create
     job_id = ProductScraperJob.perform_async current_user.id, params[:url]
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Successfully queued.." }
       format.json { render json: { id: job_id }.to_json }
     end
-  end
-
-  # Quick-dirty API check to see if the search term is indeed a Merchant URL?
-  def parseable
-    hash = begin
-             ProductScraper.url_hash_for(params[:search])
-           rescue ProductScraper::Error
-           end
-    existing = Product.find_by(url_hash: hash) if hash
-    existing = existing ? product_path(existing) : nil
-    respond_to do |format|
-      format.json { render json: { valid: hash.present?, existing: existing } }
-    end
-  end
-
-  # Quick-dirty API to query the status of a sidekiq job
-  def status
-    id = params[:job_id]
-    status = Sidekiq::Status::status(id).to_s.camelize
-    data = Sidekiq::Status::get_all id
-    status = 'Failed' if data['errors'].present?
-    data['errors'] = 'Something took a long time.' if status.blank?
-    response = { status: status, id: data['id'], errors: data['errors'] }
-    if data['errors']
-      response[:error_html] = render_to_string(
-        partial: 'status_errors', formats: [:html],
-        layout: false, locals: { errors: data['errors'] }
-      )
-    end
-    render json: response.to_json
   end
 
   private

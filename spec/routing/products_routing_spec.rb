@@ -35,13 +35,13 @@ RSpec.describe ProductsController, type: :routing do
       expect(delete: "/products/1").not_to be_routable
     end
 
-    it "routes to #status" do
-      expect(post: "/products/create/status").to route_to("products#status", format: :json)
+    it "routes to #fetch_status" do
+      expect(post: "/products/create/status").to route_to("products#fetch_status", format: :json)
       expect(post: "/products/create/status.html").not_to be_routable
     end
 
-    it "routes to #check" do
-      expect(post: "/products/create/check").to route_to("products#parseable", format: :json)
+    it "routes to #verify_url" do
+      expect(post: "/products/create/check").to route_to("products#verify_url", format: :json)
       expect(post: "/products/create/check.html").not_to be_routable
     end
 

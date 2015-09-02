@@ -27,7 +27,7 @@
 $(document).ajaxError (e, XHR, options) ->
   # TODO: display a message here saying that the action requires login
   message = "You need to sign in or sign up before continuing."
-  window.location.replace("/login?error='#{message}'") if XHR.status == 401
+  window.location.replace("/login?error=#{message}") if XHR.status == 401
 
 $ ->
   "use strict"

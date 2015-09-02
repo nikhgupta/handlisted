@@ -37,8 +37,8 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show, :create], concerns: :paginatable do
     collection do
-      post 'create/status' => 'products#status', defaults: { format: :json }, constraints: { format: :json }
-      post 'create/check' => 'products#parseable', defaults: { format: :json }, constraints: { format: :json }
+      post 'create/status' => 'products#fetch_status', defaults: { format: :json }, constraints: { format: :json }
+      post 'create/check' => 'products#verify_url', defaults: { format: :json }, constraints: { format: :json }
       post 'search', as: :search_or_add
     end
     member do
