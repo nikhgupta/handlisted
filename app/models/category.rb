@@ -28,4 +28,8 @@ class Category < ActiveRecord::Base
     ids = send(relation).pluck(:id)
     Product.where(category_id: ids)
   end
+
+  def all_products
+    products_for(:self_and_descendants)
+  end
 end

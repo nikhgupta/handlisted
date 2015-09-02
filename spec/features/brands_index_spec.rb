@@ -17,7 +17,7 @@ feature "brands index" do
     visit "/brands/merchant-x"
 
     expect(page).to have_content("Brand Y")
-    expect(page).to have_content('Available Brands on Merchant X')
+    expect(page).to have_content('Available Brands On Merchant X')
     expect(page).to have_linkhref('/brands/merchant-x/brand-y')
 
     expect(page).not_to have_content("Brand B")

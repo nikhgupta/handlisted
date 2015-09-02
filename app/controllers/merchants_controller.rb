@@ -1,17 +1,8 @@
 class MerchantsController < ApplicationController
-  before_action :set_merchant, only: [:show]
-
-  def index
-    @merchants = Merchant.all.page params[:page]
-  end
+  include ProductsContainable
 
   def show
-    @products = @merchant.products.page params[:page]
-  end
-
-  private
-
-  def set_merchant
-    @merchant = Merchant.find(params[:id])
+    @header = "<span>Products from</span> #{@merchant.name.titleize}"
+    super # calls up show action in ProductsContainable
   end
 end

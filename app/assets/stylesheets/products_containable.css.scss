@@ -1,20 +1,20 @@
-.brand-index {
+.collection-index {
   width: 90%;
   margin: 10px auto 27px;
   .card-container {
     margin: 0;
     padding: 0;
-    .brand-card {
+    .entity-card {
       margin-bottom: 0;
       border-radius: 0;
       overflow-y: hidden;
-      .brand-name h3 {
+      .entity-name h3 {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         line-height: 24px;
       }
-      .brand-image {
+      .entity-image {
         height: 200px;
         .container {
           width: 60%;
@@ -35,7 +35,7 @@
   }
 }
 
-.brand-header {
+.collection-header {
   margin: -14px -11px 40px;
   @media (min-width: 992px) { margin: -24px -21px 60px; }
   h3 {

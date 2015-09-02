@@ -9,7 +9,7 @@
           <h1 class="product-name pln"><%= presenter.name %></h3>
           <% if product.brand.present? %>
             <h3 class="product-brand text-muted">
-              By <%= link_to product.brand.name, brand_path(product.brand.merchant, product.brand), class: "text-dark" %>
+              By <%= link_to product.brand.name, brand_path(product.brand), class: "text-dark" %>
             </h4>
           <% end %>
         </div>

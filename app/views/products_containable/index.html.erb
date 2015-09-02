@@ -1,0 +1,16 @@
+<div class="collection-header bg-alert">
+  <h3><%= @header.html_safe %></h3>
+</div>
+<div class="row collection-index">
+  <% @collection.each do |entity| %>
+    <% cover = entity.cover_product %>
+    <% if cover.present? %>
+      <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 card-container">
+        <%= render "products_containable/card",
+          entity: entity, product_presenter: present(cover) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<div class="paginator"> <%= paginate @collection %> </div>
+

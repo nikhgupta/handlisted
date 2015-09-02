@@ -1,0 +1,8 @@
+<div class="collection-header bg-alert">
+  <h3><%= @header.html_safe %></span></h3>
+</div>
+<%= render layout: "products/listing", locals: { products: @products, kind: nil } do %>
+  Oh snap! <strong>No products were found for this <%= entity %>.</strong>
+  Perhaps, you wandered off to a strange place?
+<% end %>
+

@@ -1,17 +1,10 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show]
-
-  def index
-    @categories = Category.roots.page(params[:page])
-  end
-
-  def show
-    @products = @category.products_for(:self_and_descendants).page(params[:page])
-  end
+  before_action :set_categories, only: [:index]
+  include ProductsContainable
 
   private
 
-  def set_category
-    @category = Category.find(params[:id])
+  def set_categories
+    @categories = Category.roots
   end
 end
