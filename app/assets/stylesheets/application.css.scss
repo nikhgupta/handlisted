@@ -157,3 +157,14 @@ a[data-like='off'] .fa { color: grey; }
     display: block;
   }
 }
+
+.home-page-link {
+  &.light {
+    color: #d8d8d8;
+    font-size: 22px;
+    text-decoration: none;
+    strong {
+      color: #f8f8f8;
+    }
+  }
+}
