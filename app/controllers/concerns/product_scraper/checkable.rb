@@ -18,7 +18,7 @@ module ProductScraper::Checkable
   end
 
   def valid?
-    @hash = find_product_hash
+    @hash ||= find_product_hash
     @hash.present?
   end
 
@@ -29,6 +29,7 @@ module ProductScraper::Checkable
     product_path(product)
   end
 
+  # FIXME: key `valid` is not really required here!
   def response_hash
     { valid: valid?, existing: existing_product_path }
   end
