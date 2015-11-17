@@ -19,7 +19,13 @@ doc
 coverage/*
 
 # Ignore sensitive files
-.env
-.env-heroku
 config/secrets.yml
 config/database.yml
+
+.env
+.env-heroku
+.rbenv-vars
+
+public/assets/
+vendor/bundle
+vendor/gems/product_scraper

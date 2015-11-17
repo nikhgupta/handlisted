@@ -2,7 +2,6 @@ require 'rails_helper'
 
 feature "displaying user badges" do
   background do
-    travel_to "January 1, 2016"
     john  = create(:confirmed_user, username: :john)
     diaz  = create(:confirmed_user, username: :diaz)
     omega = Merit::Badge.find_by_name_and_level("omega", nil)
@@ -30,7 +29,7 @@ end
 
 feature "user badges" do
   background do
-    travel_to "January 1, 2016"
+    travel_to "January 1, 2020"
   end
 
   scenario "user has no badge upon registration" do
@@ -39,7 +38,7 @@ feature "user badges" do
   end
 
   scenario "'Omega' badge is granted to developers" do
-    mail = CuratedShop::Facts::DEVELOPER_EMAILS[0]
+    mail = HandListed::Facts::DEVELOPER_EMAILS[0]
     user = User.find_by(email: mail) || create(:confirmed_user, email: mail)
     user.confirm unless user.confirmed?
 
@@ -49,31 +48,31 @@ feature "user badges" do
   end
 
   scenario "'Alpha user' badge is granted to users who have registered during the Alpha phase" do
-    travel_to(CuratedShop::Facts::BETA_STARTED_ON - 1.day)
+    travel_to(HandListed::Facts::BETA_STARTED_ON - 1.day)
     user = sign_in_as :confirmed_user
     expect(user).to have_badge("alpha-user")
     expect(user).not_to have_badge('new-user')
     sign_out_if_logged_in
 
-    travel_to "January 1, 2016"
+    travel_to "January 1, 2020"
     user = sign_in_as :confirmed_user
     expect(user).not_to have_badge("alpha-user")
     expect(user).to have_badge('new-user')
   end
 
   scenario "'Beta user' badge is granted to users who have registered during the Beta phase" do
-    travel_to(CuratedShop::Facts::BETA_STARTED_ON - 1.day)
+    travel_to(HandListed::Facts::BETA_STARTED_ON - 1.day)
     user = sign_in_as :confirmed_user
     expect(user).not_to have_badge("beta-user")
     sign_out_if_logged_in
 
-    travel_to(CuratedShop::Facts::LAUNCHED_ON - 1.day)
+    travel_to(HandListed::Facts::LAUNCHED_ON - 1.day)
     user = sign_in_as :confirmed_user
     expect(user).to have_badge("beta-user")
     expect(user).not_to have_badge('new-user')
     sign_out_if_logged_in
 
-    travel_to "January 1, 2016"
+    travel_to "January 1, 2020"
     user = sign_in_as :confirmed_user
     expect(user).not_to have_badge("beta-user")
     expect(user).to have_badge('new-user')

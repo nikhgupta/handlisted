@@ -1,7 +1,7 @@
 class ProductScraperJob
   include Sidekiq::Worker
   include Sidekiq::Status::Worker
-  sidekiq_options queue: :high_priority
+  sidekiq_options queue: :default
 
   def expiration
     @expiration ||= 60  # 1 minute

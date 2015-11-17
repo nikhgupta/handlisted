@@ -52,7 +52,7 @@ end
 module Capybara
   module Node
     class Base
-      def synchronize(seconds=Capybara.default_wait_time, options = {})
+      def synchronize(seconds=Capybara.default_max_wait_time, options = {})
         start_time = Time.now
 
         if session.synchronized

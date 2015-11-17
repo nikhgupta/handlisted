@@ -1,4 +1,4 @@
-module RSpecCustomMatchersForCuratedShop
+module RSpecCustomMatchersForHandListed
   class HaveBadge
     def initialize(*expected)
       name, level = [expected].flatten

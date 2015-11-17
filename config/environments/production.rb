@@ -1,8 +1,4 @@
 Rails.application.configure do
-  # TODO: uncomment the following lines before deployment to production
-  # config.host_url = "http://localhost:3000"
-  # config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -67,6 +63,11 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+  #
+  # Configure host settings for views and mailer use
+  config.action_mailer.default_url_options = {
+    host: ENV['APP_HOST'], port: (config.force_ssl ? 443 : 80)
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

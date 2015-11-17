@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.2.3'
 
 gem 'rails', '4.2.2'
 gem 'pg'
@@ -9,10 +10,9 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+# gem 'unicorn'
 # gem 'therubyracer', platforms: :ruby
 # gem 'bcrypt', '~> 3.1.7'
-# gem 'unicorn'
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   gem 'byebug'
@@ -41,6 +41,11 @@ group :development do
   gem 'bundler-audit', require: false
   gem 'rubycritic', require: false
   gem 'metric_fu', require: false
+
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rbenv', '~> 2.0'
 
   gem 'guard-rspec'
   gem 'terminal-notifier'
@@ -73,14 +78,16 @@ gem 'monetize'
 gem 'money-rails'
 gem 'google_currency'
 
-gem 'product_scraper', path: "./vendor/gems/product_scraper"
+gem 'product_scraper', github: 'nikhgupta/product_scraper', branch: :master
 gem 'rails_12factor', group: :production
 
 gem 'kramdown'
 gem 'pg_search'
 
 gem 'foreman'
-gem 'thin'
+gem 'unicorn'
+
+gem 'rollbar', '~> 2.5.0'
 
 gem 'kaminari'
 # # Future additions

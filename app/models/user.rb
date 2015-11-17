@@ -99,16 +99,16 @@ class User < ActiveRecord::Base
   # NOTE: following checks are used by Merit for awarding Badges.
   # OPTIMIZE: Probably, it will be wise to put them into separate concern?
   def is_developer?
-    CuratedShop::Facts::DEVELOPER_EMAILS.include? email
+    HandListed::Facts::DEVELOPER_EMAILS.include? email
   end
 
   def is_alpha_user?
-    !is_developer? && created_at < CuratedShop::Facts::BETA_STARTED_ON
+    !is_developer? && created_at < HandListed::Facts::BETA_STARTED_ON
   end
 
   def is_beta_user?
     !is_developer? && !is_alpha_user? &&
-      (created_at < CuratedShop::Facts::LAUNCHED_ON)
+      (created_at < HandListed::Facts::LAUNCHED_ON)
   end
 
   def is_new_user?

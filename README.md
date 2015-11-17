@@ -1,15 +1,8 @@
-CuratedShop
-===========
-
-This is a short description of your app. You MUST replace it, before
-you even think about pushing this application to Github.
-
-## TODO
-
-- TODO: Update the README.
+handlisted.in
+=============
 
 Test Suite
-==========
+----------
 
 Test suite can be run along with following environment variables:
 

@@ -42,6 +42,6 @@ class FacebookExtractor < Extractor::Base
   end
 
   def url
-    auth["info"]["urls"]["Facebook"]
+    auth["info"]["urls"].try(:[], "Facebook")
   end
 end

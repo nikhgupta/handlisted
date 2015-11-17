@@ -1,5 +1,5 @@
 class UserFormBuilder < ActionView::Helpers::FormBuilder
-  delegate :content_tag, :tag, :fa_icon, :concat, to: :@template
+  delegate :content_tag, :tag, :fa_icon, :concat, :root_url, to: :@template
 
   %w[text_field password_field email_field text_area].each do |method_name|
     define_method(method_name) do |name, *args|
@@ -14,7 +14,6 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def label_for_profile
-    url = Rails.application.config.host_url + "/"
     username_str = object.new_record? ? "..." : object.username
     content_tag :div, class: "section profile-info-text" do
       concat(
@@ -24,7 +23,7 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
       )
       concat(
         content_tag(:label, class: "field-label text-dark url") do
-          concat url
+          concat root_url
           concat content_tag(:span, username_str, class: "text-primary")
         end
       )

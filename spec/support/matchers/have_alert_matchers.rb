@@ -1,4 +1,4 @@
-module RSpecCustomMatchersForCuratedShop
+module RSpecCustomMatchersForHandListed
   class HaveAlert
     def initialize(expected)
       @expected = expected

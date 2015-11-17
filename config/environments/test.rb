@@ -1,7 +1,4 @@
 Rails.application.configure do
-  config.host_url = "http://localhost:3000"
-  config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's
@@ -34,6 +31,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
 
   # Randomize the order test cases are executed.
   config.active_support.test_order = :random

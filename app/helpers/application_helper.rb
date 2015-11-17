@@ -31,7 +31,7 @@ module ApplicationHelper
   # TODO: link tp image logo
   def link_logo_to(path, options = {})
     # html = image_tag("logo.png", class: "img-responsive w250")
-    html = "<span><strong>Curated</strong>Shop</span>"
+    html = "<span>hand<strong>listed</strong>.in</span>"
     link_to html.html_safe, path, options
   end
 

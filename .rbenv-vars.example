@@ -1,0 +1,31 @@
+RAILS_ENV=development
+PORT=3000
+
+####### External API access details #######
+
+FACEBOOK_APP_ID=
+FACEBOOK_APP_SECRET=
+TWITTER_APP_IP=
+TWITTER_APP_SECRET=
+GOOGLE_APP_ID=
+GOOGLE_APP_SECRET=
+
+AMAZON_AFFILIATE_CODE=shabd-20
+FLIPKART_AFFILIATE_CODE=nikhgup
+
+########### For development: ##############
+
+DEFAULT_PASSWORD=somepassword
+
+############ For production: ##############
+
+# PATH=/home/handlisted/.rbenv/shims:/home/handlisted/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# HANDLISTED_DATABASE_URL=postgres://user:password@localhost/database
+# SECRET_KEY_BASE=`rake secret`
+# APP_HOST=handlisted.in
+## RAILS_SERVE_STATIC_FILES=true
+# SMTP_USERNAME=<username>
+# SMTP_PASSWORD=<password>
+# SMTP_DOMAIN=handlisted.in
+# SMTP_ADDRESS=smtp.sendgrid.net
+# SMTP_PORT=587
