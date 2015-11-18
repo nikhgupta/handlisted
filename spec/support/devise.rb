@@ -1,3 +1,5 @@
+# Devise.mailer = Devise::Mailer
+
 module ControllerHelpers
   def sign_in(user = double('user'))
     if user.nil?

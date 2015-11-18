@@ -53,6 +53,8 @@ feature "user registers with omniauth provider", :omniauth do
 
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
+
+    Sidekiq::Extensions::DelayedMailer.drain
     expect(open_last_email).to be_delivered_to(user.email)
   end
 
@@ -93,6 +95,7 @@ feature "user registers with omniauth provider", :omniauth do
     user = User.find_by(email: email)
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
+    Sidekiq::Extensions::DelayedMailer.drain
     expect(open_last_email).to be_delivered_to(user.email)
 
     user.confirm
@@ -126,6 +129,7 @@ feature "user registers with omniauth provider", :omniauth do
     user = User.find_by(email: "john@smith.com")
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
+    Sidekiq::Extensions::DelayedMailer.drain
     expect(open_last_email).to be_delivered_to(user.email)
 
     user.confirm

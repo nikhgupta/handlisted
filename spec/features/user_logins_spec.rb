@@ -75,12 +75,15 @@ feature "When user registers" do
     @user = User.find_by(email: "john@smith.com")
   end
 
-  scenario "sends a confirmation email" do
+  scenario "sends a confirmation email in the background" do
     expect(current_path).to eq(root_path)
     expect(page).to have_alert("activate your account").as_notice
 
     expect(@user).to be_persisted
     expect(@user).not_to be_confirmed
+    expect(deliveries).to be_empty
+
+    Sidekiq::Extensions::DelayedMailer.drain
     expect(open_last_email).to be_delivered_to(@user.email)
     expect(read_emails_for(@user.email).size).to eq(1)
     expect(open_last_email.subject).to eq("Confirmation instructions")
@@ -94,6 +97,7 @@ feature "When user registers" do
   end
 
   scenario "notifies user when email is confirmed" do
+    Sidekiq::Extensions::DelayedMailer.drain
     open_last_email
     click_first_link_in_email
     expect(page).to have_alert("successfully confirmed").as_notice

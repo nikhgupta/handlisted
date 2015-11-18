@@ -24,11 +24,18 @@ module HandListed
     config.active_record.raise_in_transactional_callbacks = true
 
     # Remove `.field_with_errors` class from validated forms (for now)
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
-      html_tag
-    }
+    config.action_view.field_error_proc = Proc.new { |tag, instance| tag }
 
-    # use sidekiq for active_jobs
-    # config.active_job.queue_adapter = :sidekiq
+    # ActionMailer settings:
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      user_name: ENV['SMTP_USERNAME'],
+      password:  ENV['SMTP_PASSWORD'],
+      domain:    ENV['SMTP_DOMAIN'],
+      address:   ENV['SMTP_ADDRESS'],
+      port:      ENV['SMTP_PORT'],
+      authentication: :plain,
+      enable_starttls_auto: true
+    } if ENV['SMTP_USERNAME'].present?
   end
 end
