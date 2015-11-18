@@ -25,14 +25,14 @@ group :development, :test do
 end
 
 group :test do
-  gem 'launchy'
-  gem 'shoulda-matchers', require: false
-  gem 'database_cleaner'
-  gem 'simplecov', require: false
-  gem 'poltergeist'
-  gem 'email_spec', require: true
   gem 'vcr'
   gem 'webmock'
+  gem 'launchy'
+  gem 'poltergeist'
+  gem 'simplecov', require: false
+  gem 'email_spec', require: false
+  gem 'shoulda-matchers', require: false
+  gem 'database_cleaner', require: false
 end
 
 group :development do

@@ -58,6 +58,10 @@ set :rollbar_token, ENV['ROLLBAR_ACCESS_TOKEN']
 set :rollbar_env,   Proc.new { fetch :stage }
 set :rollbar_role,  Proc.new { :app }
 
+# rspec
+set :test_log, "tmp/rspec/capistrano.log"
+set :coverage, "tmp/simplecov/output/index.html"
+
 namespace :foreman do
   desc "Export application processes as Systemd jobs"
   task :export do
@@ -99,8 +103,34 @@ namespace :foreman do
   end
 end
 
+namespace :rspec do
+  desc 'Run RSpec before deployment'
+  task 'verify' do
+    run_locally do
+      target  = fetch :branch
+      current = %x(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f 3).strip
+
+      begin
+        %x(git checkout #{target} &>/dev/null) if current != target
+        info "Running tests (with coverage) on #{target}, please wait ..."
+
+        if execute "COVERAGE=1 bundle exec rake > #{fetch :test_log} 2>&1"
+          info "Tests passed. Coverage report: #{fetch :coverage}"
+          execute "rm #{fetch :test_log}"
+        else
+          error "Tests failed. Run `cat #{fetch :test_log}` to see what went wrong."
+          exit
+        end
+      ensure
+        %x(git checkout #{current} &>/dev/null) if current != target
+      end
+    end
+  end
+end
+
 namespace :deploy do
-  after :publishing, "foreman:export"
-  after :publishing, "foreman:restart"
+  before :starting,   "rspec:verify"
+  after  :publishing, "foreman:export"
+  after  :publishing, "foreman:restart"
   # after "deploy:finished", 'airbrake:deploy'
 end

@@ -12,8 +12,8 @@ RSpec.describe Brand, type: :model do
   it { is_expected.to validate_length_of(:name).is_at_least(2).is_at_most(60) }
   it { is_expected.to validate_presence_of(:merchant_id) }
   it { is_expected.to validate_inclusion_of(:average_rating).in_range(0..100) }
-  it { is_expected.to validate_numericality_of(:ratings_count).only_integer }
-  it { is_expected.to validate_numericality_of(:products_count).only_integer }
+  # it { is_expected.to validate_numericality_of(:ratings_count).only_integer }
+  # it { is_expected.to validate_numericality_of(:products_count).only_integer }
 
   it_behaves_like 'sluggable'
 

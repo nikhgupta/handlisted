@@ -9,7 +9,7 @@ RSpec.describe Merchant, type: :model do
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(2).is_at_most(20) }
-  it { is_expected.to validate_numericality_of(:brands_count).only_integer }
+  # it { is_expected.to validate_numericality_of(:brands_count).only_integer }
 
   it_behaves_like 'sluggable'
 

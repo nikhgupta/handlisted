@@ -21,9 +21,9 @@ RSpec.describe Product, type: :model do
   it { is_expected.to validate_presence_of(:price_currency) }
   it { is_expected.to validate_presence_of(:marked_price_currency) }
 
-  it { is_expected.to validate_numericality_of(:price_cents).only_integer }
-  it { is_expected.to validate_numericality_of(:marked_price_cents).only_integer }
-  it { is_expected.to validate_numericality_of(:ratings_count).only_integer }
+  # it { is_expected.to validate_numericality_of(:price_cents).only_integer }
+  # it { is_expected.to validate_numericality_of(:marked_price_cents).only_integer }
+  # it { is_expected.to validate_numericality_of(:ratings_count).only_integer }
   it { is_expected.to validate_inclusion_of(:average_rating).in_range(0..100) }
 
   it { is_expected.to have_db_index(:pid) }
