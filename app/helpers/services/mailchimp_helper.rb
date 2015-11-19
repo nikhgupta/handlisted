@@ -1,0 +1,2 @@
+module Services::MailchimpHelper
+end

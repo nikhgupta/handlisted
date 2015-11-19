@@ -55,13 +55,15 @@ Rails.application.routes.draw do
 
   resources :merchants, only: [:index, :show]
 
-  get '/brands/:merchant' => "brands#index", as: :merchant_brands
-  get '/brands/:merchant/:brand' => "brands#show", as: :brand
+  get 'brands/:merchant' => "brands#index", as: :merchant_brands
+  get 'brands/:merchant/:brand' => "brands#show", as: :brand
 
-  get '/shop/categories' => "categories#index", as: :shop
-  get '/shop/:id' => "categories#show", as: :category
+  get 'shop/categories' => "categories#index", as: :shop
+  get 'shop/:id' => "categories#show", as: :category
 
-  get '/:username' => 'users#show', as: :profile
+  post 'newsletter/subscribe' => 'services/mailchimp#subscribe', as: :newsletter_subscription
+
+  get ':username' => 'users#show', as: :profile
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

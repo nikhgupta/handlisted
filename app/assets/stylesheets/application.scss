@@ -168,3 +168,11 @@ a[data-like='off'] .fa { color: grey; }
     }
   }
 }
+
+.subscription-form .subscriptionStatus {
+  background-color: #f0fff0;
+  padding: 4px 10px;
+  margin: 20px 20px 0 0;
+  border: 1px solid #d0ffb0;
+  display: none;
+}

@@ -45,6 +45,7 @@ gem 'sinatra', require: false
 
 # Services
 gem 'rollbar', '~> 2.5.0'
+gem 'gibbon'
 
 # Deployment
 group :development do
