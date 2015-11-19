@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailchimpSubscriptionJob, type: :job do
+RSpec.describe Services::NewsletterSubscriptionJob, type: :job do
   let(:user) { create :confirmed_user, email: "registered@example.com", name: "Some Great User" }
 
   it 'queues the subscription in background queue' do

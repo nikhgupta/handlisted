@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   get 'shop/categories' => "categories#index", as: :shop
   get 'shop/:id' => "categories#show", as: :category
 
-  post 'newsletter/subscribe' => 'services/mailchimp#subscribe', as: :newsletter_subscription
+  post 'newsletter/subscribe' => 'services/newsletter#subscribe', as: :newsletter_subscription
 
   get ':username' => 'users#show', as: :profile
   # The priority is based upon order of creation: first created -> highest priority.

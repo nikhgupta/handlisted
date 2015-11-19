@@ -19,6 +19,7 @@
  *= require users
  *= require comments
  *= require badges
+ *= require services/newsletter
  *= require_self
  */
 
@@ -129,23 +130,6 @@ footer#site-wide-footer {
   }
 }
 
-.admin-form {
-  .subscription-form, &.subscription-form {
-    .panel {
-      border: 0;
-      background-color: transparent;
-      box-shadow: none;
-      .panel-body {
-        padding: 25px 0 0;
-      }
-      .panel-footer {
-        background-color: transparent;
-        padding: 0;
-      }
-    }
-  }
-}
-
 // for the like button
 a[data-like='on']  .fa { color: #df5640; }
 a[data-like='off'] .fa { color: grey; }
@@ -167,12 +151,4 @@ a[data-like='off'] .fa { color: grey; }
       color: #f8f8f8;
     }
   }
-}
-
-.subscription-form .subscriptionStatus {
-  background-color: #f0fff0;
-  padding: 4px 10px;
-  margin: 20px 20px 0 0;
-  border: 1px solid #d0ffb0;
-  display: none;
 }

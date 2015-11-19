@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Mailchimp Subscription", :background, :js, type: :feature do
+RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feature do
   before do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("MAILCHIMP_DEFAULT_LIST_ID").and_return "abcdef"
@@ -9,7 +9,7 @@ RSpec.feature "Mailchimp Subscription", :background, :js, type: :feature do
   end
 
   scenario "users (or guests) are able to subscribe to newsletter" do
-    expect(MailchimpSubscriptionJob).to receive(:perform_async)
+    expect(Services::NewsletterSubscriptionJob).to receive(:perform_async)
       .with("someone@example.com", "abcdef")
 
     within(".subscription-form") do
