@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe GooglePlusExtractor, :omniauth do
+RSpec.describe GooglePlusExtractor, :omniauth do
   let(:auth) { OmniAuth.config.mock_auth[:google_plus] }
   subject{ described_class.new(auth) }
   let(:match) {

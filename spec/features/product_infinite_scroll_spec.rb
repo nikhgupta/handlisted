@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "infinite scrolling for products listing", :js do
+RSpec.feature "infinite scrolling for products listing", :js do
   background do
     @per_page = Kaminari.config.default_per_page
   end
@@ -18,7 +18,7 @@ feature "infinite scrolling for products listing", :js do
     expect(page).to have_css(".product-card", count: Product.count)
   end
 
-  scenario "loads more records when scrolled to bottom of page once 'load more' has been clicked" do
+  scenario "loads more records when scrolled to bottom of page once 'load more' has been clicked", :slow do
     create_list(:product, @per_page * 2 + 1)
     expect(Product.count).to be > @per_page * 2
     visit products_path

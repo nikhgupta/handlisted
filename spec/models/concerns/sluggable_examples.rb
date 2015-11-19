@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-shared_examples_for "sluggable" do |options = {}|
+RSpec.shared_examples_for "sluggable" do |options = {}|
   let(:model) { described_class.to_s.underscore.to_sym }
   let(:slug_field){ options[:slug_field] || :name }
 

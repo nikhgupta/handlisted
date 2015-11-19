@@ -1,4 +1,4 @@
-module ProductHelpers
+module AddProductHelpers
   def add_product(user, url)
     pid, url = PRODUCTS_LIST[url][:pid], PRODUCTS_LIST[url][:url]
     ProductScraperJob.perform_async user.id, url

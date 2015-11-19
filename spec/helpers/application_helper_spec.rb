@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper, type: :helper do
   include Devise::TestHelpers
   it "presents current user when current user is present" do
     expect(helper.current_user).to be_nil

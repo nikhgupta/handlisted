@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "product comments" do
+RSpec.feature "product comments" do
   def add_comment(text: nil)
     sign_in_as(:confirmed_user) unless @signed_in_user.present?
     visit product_path(@product)
@@ -28,8 +28,9 @@ feature "product comments" do
     expect(page).to have_no_content("No comments were found")
   end
 
-  scenario "product profile allows commenting on product when logged in" do
+  scenario "product profile allows commenting on product when logged in", :slow do
     add_comment
+    skip "test specific to non-js environment" if js_test?
     expect(page).to have_content("this is a comment for this product")
     expect(page).to have_selector("textarea#comment_comment", text: "")
     expect(page).to have_alert("Your comment has been added").as_success

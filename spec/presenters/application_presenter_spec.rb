@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ApplicationPresenter do
+RSpec.describe ApplicationPresenter, type: :presenter do
   subject { described_class.new({ a: 'a' }, view) }
 
   it "provides helper method to render markdown" do

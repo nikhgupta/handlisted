@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "displaying user badges" do
+RSpec.feature "displaying user badges", :timers do
   background do
     john  = create(:confirmed_user, username: :john)
     diaz  = create(:confirmed_user, username: :diaz)
@@ -27,7 +27,7 @@ feature "displaying user badges" do
   end
 end
 
-feature "user badges" do
+RSpec.feature "user badges", :timers do
   background do
     travel_to "January 1, 2020"
   end

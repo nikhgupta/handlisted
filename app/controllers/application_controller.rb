@@ -9,15 +9,12 @@ class ApplicationController < ActionController::Base
 
   # :nocov:
   def alpha_access_only
-    return if Rails.env.test?
     authenticate_or_request_with_http_basic('Alpha Access Only') do |email, pass|
-      if ENV['ALPHA_USER'] && ENV['ALPHA_PASS']
-        email == ENV['ALPHA_USER'] && pass == ENV['ALPHA_PASS']
-      else
-        user = User.find_by(email: email)
-        user.present? && user.admin? && user.valid_password?(pass)
-      end
-    end
+      user = User.find_by(email: email)
+      return true  if user.present? && user.admin? && user.valid_password?(pass)
+      return false if ENV['ALPHA_USER'].blank? || ENV['ALPHA_PASS'].blank?
+      email == ENV['ALPHA_USER'] && pass == ENV['ALPHA_PASS']
+    end unless Rails.env.test?
   end
   # :nocov:
 end

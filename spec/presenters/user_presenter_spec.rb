@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UserPresenter do
+RSpec.describe UserPresenter, type: :presenter do
   let(:user) { build_stubbed :user_with_full_info }
   let(:presenter) { described_class.new user, view }
 

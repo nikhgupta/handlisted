@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ProductPresenter do
+RSpec.describe ProductPresenter, type: :presenter do
   let(:product) { create :moto_x }
   let(:presenter) { described_class.new product, view }
 

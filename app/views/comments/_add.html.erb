@@ -1,6 +1,7 @@
 <% if current_user.present? %>
 <div class="admin-form comment-form">
-  <%= form_for [@commentable, @comment], remote: true, builder: CommentFormBuilder do |f| %>
+  <%= form_for [@commentable, @comment], remote: true, authenticity_token: true,
+    builder: CommentFormBuilder do |f| %>
     <%= f.text_area_with_submit :comment,
       placeholder: "Respond with a comment..",
       class: "gui-textarea", icon: 'comments', required: true %>

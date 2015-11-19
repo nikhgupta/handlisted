@@ -1,4 +1,4 @@
-module RSpecCustomMatchersForHandListed
+module CustomMatchersForCapybara
   class HaveAlert
     def initialize(expected)
       @expected = expected

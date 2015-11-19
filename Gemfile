@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
-gem 'rails', '4.2.2'
+gem 'rails', '~> 4.2.2'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -77,9 +77,9 @@ group :test do
   gem 'webmock'
   gem 'launchy'
   gem 'poltergeist'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner'
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', require: false
-  gem 'database_cleaner', require: false
 end
 
 group :test, :development do

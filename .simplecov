@@ -2,6 +2,7 @@
 if defined?(Spring)
   message  = "Coverage tests while Spring is running are unreliable.\n"
   message += "Please, try again with Spring disabled.\n"
+  message += "Hint: COVERAGE=1 bundle exec rspec"
   puts "\e[33m#{message}\e[0m"
 elsif SimpleCov.running
   puts "\e[37mSimpleCov is already running..\e[0m\n"
@@ -19,4 +20,4 @@ else
   end
   SimpleCov.command_name 'RSpec'
   SimpleCov.coverage_dir 'tmp/simplecov/output'
-end if ENV['COVERAGE'] || ENV['FULL']
+end unless ENV['COVERAGE'].to_s.strip.empty?

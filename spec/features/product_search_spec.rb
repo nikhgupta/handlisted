@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "search products from search bar", :js, :slow do
+RSpec.feature "search products from search bar", :js, :slow do
   background do
     @user = sign_in_as :confirmed_user
     @moto = add_product @user, :moto_x

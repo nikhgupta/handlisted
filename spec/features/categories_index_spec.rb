@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "category index" do
+RSpec.feature "category index" do
   background do
     @p1, c1, s1 = Category.create_hierarchy :parent1, :child1, :subchild1
     @p2, c2, s2 = Category.create_hierarchy :parent2, :child2, :subchild2
@@ -36,7 +36,7 @@ feature "category index" do
     expect(page).not_to have_product_card_for(@product2)
   end
 
-  scenario "allows loading more products for the given category", :js do
+  scenario "allows loading more products for the given category", :js, :slow do
     create_list :product, @per_page * 2, category: @p2
     visit category_path(@p2)
 

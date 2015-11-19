@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "liking a product" do
+RSpec.feature "liking a product" do
   background do
     @user = create :confirmed_user
     @product = create :product
@@ -37,7 +37,7 @@ feature "liking a product" do
   end
 end
 
-feature "user likes on product pages" do
+RSpec.feature "user likes on product pages" do
   def add_likers(total: 5)
     total -= @product.likers.count
     if total > 0

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "listings on user's public profile", :js do
+RSpec.feature "listings on user's public profile", :js do
   def setup(user, options = {})
     liked = create_list(:product, options[:likes] || 1)
     found = create_list(:product, (options[:found] || 1), founder: user)
@@ -49,7 +49,7 @@ feature "listings on user's public profile", :js do
   end
 
   context 'has infinite scrolling for these listings' do
-    scenario "loads more records when 'load more' button is clicked" do
+    scenario "loads more records when 'load more' button is clicked", :slow do
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")
@@ -66,7 +66,7 @@ feature "listings on user's public profile", :js do
   end
 end
 
-feature "listings on user's personal profile", :js do
+RSpec.feature "listings on user's personal profile", :js do
   def setup(user, options = {})
     liked = create_list(:product, options[:likes] || 1)
     found = create_list(:product, (options[:found] || 1), founder: user)
@@ -108,7 +108,7 @@ feature "listings on user's personal profile", :js do
   end
 
   context 'has infinite scrolling for these listings' do
-    scenario "loads more records when 'load more' button is clicked" do
+    scenario "loads more records when 'load more' button is clicked", :slow do
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")

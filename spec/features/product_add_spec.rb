@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "when not logged in", :slow, :vcr do
+RSpec.feature "when not logged in", :slow, :vcr do
   scenario "adding products from search bar requires signing in", js: true do
     sign_out_if_logged_in
     visit root_path
@@ -11,13 +11,13 @@ end
 
 # TODO: patch Worker to execute some tests while performing the job
 #
-feature "add product from search bar", :slow, :vcr, js: true do
+RSpec.feature "add product from search bar", :slow, :vcr, js: true do
   background do
     @user = sign_in_as :confirmed_user
     visit root_path
   end
 
-  scenario "user adds a product", :very_slow do
+  scenario "user adds a product" do
     add_product_via_search_and_perform(:amazon_echo) do
       expect(page).to have_selector('header .progress-bar.progress-bar-warning')
       status = progress_status

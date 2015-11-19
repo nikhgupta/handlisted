@@ -1,4 +1,4 @@
-module RSpecCustomMatchersForHandListed
+module CustomMatchersForCapybara
   class HaveProductCardFor
     def initialize(expected)
       @message  = []

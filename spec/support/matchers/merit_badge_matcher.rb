@@ -1,4 +1,4 @@
-module RSpecCustomMatchersForHandListed
+module CustomMatchersForCapybara
   class HaveBadge
     def initialize(*expected)
       name, level = [expected].flatten

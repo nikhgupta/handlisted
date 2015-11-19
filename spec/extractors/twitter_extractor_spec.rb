@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe TwitterExtractor, :omniauth do
+RSpec.describe TwitterExtractor, :omniauth do
   let(:auth) { OmniAuth.config.mock_auth[:twitter] }
   subject{ described_class.new(auth) }
   let(:match) {

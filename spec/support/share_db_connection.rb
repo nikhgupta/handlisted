@@ -1,3 +1,6 @@
+# Helps share database connection between Poltergeist and the actual test
+# session. Without this, Devise related specs with JS driver are bound to fail.
+#
 class ActiveRecord::Base
   mattr_accessor :shared_connection
   @@shared_connection = nil

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe FacebookExtractor, :omniauth do
+RSpec.describe FacebookExtractor, :omniauth do
   let(:auth) { OmniAuth.config.mock_auth[:facebook] }
   subject{ described_class.new(auth) }
   let(:match) {

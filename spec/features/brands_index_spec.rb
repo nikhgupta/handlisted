@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "brands index" do
+RSpec.feature "brands index" do
   background do
     @per_page  = Kaminari.config.default_per_page
 
@@ -33,7 +33,7 @@ feature "brands index" do
     expect(page).not_to have_product_card_for(@product2)
   end
 
-  scenario "allows loading more products for the given category", :js do
+  scenario "allows loading more products for the given category", :js, :slow do
     create_list :product, @per_page * 2, brand: @brand1, merchant: @merchant1
     visit "/brands/merchant-x/brand-y"
 
