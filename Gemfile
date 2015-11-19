@@ -65,7 +65,6 @@ gem 'high_voltage'
 gem 'monetize'
 gem 'money-rails'
 gem 'google_currency'
-gem 'email_spec',              group: :test,        require: false
 
 # Test Suite and other tools and helpers follow:
 

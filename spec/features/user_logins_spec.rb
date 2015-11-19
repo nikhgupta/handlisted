@@ -69,7 +69,7 @@ feature "On user registration page" do
   end
 end
 
-feature "When user registers" do
+feature "When user registers", :mailers do
   background do
     sign_up_with "john", "John Smith", "john@smith.com", "password"
     @user = User.find_by(email: "john@smith.com")
@@ -83,10 +83,10 @@ feature "When user registers" do
     expect(@user).not_to be_confirmed
     expect(deliveries).to be_empty
 
-    Sidekiq::Extensions::DelayedMailer.drain
-    expect(open_last_email).to be_delivered_to(@user.email)
-    expect(read_emails_for(@user.email).size).to eq(1)
-    expect(open_last_email.subject).to eq("Confirmation instructions")
+    deliver_enqueued_emails
+    expect(recipients_for_last_email).to include @user.email
+    expect(emails_for(@user.email).size).to eq(1)
+    expect(subject_for_last_email).to eq "Confirmation instructions"
   end
 
   scenario "requires confirming email before allowing logging in" do
@@ -97,9 +97,8 @@ feature "When user registers" do
   end
 
   scenario "notifies user when email is confirmed" do
-    Sidekiq::Extensions::DelayedMailer.drain
-    open_last_email
-    click_first_link_in_email
+    deliver_enqueued_emails
+    click_first_link_in_last_email
     expect(page).to have_alert("successfully confirmed").as_notice
   end
 

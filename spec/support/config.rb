@@ -5,10 +5,7 @@ Dir[Rails.root.join('spec/support/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   # include factory_girl methods
   config.include FactoryGirl::Syntax::Methods
-
-  # include email spec helpers
-  config.include EmailSpec::Helpers
-  config.include EmailSpec::Matchers
+  config.include EmailHelpers, :mailers
 
   # include helpers for testing presenters
   config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}

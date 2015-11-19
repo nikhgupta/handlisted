@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "user registers with omniauth provider", :omniauth do
+feature "user registers with omniauth provider", :omniauth, :mailers do
   background do
     sign_out_if_logged_in
   end
@@ -20,9 +20,8 @@ feature "user registers with omniauth provider", :omniauth do
     click_on_button "Sign up"
 
     user   = User.find_by(email: email)
-    emails = unread_emails_for(email)
 
-    expect(emails.size).to be 0
+    expect(emails_for(email).size).to be 0
     expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
     expect(page).to have_alert("signed up successfully").as_notice
@@ -54,8 +53,8 @@ feature "user registers with omniauth provider", :omniauth do
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
 
-    Sidekiq::Extensions::DelayedMailer.drain
-    expect(open_last_email).to be_delivered_to(user.email)
+    deliver_enqueued_emails
+    expect(recipients_for_last_email).to include user.email
   end
 
   scenario "using google+" do
@@ -63,9 +62,8 @@ feature "user registers with omniauth provider", :omniauth do
 
     email  = "testuser@gmail.com"
     user   = User.find_by(email: email)
-    emails = unread_emails_for(email)
 
-    expect(emails.size).to be 0
+    expect(emails_for(email).size).to be 0
     expect(user).to be_persisted.and be_confirmed
     expect(current_path).to eq root_path
     expect(page).to have_alert("authenticated from Google Plus").as_notice
@@ -95,8 +93,8 @@ feature "user registers with omniauth provider", :omniauth do
     user = User.find_by(email: email)
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
-    Sidekiq::Extensions::DelayedMailer.drain
-    expect(open_last_email).to be_delivered_to(user.email)
+    deliver_enqueued_emails
+    expect(recipients_for_last_email).to include user.email
 
     user.confirm
     sign_in_with_provider :twitter
@@ -129,8 +127,9 @@ feature "user registers with omniauth provider", :omniauth do
     user = User.find_by(email: "john@smith.com")
     expect(user).to be_persisted
     expect(user).not_to be_confirmed
-    Sidekiq::Extensions::DelayedMailer.drain
-    expect(open_last_email).to be_delivered_to(user.email)
+
+    deliver_enqueued_emails
+    expect(recipients_for_last_email).to include user.email
 
     user.confirm
     sign_in_with_provider :facebook
