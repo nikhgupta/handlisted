@@ -1,8 +1,15 @@
+# Class for dealing with submissions for adding a new product via sitewide
+# search bar in the header. This class does the following:
+#
+# - allows user to add a new query for submission.
+# - checks if the query is a URL for importing a product or a search.
+# - redirects to search results if query is search.
+# - imports the product while showing the user relevant progress if importing.
+#
 class @ProductAdder
-  constructor: (options) ->
-    @form        = $(options.form)
-    @options     = options
-    @timer       = null
+  constructor: (@options) ->
+    @form  = $(@options.form)
+    @timer = null
 
   setup: ->
     return false unless @form?
@@ -13,6 +20,13 @@ class @ProductAdder
 
   init: ->
     return unless @setup()
+
+    @input.on 'blur', =>
+      @input.val(@options.default_input_text) if @input.val() is ""
+
+    @input.on 'focus', =>
+      @input.val("") if @input.val() is @options.default_input_text
+
     @form.on 'submit', (e) =>
       e.preventDefault()
       $.post @endpoints.check, { search: @input.val() }, (response) =>
@@ -45,7 +59,7 @@ class @ProductAdder
       setInterval (=> window.location = "/products/#{@status.id}"), 800
 
   displayErrors: (errors) ->
-    new magnificModal
+    new MagnificModal
       html: errors
       modalClass: "product-adder-errors"
       animation: "slideDown"

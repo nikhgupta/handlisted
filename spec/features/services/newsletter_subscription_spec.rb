@@ -12,7 +12,7 @@ RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feat
     expect(Services::NewsletterSubscriptionJob).to receive(:perform_async)
       .with("someone@example.com", "abcdef")
 
-    within(".subscription-form") do
+    within(".newsletter") do
       fill_in "email", with: "someone@example.com"
       click_on 'Subscribe'
 
@@ -22,7 +22,7 @@ RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feat
   end
 
   scenario "validation errors are shown for the subscription form" do
-    within(".subscription-form") do
+    within(".newsletter") do
       fill_in "email", with: "someone"
       click_on 'Subscribe'
       expect(page).to have_selector "em.state-error", text: "Please enter a valid email address"

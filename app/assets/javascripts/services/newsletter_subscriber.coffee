@@ -1,4 +1,4 @@
-class @newsletterSubscriber
+class @NewsletterSubscriber
   constructor: (el) -> @el = $(el)
 
   html: (email) -> "

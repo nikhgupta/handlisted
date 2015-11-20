@@ -1,24 +1,23 @@
+#= require components/product_card
+#= require components/product_adder
+#= require components/product_paginator
 
-$ ->
-  cardifyProducts = ->
-    $('.product-card:not(.cardified)').productCardify()
+ready = ->
+  $('.product-card:not(.cardified)').productCardify()
 
-  cardifyProducts()
+  # allow pagination of product cards
+  new ProductPaginator(offset: 200).init()
 
-  if $(".product-index + .paginator .pagination").length
-    url = $(".pagination a[rel='next']").attr("href")
-    $('.pagination').replaceWith("<div class='bg-header pagination'><a class='load-more' href='#{url}'>Load More</a></div>")
-    $('.pagination a.load-more').on 'click', (e) ->
-      e.preventDefault()
-      url = $(@).attr('href')
-      $(@).replaceWith("<img src='/assets/ajax-loader.gif' width='30'/>")
-      $.getScript url, =>
-        cardifyProducts()
-        $(@).remove()
+  # Sidekiq Queue results on Search/Add Product Page
+  new ProductAdder(
+    form:  '.navbar-search',
+    input: '#product_search'
+    default_input_text: "Search.."
+    endpoints:
+      status: "/products/create/status.json"
+      check: "/products/create/check.json"
+      add: "/products.json"
+  ).init()
 
-    $(window).scroll ->
-      url = $(".pagination a[rel='next']").attr('href')
-      if url && $(window).scrollTop() > $(document).height() - $(window).height() - 200
-        $('.pagination').html("<img src='/assets/ajax-loader.gif' width='30'/>")
-        $.getScript(url, -> cardifyProducts())
-    $(window).scroll(-> cardifyProducts())
+$(document).ready(ready)
+$(document).on('pages:load', ready)

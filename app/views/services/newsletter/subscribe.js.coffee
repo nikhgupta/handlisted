@@ -1,2 +1,2 @@
-box = new @newsletterSubscriber(".newsletter")
+box = new @NewsletterSubscriber(".newsletter")
 box.subscribe "<%= @email %>"

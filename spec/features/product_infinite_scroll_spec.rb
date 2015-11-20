@@ -29,8 +29,8 @@ RSpec.feature "infinite scrolling for products listing", :js do
     expect(page).to have_css(".product-card", count: @per_page * 2)
 
     page.execute_script('window.scrollTo(0,100000)')
-    expect(page).to have_css('.pagination img[src="/assets/ajax-loader.gif"]')
-    expect(page).not_to have_css('.pagination img[src="/assets/ajax-loader.gif"]')
+    expect(page).to have_css('.pagination img')
+    expect(page).not_to have_css('.pagination img')
     expect(page).to have_css(".product-card", count: Product.count)
     expect(page).to have_css("p.bg-header", text: "reached the end")
   end

@@ -1,3 +1,9 @@
+# Class to implement command JS behaviour to CSS class `.product-card`.
+# At the moment, it allows:
+#
+# - opening a modal with product info if viewport width is sufficient
+# - otherwise, redirects to the product info page
+#
 class @ProductCard
   constructor: (options) ->
     @card = $(options.element)
@@ -20,6 +26,4 @@ class @ProductCard
         $.getScript "#{@image.data('link')}.js"
 
 $.fn.productCardify = ->
-  @each ->
-    card = new ProductCard element: @
-    card.init()
+  @each -> new ProductCard(element: @).init()

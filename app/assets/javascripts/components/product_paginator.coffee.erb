@@ -1,0 +1,35 @@
+class @ProductPaginator
+  constructor: (@options) ->
+
+  selector:       $(".product-index + .paginator")
+  ajaxLoaderHTML: '<%= image_tag 'ajax-loader.gif', width: 64 %>'
+
+  pagination:     -> @selector.find(".pagination")
+  paginationUrl:  -> @pagination().find("a[rel='next']").attr("href")
+  reachedEnd:     -> $(window).scrollTop() > $(document).height() - $(window).height() - @options.offset
+
+  init: ->
+    return false unless @pagination().length
+    @convertPaginationToLoadMoreLink()
+
+    $(window).scroll =>
+      if @reachedEnd() && (url = @paginationUrl())
+        @replacePaginationWith @ajaxLoaderHTML
+        @fetchCards url
+
+  replacePaginationWith: (html, has_loader = true) ->
+    @pagination().html(html).addClass("bg-header #{"has-loader" if has_loader}")
+
+  fetchCards: (url, cb = ->) ->
+    cards = $(".product-card:not(.cardified)")
+    $.getScript url, => cards.productCardify() and cb()
+
+  convertPaginationToLoadMoreLink: ->
+    ajaxHtml = "<a class='load-more' href='#{@paginationUrl()}'>Load More</a>"
+    @replacePaginationWith ajaxHtml, false
+
+    @pagination().find("a.load-more").on 'click', (event) =>
+      event.preventDefault()
+      url = $(event.target).attr('href')
+      @replacePaginationWith @ajaxLoaderHTML
+      @fetchCards(url, -> $(event.target).remove())

@@ -1,4 +1,7 @@
-class @magnificModal
+# Allows wrapper for setting up a modal using `magnificPopup` with given
+# options, and opening it quickly.
+#
+class @MagnificModal
   constructor: (options) ->
     @html       = options.html
     @modalClass = options.modalClass
