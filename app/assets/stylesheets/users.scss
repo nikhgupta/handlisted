@@ -1,4 +1,4 @@
-.user-box {
+.userProfileBox {
   .avatar {
     max-width: 150px !important;
     border: 5px solid rgba(0,0,0,0.15);
@@ -15,8 +15,7 @@
     span.level { font-weight: 600;}
   }
 }
-
-.profile-info-text {
+.userProfileBox-info {
   .field-label {
     font-size: 18px;
   }
@@ -32,7 +31,7 @@
   }
 }
 
-.users.mini-list {
+.usersList-mini {
   margin: 40px auto 10px;
   width: 100%;
   .wrapper {
@@ -43,41 +42,35 @@
     @media (min-width: 768px) { width: 340px; margin: 0; }
     @media (min-width: 1140px) { width: 450px; }
   }
-  .user.mini-card {
-    width: 52px;
-    float: left;
-    border: 3px solid #f8f8f8;
-    margin: 2px;
-    img {
-      width: 48px;
-      height: 48px;
-      background-color: #ddd;
-    }
-    &.counter-card {
-      width: 52px;
-      height: 54px;
-      font-weight: bold;
-      font-size: 1.3em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background-color: #f8f8f8;
-    }
-    &.highlight {
-      width: 110px;
-      border: 3px solid #3bafda;
-      img {
-        width: 104px;
-        height: 104px;
-      background-color: #3bafda; 
-    }
-    }
+}
+.userCard-mini {
+  width: 52px;
+  float: left;
+  border: 3px solid #f8f8f8;
+  margin: 2px;
+  img {
+    width: 48px;
+    height: 48px;
+    background-color: #ddd;
   }
 }
-.founder-info {
-  clear: both;
-  padding-top: 15px;
-  font-size: 1.4em;
+.userCard-mini.counterCard {
+  width: 52px;
+  height: 54px;
   font-weight: bold;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f8f8f8;
+}
+.userCard-mini.highlight {
+  width: 110px;
+  border: 3px solid #3bafda;
+  img {
+    width: 104px;
+    height: 104px;
+    background-color: #3bafda; 
+  }
 }

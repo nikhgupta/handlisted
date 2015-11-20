@@ -1,4 +1,4 @@
-<%= render layout: "products/listing", locals: { products: @products, kind: nil } do %>
+<%= products_listing_for @products do %>
   Oh snap! <strong>No matching products were found for this search.</strong>
   Perhaps, you would like to <a href="#" class='alert-link'>search again</a>?
 <% end %>

@@ -1,24 +1,19 @@
-<%
-  found = presenter.found_products_count
-  liked = presenter.likes.count
-  content_for(:primary_box) do
-%>
-<div class="page-heading user-box bg-success">
-  <div class="media clearfix">
-    <div class="media-left pr30"><%= presenter.avatar_tag %></div>
-    <div class="media-body va-m">
-      <h2 class="media-heading">
-        @<%= presenter.username %>
-        <small class="hidden-xs"> - <%= presenter.name %></small>
-      </h2>
-      <p class="lead">
-        <%= presenter.badge_list %><br/><br/>
-        <br class="visible-xs-block" />
-        <%= "Found #{pluralize(found, "product")}.".html_safe if found > 0 %>
-        <%= "Likes #{pluralize(liked, "product")}.".html_safe if liked > 0 %>
-        With us, since <%= time_ago_in_words(presenter.created_at) %>.
-      </p>
+<%= content_for :primary_box do %>
+  <div class="page-heading userProfileBox bg-success">
+    <div class="media clearfix">
+      <div class="media-left pr30"><%= presenter.avatar_tag %></div>
+      <div class="media-body va-m">
+        <h2 class="media-heading">
+          @<%= presenter.username %> <small class="hidden-xs"> - <%= presenter.name %></small>
+        </h2>
+        <p class="lead">
+          <%= presenter.badge_list %><br/><br/>
+          <br class="visible-xs-block" />
+          <%= "Found #{pluralize(found, "product")}.".html_safe if found > 0 %>
+          <%= "Likes #{pluralize(liked, "product")}.".html_safe if liked > 0 %>
+          With us, since <%= time_ago_in_words(presenter.created_at) %>.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 <% end %>

@@ -1,11 +1,11 @@
-<%= render "profile_box", presenter: current_user %>
+<%= render "profile_box", presenter: current_user, liked: @liked, found: @found %>
 
 <div class="row admin-form">
   <div class="col-md-4">
-    <%= render 'identities' %>
+    <%= render 'omniauth_identities' %>
   </div>
   <div class="col-md-8">
-    <%= render 'form' %>
+    <%= render 'profile_editing_form' %>
   </div>
 </div>
 
@@ -20,25 +20,20 @@
       <li class="bg-alert">
         <a href="#found-products" data-toggle="tab" class="btn">Products You <%= fa_icon('search') %></a>
       </li>
-      <!--
-      <li class="bg-info">
-        <a href="#tab18_3" data-toggle="tab" class="btn">Products You <%= fa_icon('download') %></a>
-      </li>
-      -->
     </ul>
   </div>
 </div>
 
 <div class="tab-content br-n pn">
   <div id="liked-products" class="tab-pane active">
-    <%= render layout: "products/listing", locals: { products: @products[:liked], kind: :liked } do %>
+    <%= products_listing_for @products[:liked], kind: :liked do %>
       <strong>Oh snap!</strong> You seem a bit shy. You need to
       <a href="#" class="alert-link">like some products</a>.
       Come on! You'll be famous!
     <% end %>
   </div>
   <div id="found-products" class="tab-pane">
-    <%= render layout: "products/listing", locals: { products: @products[:found], kind: :found } do %>
+    <%= products_listing_for @products[:found], kind: :found do %>
       <strong>Oh snap!</strong> You seem a bit shy. You need to
       <a href="#" class="alert-link">find some products</a>.
       Come on! You'll be famous!

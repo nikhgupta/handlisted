@@ -1,156 +1,20 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require absolute-admin/admin-forms
- *= require absolute-admin/theme
- *= require absolute-admin/plugins/magnific/magnific-popup
- *= require theme-overrides
- *= require products
- *= require products_containable
- *= require users
- *= require comments
- *= require badges
- *= require services/newsletter
- *= require_self
- */
+*= require theme
+*= require_self
+*/
 
-body {
-  &#devise-page {
-    a.navbar-brand {
-      display: block;
-      font-size: 1.7em;
-      color: white;
-      text-decoration: none;
-      padding: 25px 0 0;
-    }
-  }
-}
+@import "mixins";
 
-header{
-  &.navbar {
-    .navbar-nav {
-      li {
-        a.btn-login {
-          background-color: #55BADF !important;
-          color: white !important;
-          font-weight: bold;
-        }
-        a.btn-register {
-          background-color: #48C9A9 !important;
-          color: white !important;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
+@import "services/magnific_modal";
+@import "services/forms_validator";
+@import "services/newsletter_subscriber";
 
-.promotion {
-  p.action {
-    font-size: 18px;
-  }
-  &.page-heading {
-    text-align: center;
-    h3 { line-height: 1.6em; }
-    @media (max-width: 786px) {
-      padding: 20px 0px 30px;
-    }
-    @media (max-width: 400px) {
-      padding: 10px 0px 20px;
-      h1 { font-size: 20px; }
-    }
-  }
-}
+@import "sections/navbar";
+@import "sections/footer";
+@import "sections/devise";
+@import "sections/badges";
+@import "sections/comments";
+@import "sections/promotions";
 
-#content {
-  .bg-header {
-    text-align: center;
-    margin: 10px -30px 0;
-    background-color: #e0e0e0;
-    padding: 20px 0;
-    font-size: 18px;
-    height: 64px;
-    &.has-loader { padding: 0 }
-  }
-}
-
-footer#site-wide-footer {
-  color: #AAA;
-  overflow: hidden;
-  position: absolute;
-  padding: 20px 20px 10px;
-  background-color: #f8f8f8;
-  border-top: 1px solid #DDD;
-  transition: margin 0.2s ease;
-  transition: margin 0.2s ease;
-  width: 100%;
-  margin: 0;
-
-  ul {
-    padding-left: 0;
-    li {
-      display: inline-block;
-      padding: 5px 10px 5px 0;
-    }
-  }
-
-  ul.social-links li {
-    padding: 5px 40px 5px 0;
-  }
-  ul.social-links li a, ul.footer-links li a {
-    color: #aaa;
-  }
-
-  h1,h2,h3,p,ul li {
-    line-height: 1.6em;
-  }
-
-  h3, p.action {
-    color: #777; 
-  }
-
-  @media (min-width: 480px) and (max-width: 767px) {
-    padding: 5px 60px 15px;
-  }
-  @media (min-width: 992px) {
-    padding: 60px 60px 30px;
-    .promotion {
-      border-right: 2px solid #dedede; 
-    }
-    .footer-about {
-      padding-left: 60px; 
-    }
-  }
-}
-
-// for the like button
-a[data-like='on']  .fa { color: #df5640; }
-a[data-like='off'] .fa { color: grey; }
-
-// pagination centered
-.paginator {
-  text-align: center;
-  .pagination.bg-header {
-    display: block;
-  }
-}
-
-.home-page-link {
-  &.light {
-    color: #d8d8d8;
-    font-size: 22px;
-    text-decoration: none;
-    strong {
-      color: #f8f8f8;
-    }
-  }
-}
+@import "products";
+@import "users";

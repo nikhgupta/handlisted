@@ -1,0 +1,49 @@
+footer#site-wide-footer {
+  color: #AAA;
+  overflow: hidden;
+  position: absolute;
+  padding: 20px 20px 10px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #DDD;
+  transition: margin 0.2s ease;
+  transition: margin 0.2s ease;
+  width: 100%;
+  margin: 0;
+
+  ul {
+    padding-left: 0;
+    li {
+      display: inline-block;
+      padding: 5px 10px 5px 0;
+    }
+  }
+
+  ul.social-links li {
+    padding: 5px 40px 5px 0;
+  }
+  ul.social-links li a, ul.footer-links li a {
+    color: #aaa;
+  }
+
+  h1,h2,h3,p,ul li {
+    line-height: 1.6em;
+  }
+
+  h3, p.action {
+    color: #777; 
+  }
+
+  @media (min-width: 480px) and (max-width: 767px) {
+    padding: 5px 60px 15px;
+  }
+  @media (min-width: 992px) {
+    padding: 60px 60px 30px;
+    .newsletter {
+      border-right: 2px solid #dedede; 
+    }
+    .footer-about {
+      padding-left: 60px; 
+    }
+  }
+}
+

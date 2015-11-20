@@ -12,7 +12,7 @@ $('.new-comment-error').html("
 ").promise().done(-> $(this).slideDown())
 
 <% else %>
-<%= render('comments/listing', comments: @comments) %>
+<%= render('comments/lists/default', comments: @comments) %>
 $("#comment_comment").val("").parent().removeClass("state-success state-error")
 
 <% end %>

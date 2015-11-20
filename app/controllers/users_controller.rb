@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
+  before_action :set_kind_and_counts, only: [:show, :edit]
 
   # GET /users/1/edit
   def edit
     key = 'devise.user_errors'
     @user.errors.add(:base, *session.delete(key)) if session[key]
-    @kind = params[:kind]
     @products = {
       liked: @user.liking.scope.page(params[:page]),
       found: @user.found_products.scope.page(params[:page]),
@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @kind = params[:kind]
     @products = {
       liked: @user.liking.scope.page(params[:page]),
       found: @user.found_products.scope.page(params[:page]),
@@ -38,11 +37,17 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user = User.find(params[:username])
+      @user  = User.find(params[:username])
     end
 
     def set_current_user
       @user = current_user
+    end
+
+    def set_kind_and_counts
+      @kind  = params[:kind]
+      @liked = @user.likes.count
+      @found = @user.found_products_count
     end
 
     def user_params

@@ -1,0 +1,7 @@
+<div class="productCollection-header bg-alert">
+  <h3><%= @header.html_safe %></span></h3>
+</div>
+<%= products_listing_for @products do %>
+  Oh snap! <strong>No products were found for this <%= entity %>.</strong>
+  Perhaps, you wandered off to a strange place?
+<% end %>

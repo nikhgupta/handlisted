@@ -8,10 +8,10 @@
 // $sidebar-width: 242px;
 
 // Active Admin's got SASS!
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 @import "active_admin/mixins";
 @import "active_admin/base";
 @import "badges";
-@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:

@@ -1,0 +1,69 @@
+<div class="productCard-overview row">
+  <div class="panel main">
+    <div class="panel-body">
+      <div class="row">
+        <div class="product-image col-sm-6" data-link="<%= product_path(product) %>">
+          <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
+        </div>
+        <div class="col-sm-6 product-details mb20">
+          <div class="text-info">
+            <h1 class="product-name pln"><%= presenter.name %></h1>
+            <% if product.brand.present? %>
+              <h3 class="product-brand text-muted"> By <%= link_to product.brand.name, brand_path(product.brand), class: "text-dark" %> </h3>
+            <% end %>
+          </div>
+          <%= presenter.affiliate_link_action_button target: '_blank' %>
+          <%= render layout: "users/lists/mini", locals: { users: product.likers.order("likes.created_at desc"), primary: product.founder } do %>
+            Oh Snap! <strong>No one has liked this product, yet!</strong>
+            Be the first to like this product!
+          <% end %>
+          <div class="productCard-founder"> Found by <%= present(product.founder).username_link %> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if product.related_products.count > 0 %>
+    <div class="panel panel-info panel-related">
+      <div class="panel-heading text-center">
+        <h3>Related Products</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <% @product.related_products.take(6).each do |product| %>
+            <div class="col-xxs-6 col-xs-4 col-sm-3 col-md-2">
+              <%= render "products/cards/mini", product: product, presenter: present(product) %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if presenter.marked_description.present? %>
+    <div class="panel panel-warning panel-description">
+      <div class="panel-heading text-center">
+        <h3>Description</h3>
+      </div>
+      <div class="panel-body" style='overflow-y: scroll !important'>
+        <div class='markdown'>
+          <%= presenter.marked_description.try :html_safe %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="panel panel-success panel-comments">
+    <div class="panel-heading text-center">
+      <h3>Comments</h3>
+    </div>
+    <div class="panel-body chat-widget">
+      <% self.formats = [:html] %>
+      <%= render "comments/add" %>
+      <%# NOTE: for product info modal, content type is JS, but we want to render HTML. %>
+      <div class="commentsList-ajax">
+        <%= render "comments/lists/default", comments: @comments %>
+      </div>
+    </div>
+  </div>
+</div>

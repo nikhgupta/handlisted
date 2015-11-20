@@ -1,0 +1,15 @@
+<% if products.any? %>
+  <div class="row productList <%= kind.present? ? "productList-#{kind}" : "" %>">
+    <% products.each do |product| %>
+      <div class="col-sm-6 col-md-4">
+        <%= render "products/cards/default", product: product, presenter: present(product) %>
+      </div>
+    <% end %>
+  </div>
+  <div class="paginator"> <%= paginate products, params: { kind: kind } %> </div>
+<% else %>
+  <div class="alert alert-sm alert-dark pastel productList-empty">
+    <i class="fa fa-cubes pr10"></i>
+    <%= yield %>
+  </div>
+<% end %>

@@ -1,24 +1,70 @@
 <!DOCTYPE html>
 <html>
-  <%= render 'shared/head' %>
+  <%= render "layouts/head" %>
   <body class="sb-r-c sb-l-c <%= home_page? ? 'home-page' : '' %>">
     <div id="main">
-      <%= render 'shared/navbar' %>
-      <%# <%= render 'shared/sidebar' if current_user.present? %1> %>
+      <%= render partial: 'layouts/navbar' %>
+
+      <%# render 'shared/sidebar' if current_user.present? %>
+
       <% if home_page? && current_user.blank? %>
-        <%= render 'shared/promotions/header_shout_out' %>
+        <%= render 'application/promotions/default' %>
       <% else %>
         <%= yield :primary_box %>
       <% end %>
+
       <section id="content_wrapper">
-        <%= render 'shared/topbar' %>
         <section id="content" class="animated fadeIn">
-          <%= render 'shared/flashes' %>
+          <% flash.each do |name, msg| %>
+            <%= content_tag :div, class: "alert alert-#{%w[error alert].include?(name.to_s) ? "danger" : "success" } alert-dismissable", role: "alert" do %>
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <%= msg %>
+            <% end %>
+          <% end %>
+
           <%= yield %>
+
         </section>
       </section>
-      <%= render 'shared/footer' %>
-    </div>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  </body>
-</html>
+
+      <footer id='site-wide-footer' class='row'>
+        <div class="col-md-6 col-sm-5">
+          <%= render partial: "services/newsletter/form" %>
+        </div>
+
+        <div class="col-md-6 col-sm-7 footer-about">
+          <h3>Discover amazing products from leading merchant sites,
+            curated by a community with a great taste.</h3>
+
+          <ul class='footer-nav'>
+            <li><%= link_to "About", page_path("about") %>
+            <li><%= link_to "App", page_path("app") %>
+            <li><%= link_to "Add Products", page_path("add_products") %>
+            <li class='hidden-320'><%= link_to "Press", page_path("press") %>
+            <li><%= link_to "Blog", page_path("blog") %>
+            <li class='hidden-400'><%= link_to "Log out", destroy_user_session_path, method: :delete %>
+          </ul>
+          <p>handlisted.in is an independent company.<br/>
+            Merchants that appear on this website have their respective trademarks.<br/>
+            ©2015 handlisted.in. All rights reserved.</p>
+
+          <ul class='footer-links'>
+            <li><%= link_to "Terms", page_path("terms") %>
+            <li><%= link_to "Privacy", page_path("privacy") %>
+            <li><%= link_to "Directory", page_path("listing") %> <!-- TODO: replace with real path -->
+              <li class='hidden-360'><%= link_to "Send feedback", "mailto:hello@handlisted.in" %>
+            </ul>
+
+            <ul class='social-links'>
+              <li><%= link_to fa_icon(:twitter,   class: "fa-2x"), "http://twitter.com/handlisted" %>
+              <li><%= link_to fa_icon(:instagram, class: "fa-2x"), "http://instagram.com/handlisted" %>
+              <li><%= link_to fa_icon(:facebook,  class: "fa-2x"), "http://facebook.com/handlisted" %>
+              <li><%= link_to fa_icon(:pinterest, class: "fa-2x"), "http://pinterest.com/handlisted" %>
+            </ul>
+          </div>
+        </footer>
+
+      </div>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    </body>
+  </html>

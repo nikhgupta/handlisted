@@ -1,0 +1,23 @@
+.panel-comments {
+  margin-bottom: 40px !important;
+  .commentForm {
+    .btn {
+      font-weight: bold;
+    }
+  }
+  .commentsList {
+    .paging-info { margin: 19px 0; }
+    .paging-links {
+      span { padding: 0 4px; }
+    }
+    .commentCard {
+      .media-body {
+        color: #666;
+        h5 { color: #999; }
+        .comment {
+          white-space: pre;
+        }
+      }
+    }
+  }
+}

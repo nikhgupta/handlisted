@@ -1,9 +1,9 @@
 <% if @pagination_for == "comments" %>
-<%= render("comments/listing", comments: @comments) %>
+<%= render("comments/lists/default", comments: @comments) %>
 <% else %>
 new MagnificModal
-  html: "<%= j render('info', product: @product, presenter: present(@product)) %>"
-  modalClass: "product-info"
+  html: "<%= j render('products/cards/overview', product: @product, presenter: present(@product)) %>"
+  modalClass: "productModal"
   animation: "zoomIn"
 .open()
 <% end %>

@@ -1,0 +1,36 @@
+<header class="navbar navbar-static-top navbar-shadow">
+  <div class="navbar-branding">
+    <%= link_logo_to root_path, class: "navbar-brand" %>
+    <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
+  </div>
+  <ul class="nav navbar-nav navbar-left">
+    <li> <%= link_to "#{fa_icon 'home'}<span> Home</span>".html_safe, root_path %> </li>
+    <li> <%= link_to "#{fa_icon 'shopping-cart'}<span> Shop</span>".html_safe, shop_path %> </li>
+    <li> <%= link_to "#{fa_icon 'star'}<span> Featured</span>".html_safe, "#" %> </li>
+  </ul>
+
+
+  <%= form_for :product, url: products_path, method: :get, html: { class: "navbar-form navbar-left navbar-search alt", role: "adder" } do |f| %>
+    <div class="form-group">
+      <%= f.text_field :search, class: "form-control", placeholder: "Search..", value: "Search.." %>
+      <%= f.submit 'Search', hidden: true %>
+    </div>
+    <div class="progress progress-bar-xl" style='display: none'>
+      <div class="progress-bar progress-bar-dark progress-bar-striped active"
+        role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"> </div>
+    </div>
+  <% end %>
+
+  <ul class="nav navbar-nav navbar-right">
+    <% if current_user.present? %>
+      <% if current_user.admin? %>
+        <li> <div class="navbar-btn btn-group"> <%= link_to fa_icon('gear'), admin_dashboard_path, class: "btn btn-sm" %> </div> </li>
+      <% end %>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Profile", edit_profile_path, class: "btn btn-sm" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Logout", destroy_user_session_path, class: "btn btn-sm" %> </div> </li>
+    <% else %>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Login", new_user_session_path, class: "btn btn-sm btn-login" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-register" %> </div> </li>
+    <% end %>
+  </ul>
+</header>

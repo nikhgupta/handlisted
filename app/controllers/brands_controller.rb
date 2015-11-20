@@ -2,7 +2,7 @@ class BrandsController < ApplicationController
   before_action :set_merchant
   before_action :set_brand,  only: [:show]
   before_action :set_brands, only: [:index]
-  include ProductsContainable
+  include Products::Collection
 
   private
 

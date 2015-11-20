@@ -1,2 +1,2 @@
-<%= render("products/listing", products: @products[@kind.to_sym], kind: @kind) %>
+<%= products_listing_for @products[@kind.to_sym], kind: @kind %>
 

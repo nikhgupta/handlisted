@@ -1,7 +1,7 @@
 class @ProductPaginator
   constructor: (@options) ->
 
-  selector:       $(".product-index + .paginator")
+  selector:       $(".productList + .paginator")
   ajaxLoaderHTML: '<%= image_tag 'ajax-loader.gif', width: 64 %>'
 
   pagination:     -> @selector.find(".pagination")
@@ -21,7 +21,7 @@ class @ProductPaginator
     @pagination().html(html).addClass("bg-header #{"has-loader" if has_loader}")
 
   fetchCards: (url, cb = ->) ->
-    cards = $(".product-card:not(.cardified)")
+    cards = $(".productCard:not(.cardified)")
     $.getScript url, => cards.productCardify() and cb()
 
   convertPaginationToLoadMoreLink: ->

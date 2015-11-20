@@ -23,7 +23,8 @@ class ProductScraperJob
     raise
   end
 
-private
+  private
+
   def store_errors(errors)
     store errors: [errors].flatten.uniq.first
   end

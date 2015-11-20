@@ -1,9 +1,11 @@
 module ApplicationHelper
   def present(object, klass=nil)
-    klass ||= "#{object.class}Presenter".constantize
-    presenter = klass.new(object, self)
-    yield presenter if block_given?
-    presenter
+    unless object.is_a?(ApplicationPresenter)
+      klass ||= "#{object.class}Presenter".constantize
+      object = klass.new(object, self)
+    end
+    yield object if block_given?
+    object
   end
 
   def current_user
@@ -51,5 +53,12 @@ module ApplicationHelper
   def oauth_link_to provider, html, options = {}
     link = omniauth_authorize_path(:user, provider.to_s.underscore)
     link_to html.html_safe, link, options
+  end
+
+  def products_listing_for(products, kind: nil)
+    locals = { products: products, kind: kind }
+    render layout: "products/lists/default", locals: locals do
+      yield if block_given?
+    end
   end
 end

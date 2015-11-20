@@ -1,4 +1,4 @@
-# Class to implement command JS behaviour to CSS class `.product-card`.
+# Class to implement command JS behaviour to CSS class `.productCard`.
 # At the moment, it allows:
 #
 # - opening a modal with product info if viewport width is sufficient

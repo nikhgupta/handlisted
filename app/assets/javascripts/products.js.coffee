@@ -3,7 +3,7 @@
 #= require components/product_paginator
 
 ready = ->
-  $('.product-card:not(.cardified)').productCardify()
+  $('.productCard:not(.cardified)').productCardify()
 
   # allow pagination of product cards
   new ProductPaginator(offset: 200).init()

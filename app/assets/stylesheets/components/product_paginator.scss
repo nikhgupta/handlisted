@@ -1,0 +1,18 @@
+.bg-header {
+  text-align: center;
+  margin: 10px -30px 0;
+  background-color: #e0e0e0;
+  padding: 20px 0;
+  font-size: 18px;
+  height: 64px;
+  &.has-loader { padding: 0 }
+}
+
+// pagination centered
+.paginator {
+  text-align: center;
+  .pagination.bg-header {
+    display: block;
+  }
+}
+

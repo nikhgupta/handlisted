@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_categories, only: [:index]
-  include ProductsContainable
+  include Products::Collection
 
   private
 

@@ -1,0 +1,15 @@
+<div class="panel panel-tile text-center br-a br-grey productCollectionCard">
+  <div class="panel-body">
+    <a href="<%= send("#{entity.class.name.underscore}_path", entity) %>">
+      <div class="entity-image">
+        <div class="container" style='background-image: url("<%= product_presenter.cover_image %>")'></div>
+      </div>
+    </a>
+    <div class="entity-details">
+      <div class='flexbox'>
+        <div class="entity-name"> <h3><%= entity.name.titleize %></h3> </div>
+      </div>
+    </div>
+  </div>
+</div>
+

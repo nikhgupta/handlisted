@@ -15,7 +15,7 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
 
   def label_for_profile
     username_str = object.new_record? ? "..." : object.username
-    content_tag :div, class: "section profile-info-text" do
+    content_tag :div, class: "section userProfileBox-info" do
       concat(
         content_tag(:label, class: "field-label text-muted") do
           "Your profile #{object.new_record? ? 'will be' : 'is'} available at:"
