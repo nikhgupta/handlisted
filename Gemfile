@@ -70,6 +70,8 @@ gem 'google_currency'
 # Test Suite and other tools and helpers follow:
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'spring-commands-rspec'
 end
 
