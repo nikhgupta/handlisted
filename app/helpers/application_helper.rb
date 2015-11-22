@@ -32,8 +32,9 @@ module ApplicationHelper
 
   # TODO: link tp image logo
   def link_logo_to(path, options = {})
-    # html = image_tag("logo.png", class: "img-responsive w250")
-    html = "<span>hand<strong>listed</strong>.in</span>"
+    image = "handlisted-text-logo#{"-dark-bg" if options.delete(:dark_bg)}.png"
+    html = image_tag(image, class: "img-responsive logo", alt: "handlisted.in")
+    # html = "<span>hand<strong>listed</strong>.in</span>"
     link_to html.html_safe, path, options
   end
 
