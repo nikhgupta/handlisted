@@ -129,7 +129,7 @@ namespace :rspec do
 end
 
 namespace :deploy do
-  before :starting,   "rspec:verify"
+  before :starting,   "rspec:verify" if ENV['SKIP_RSPEC'].to_s.empty?
   after  :publishing, "foreman:export"
   after  :publishing, "foreman:restart"
   # after "deploy:finished", 'airbrake:deploy'
