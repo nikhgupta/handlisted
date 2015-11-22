@@ -42,6 +42,6 @@ class GooglePlusExtractor < Extractor::Base
   end
 
   def url
-    auth["info"]["urls"]["Google"]
+    auth["info"]["urls"].try :[], "Google"
   end
 end
