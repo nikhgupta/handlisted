@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   end
 
   root to: "products#index"
+  get "community", to: "users#index", as: :community
   # root to: 'high_voltage/pages#show', id: 'home'
 
   resources :products, only: [:index, :show, :create], concerns: :paginatable do

@@ -1,7 +1,25 @@
-<p>Hello <%= @resource.email %>!</p>
+<% title "Handlisted.in: unlock account" %>
+<p><%= salutation %></p>
 
-<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+<p>
+  Someone is trying to log in to your account, but he had so many
+  unsuccessful attempts. We locked him out of our system, since that
+  looked suspicious. We are extremely sorry if that was you, but you need
+  to understand that we were trying to be safe rather than giving someone
+  access to your account.
+</p>
 
-<p>Click the link below to unlock your account:</p>
+<p>You can unlock your account by opening the link below:</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+<p class='linked'>
+  <%= link_to 'Unlock my account',
+    unlock_url(@resource, unlock_token: @token),
+    class: "warning" %>
+</p>
+
+<p>
+  Again, we are sorry that you had such trouble accessing your account,
+  but there are always things in life we don't enjoy doing.
+  What's important is that you can now login to your account easily.
+  Waiting for you.....
+</p>

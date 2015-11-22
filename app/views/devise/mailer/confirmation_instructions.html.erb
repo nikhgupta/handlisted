@@ -1,5 +1,17 @@
-<p>Welcome <%= @email %>!</p>
+<% welcome %><% feedback %>
+<% title "Handlisted.in: account confirmation" %>
+<% footer do %>
+  If you did not register an account at <%= link_to "Handlisted.in", root_url %>,
+  you can safely ignore this message. However, trust us, you will enjoy discovering Handlisted.
+<% end %>
 
-<p>You can confirm your account email through the link below:</p>
+<p>
+  To get started, we need to confirm your email address, so please click this
+  link to finish creating your account:
+</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p class='linked'>
+  <%= link_to 'Confirm your Email address',
+    confirmation_url(@resource, confirmation_token: @token),
+    class: "success" %>
+</p>

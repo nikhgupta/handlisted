@@ -62,9 +62,8 @@ Rails.application.configure do
 
   # Configure hostname for ActionMailer
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = {
-    host: ENV['APP_HOST'], port: (config.force_ssl ? 443 : 80)
-  }
+  config.action_mailer.default_url_options = { host: ENV['APP_HOST'], port: (config.force_ssl ? 443 : 80) }
+  config.roadie.url_options = { host: ENV['APP_HOST'], scheme: (config.force_ssl ? "https" : "http") }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

@@ -10,3 +10,4 @@ Rails.application.config.assets.paths << Rails.root.join("vendor", "assets", "fo
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w(absolute-admin/**/*.jpg absolute-admin/**/*.png)
+Rails.application.config.assets.precompile += %w(email.css)

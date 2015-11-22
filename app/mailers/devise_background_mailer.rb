@@ -1,4 +1,20 @@
 # Mailer proxy to send devise emails in the background
+class Devise::Mailer
+  self.asset_host = nil
+  include Roadie::Rails::Mailer
+
+  private
+
+  def devise_mail(record, action, opts = {})
+    initialize_from_record(record)
+    roadie_mail headers_for(action, opts)
+  end
+
+  def roadie_options
+    super unless Rails.env.test?
+  end
+end
+
 class DeviseBackgroundMailer
 
   def self.confirmation_instructions(record, token, opts = {})
@@ -18,9 +34,6 @@ class DeviseBackgroundMailer
   end
 
   def deliver
-    # You need to hardcode the class of the Devise mailer that you
-    # actually want to use. The default is Devise::Mailer.
     Devise::Mailer.delay.send(@method, @record, @token, @opts)
   end
 end
-

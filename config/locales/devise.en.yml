@@ -18,11 +18,11 @@ en:
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Welcome to Handlisted - Let's get started"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Let's reset your password for Handlisted"
       unlock_instructions:
-        subject: "Unlock instructions"
+        subject: "Let's unlock your account on Handlisted"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."

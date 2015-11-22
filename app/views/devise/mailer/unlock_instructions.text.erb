@@ -1,0 +1,17 @@
+<% title "Handlisted.in: unlock account" %>
+<%= salutation %>
+
+Someone is trying to log in to your account, but he had so many
+unsuccessful attempts. We locked him out of our system, since that
+looked suspicious. We are extremely sorry if that was you, but you need
+to understand that we were trying to be safe rather than giving someone
+access to your account.
+
+You can unlock your account by opening the link below:
+
+<%= unlock_url(@resource, unlock_token: @token) %>
+
+Again, we are sorry that you had such trouble accessing your account,
+but there are always things in life we don't enjoy doing.
+What's important is that you can now login to your account easily.
+Waiting for you.....

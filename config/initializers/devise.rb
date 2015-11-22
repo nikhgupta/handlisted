@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'hello@handlisted.in'
+  config.mailer_sender = ENV['DEVISE_EMAIL_FROM']
 
   # Configure the class responsible to send e-mails.
   config.mailer = 'DeviseBackgroundMailer'
@@ -274,6 +274,9 @@ end
 
 # Layout for the devise
 Rails.application.config.to_prepare do
+  Devise::Mailer.layout "email"
+  Devise::Mailer.helper "email"
+
   Devise::SessionsController.layout "devise"
   Devise::ConfirmationsController.layout "devise"
   Devise::UnlocksController.layout "devise"

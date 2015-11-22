@@ -86,7 +86,7 @@ RSpec.feature "When user registers", :mailers do
     deliver_enqueued_emails
     expect(recipients_for_last_email).to include @user.email
     expect(emails_for(@user.email).size).to eq(1)
-    expect(subject_for_last_email).to eq "Confirmation instructions"
+    expect(subject_for_last_email).to include "Welcome to Handlisted - Let's get started"
   end
 
   scenario "requires confirming email before allowing logging in" do
@@ -98,7 +98,7 @@ RSpec.feature "When user registers", :mailers do
 
   scenario "notifies user when email is confirmed" do
     deliver_enqueued_emails
-    click_first_link_in_last_email
+    click_first_link_matching "confirmation?confirmation_token"
     expect(page).to have_alert("successfully confirmed").as_notice
   end
 

@@ -1,0 +1,26 @@
+<%= yield :title %>
+<%= br %>
+
+<% if content_for?(:welcome) %>
+Welcome to Handlisted (http://handlisted.in) - a community curation of
+products from merchant websites like Amazon, Flipkart, and Snapdeal.
+We help you discover some of the most elegant products -
+we do not sell products - the Handlisted community curates them for you.
+<% end %>
+<%= yield.strip %>
+
+<% if content_for?(:feedback) %>
+We welcome your feedback, ideas and suggestions. We really want you to
+discover some of the most interesting, creative and elegant products on
+the earth, so if we are falling short or should be doing something
+different, we want to hear about it. Send us an email at
+feedback@handlisted.in.
+
+Oh, and most of all, have fun!
+<% end %>
+
+- The Handlisted Crew
+
+<%= br %>
+<%= yield :footer %><%= br %>
+Copyright 2015, Handlisted.in - 125, Vardhman Nagar - A, Jaipur, India
