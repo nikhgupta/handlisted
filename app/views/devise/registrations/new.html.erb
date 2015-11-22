@@ -23,11 +23,11 @@
     </div>
     <div class="section row">
       <div class="col-md-6">
-        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 4, maxlength: 32,
+        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 8, maxlength: 32,
           label: (@minimum_password_length ? "Password <small>(#{@minimum_password_length} characters minimum)</small>" : nil) %>
       </div>
       <div class="col-md-6">
-        <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 4, maxlength: 32, equalTo: '#user_password' %>
+        <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 8, maxlength: 32, equalTo: '#user_password' %>
       </div>
     </div>
     <div class="section visible-xs-block text-center">

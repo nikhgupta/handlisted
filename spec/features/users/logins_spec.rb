@@ -89,6 +89,24 @@ RSpec.feature "When user registers", :mailers do
     expect(subject_for_last_email).to include "Welcome to Handlisted - Let's get started"
   end
 
+  scenario "allows asking for confirmation email again via username/email" do
+    visit new_user_confirmation_path
+    fill_in "Login", with: "john"
+    click_on "Resend confirmation instructions"
+
+    visit new_user_confirmation_path
+    fill_in "Login", with: "john@smith.com"
+    click_on "Resend confirmation instructions"
+
+    deliver_enqueued_emails
+    expect(page).to have_no_alert "Login not found"
+    expect(emails_for(@user.email).size).to eq 3
+    3.times do |i|
+      expect(deliveries[i].subject).to include "Let's get started"
+      expect(deliveries[i].to).to include "john@smith.com"
+    end
+  end
+
   scenario "requires confirming email before allowing logging in" do
     sign_in_with @user.email, "password"
     expect(current_path).to eq(new_user_session_path)

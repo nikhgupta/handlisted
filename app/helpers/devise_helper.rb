@@ -27,7 +27,7 @@ module DeviseHelper
   def error_detail
     case
     when error_message =~ /invalid.*password/i
-      "<br/>" + link_to("You can reset your password here.", edit_user_password_path, class: "alert-link")
+      "<br/>" + link_to("You can reset your password here.", new_user_password_path, class: "alert-link")
     when error_message =~ /confirm.*email/i
       link_to "Didn't receive confirmation email?", new_user_confirmation_path, class: "alert-link"
     end
