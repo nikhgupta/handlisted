@@ -30,11 +30,22 @@ module ApplicationHelper
     end.html_safe
   end
 
-  # TODO: link tp image logo
+  def image_or_html(image, html, options = {})
+    if File.exist?(Rails.root.join("public", "images", image).to_s)
+      image_tag image, options
+    else
+      html.html_safe
+    end
+  end
+
+  def version_image_tag(version, options = {})
+    image_or_html "#{version}.png", version.to_s.titleize, { class: "version" }.merge(options)
+  end
+
   def link_logo_to(path, options = {})
     image = "handlisted-text-logo#{"-dark-bg" if options.delete(:dark_bg)}.png"
-    html = image_tag(image, class: "img-responsive logo", alt: "handlisted.in")
-    # html = "<span>hand<strong>listed</strong>.in</span>"
+    html  = "#{image_tag(image, class: "img-responsive logo", alt: "handlisted.in")}"
+    html += "#{version_image_tag :beta, class: "version"}"
     link_to html.html_safe, path, options
   end
 

@@ -1,7 +1,7 @@
 /*
-*= require theme
-*= require_self
-*/
+ *= require theme
+ *= require_self
+ */
 
 @import "mixins";
 
@@ -20,8 +20,15 @@
 @import "products";
 @import "users";
 
-.logo {
-  width: 125px;
-  display: inline;
-  vertical-align: text-bottom;
+.navbar-brand {
+  .logo {
+    width: 125px;
+    display: inline;
+    vertical-align: text-bottom;
+  }
+  .version {
+    color: #d72;
+    font-size: 13px;
+    width: 40px;
+  }
 }
