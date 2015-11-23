@@ -10,5 +10,5 @@
 
 $(document).ajaxError (e, XHR, options) ->
   message = "You need to sign in or sign up before continuing."
-  if XHR.status is 401 and (XHR.responseText is message or XHR.responseJSON?.error? is message)
+  if XHR.status is 401 and (XHR.responseText is message or XHR.responseJSON?.error is message)
     window.location.replace("/login?unauthorized")
