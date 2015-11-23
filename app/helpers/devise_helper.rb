@@ -19,6 +19,7 @@ module DeviseHelper
   end
 
   def error_message
+    return "You need to sign in or sign up before continuing." if unauthorized?
     return resource.errors.full_messages.first if resource_error?
     return flash.first.last if flash.any?
     return
@@ -34,7 +35,7 @@ module DeviseHelper
   end
 
   def error_type
-    return :alert if resource_error?
+    return :alert if unauthorized? or resource_error?
     flash.first.first.to_sym
   end
 
@@ -44,5 +45,9 @@ module DeviseHelper
     when :notice  then :info
     else error_type
     end
+  end
+
+  def unauthorized?
+    params.has_key?("unauthorized")
   end
 end

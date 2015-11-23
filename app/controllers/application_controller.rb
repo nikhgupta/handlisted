@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :alpha_access_only
+  # before_filter :alpha_access_only
   include Pundit
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
