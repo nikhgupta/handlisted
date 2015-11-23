@@ -6,7 +6,8 @@
   <ul class="nav navbar-nav navbar-left">
     <li> <%= link_to "#{fa_icon 'home'}<span> Home</span>".html_safe, root_path %> </li>
     <li> <%= link_to "#{fa_icon 'shopping-cart'}<span> Shop</span>".html_safe, shop_path %> </li>
-    <li> <%= link_to "#{fa_icon 'star'}<span> Featured</span>".html_safe, "#" %> </li>
+    <li> <%= link_to "#{fa_icon 'star'}<span> About</span>".html_safe, page_path('about') %> </li>
+    <li> <%= link_to "#{fa_icon 'question'}<span> How it works</span>".html_safe, page_path('add-products') %> </li>
   </ul>
 
 

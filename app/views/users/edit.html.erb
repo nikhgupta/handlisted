@@ -28,14 +28,14 @@
   <div id="liked-products" class="tab-pane active">
     <%= products_listing_for @products[:liked], kind: :liked do %>
       <strong>Oh snap!</strong> You seem a bit shy. You need to
-      <a href="#" class="alert-link">like some products</a>.
+      <%= link_to "like some products", page_path("add-products"), class: "alert-link" %>.
       Come on! You'll be famous!
     <% end %>
   </div>
   <div id="found-products" class="tab-pane">
     <%= products_listing_for @products[:found], kind: :found do %>
       <strong>Oh snap!</strong> You seem a bit shy. You need to
-      <a href="#" class="alert-link">find some products</a>.
+      <%= link_to "find some products", page_path("add-products"), class: "alert-link" %>.
       Come on! You'll be famous!
     <% end %>
   </div>

@@ -17,14 +17,14 @@
   <div id="found-products" class="tab-pane active">
     <%= products_listing_for @products[:found], kind: :found do %>
       Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
-      <a href="#" class="alert-link">find some products</a>
+      <%= link_to "find some products", page_path("add-products"), class: "alert-link" %>
       for you to be able to discover his taste!
     <% end %>
   </div>
   <div id="liked-products" class="tab-pane">
     <%= products_listing_for @products[:liked], kind: :liked do %>
       Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
-      <a href="#" class="alert-link">like some products</a>
+      <%= link_to "like some products", page_path("add-products"), class: "alert-link" %>
       for you to be able to discover his likes!
     <% end %>
   </div>
