@@ -10,18 +10,20 @@ namespace :slack do
       url  = "https://circle-artifacts.com/gh/nikhgupta/handlisted.in"
       url += "/#{ENV['CIRCLE_BUILD_NUM']}/artifacts/0#{path}"
 
-      html = Nokogiri::HTML(File.read("#{path}/index.html"))
-      report   = html.search("#AllFiles div").text.gsub(/\s+/, ' ').strip
-      percent  = html.search(".covered_percent")[0].text
-      strength = html.search(".covered_strength")[0].text
-      icon = html.search("link").detect{|a| a.attr("rel") == "shortcut icon"}
+      if File.exists?("#{path}/index.html")
+        html = Nokogiri::HTML(File.read("#{path}/index.html"))
+        report   = html.search("#AllFiles div").text.gsub(/\s+/, ' ').strip
+        percent  = html.search(".covered_percent")[0].text
+        strength = html.search(".covered_strength")[0].text
+        icon = html.search("link").detect{|a| a.attr("rel") == "shortcut icon"}
 
-      surl = URI(ENV['SLACK_COVERAGE_URL'])
-      icon = "#{url}/#{icon.attr('href')}"
-      text = "<#{url}/index.html|Coverage report> for last build: #{percent}\n#{report}"
-      data = { channel: "#general", username: "simplecov", icon_url: icon, text: text }
+        surl = URI(ENV['SLACK_COVERAGE_URL'])
+        icon = "#{url}/#{icon.attr('href')}"
+        text = "<#{url}/index.html|Coverage report> for current CI build: #{percent}\n#{report}"
+        data = { channel: "#general", username: "simplecov", icon_url: icon, text: text }
 
-      Net::HTTP.post_form surl, payload: data.to_json
+        Net::HTTP.post_form surl, payload: data.to_json
+      end
     else
       puts "This task is aimed to be used within CircleCI environment."
     end

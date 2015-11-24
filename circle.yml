@@ -9,12 +9,14 @@ test:
     - ./bin/product_scraper_tests
 
 deployment:
-  coverage:
-    branch: /.+/
+  production:
+    branch: master
+    commands:
+      - bundle exec rake slack:coverage
+      - bundle exec cap production deploy
+
+  all_others:
+    branch: /.*/
     commands:
       - bundle exec rake slack:coverage
 
-  release:
-    tag: /v[0-9]+(\.[0-9]+)*/
-    commands:
-      - bundle exec cap production deploy
