@@ -9,6 +9,11 @@ test:
     - ./bin/product_scraper_tests
 
 deployment:
+  coverage:
+    branch: /.+/
+    commands:
+      - bundle exec rake slack:coverage
+
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:

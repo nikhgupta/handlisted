@@ -103,34 +103,46 @@ namespace :foreman do
   end
 end
 
-namespace :rspec do
-  desc 'Run RSpec before deployment'
-  task 'verify' do
-    run_locally do
-      target  = fetch :branch
-      current = %x(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f 3).strip
+# namespace :rspec do
+#   desc 'Run RSpec before deployment'
+#   task 'verify' do
+#     run_locally do
+#       target  = fetch :branch
+#       current = %x(git symbolic-ref HEAD 2>/dev/null | cut -d'/' -f 3).strip
 
-      begin
-        %x(git checkout #{target} &>/dev/null) if current != target
-        info "Running tests (with coverage) on #{target}, please wait ..."
+#       begin
+#         %x(git checkout #{target} &>/dev/null) if current != target
+#         info "Running tests (with coverage) on #{target}, please wait ..."
 
-        if execute "COVERAGE=1 bundle exec rake > #{fetch :test_log} 2>&1"
-          info "Tests passed. Coverage report: #{fetch :coverage}"
-          execute "rm #{fetch :test_log}"
-        else
-          error "Tests failed. Run `cat #{fetch :test_log}` to see what went wrong."
-          exit
-        end
-      ensure
-        %x(git checkout #{current} &>/dev/null) if current != target
+#         if execute "COVERAGE=1 bundle exec rake > #{fetch :test_log} 2>&1"
+#           info "Tests passed. Coverage report: #{fetch :coverage}"
+#           execute "rm #{fetch :test_log}"
+#         else
+#           error "Tests failed. Run `cat #{fetch :test_log}` to see what went wrong."
+#           exit
+#         end
+#       ensure
+#         %x(git checkout #{current} &>/dev/null) if current != target
+#       end
+#     end
+#   end
+# end
+
+namespace :deploy do
+  desc 'Reject production deployments without CircleCI'
+  task :circle_ci_check do
+    if fetch(:stage) == :production && !ENV['CI']
+      run_locally do
+        error "Cannot deploy to production directly."
+        info "Tag the release."
+        info "Push this tag to Github, which will run the tests on CircleCI."
+        info "If tests are successful, code will be deployed to production."
+        exit
       end
     end
   end
-end
 
-namespace :deploy do
-  before :starting,   "rspec:verify" if ENV['SKIP_RSPEC'].to_s.empty?
+  before :starting, "deploy:circle_ci_check"
   after  :publishing, "foreman:export"
   after  :publishing, "foreman:restart"
-  # after "deploy:finished", 'airbrake:deploy'
 end

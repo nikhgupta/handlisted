@@ -20,6 +20,6 @@ else
   end
   SimpleCov.command_name 'RSpec'
 
-  coverage_dir = ENV['CI'] ? ENV['CIRCLE_ARTIFACTS'] : "tmp/coverage"
-  SimpleCov.coverage_dir coverage_dir
+  coverage_dir = ENV['CI'] ? ENV['CIRCLE_ARTIFACTS'] : "tmp"
+  SimpleCov.coverage_dir "#{coverage_dir}/coverage"
 end unless ENV['COVERAGE'].to_s.strip.empty?
