@@ -1,9 +1,17 @@
-<div class="productCard-overview row">
+<div class="productCard-overview row" data-pid="<%= product.pid %>">
   <div class="panel main">
     <div class="panel-body">
       <div class="row">
-        <div class="product-image col-sm-6" data-link="<%= product_path(product) %>">
-          <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
+        <div class="left-side col-sm-6">
+          <div class="product-image" data-link="<%= product_path(product) %>">
+            <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
+          </div>
+          <div class="action-icons">
+            <span class="label bg-primary mr10 label-<%= product.merchant.identifier %>">
+              <%= presenter.merchant_name %>
+            </span>
+            <%= presenter.like_button class: "pull-right" %>
+          </div>
         </div>
         <div class="col-sm-6 product-details mb20">
           <div class="text-info">

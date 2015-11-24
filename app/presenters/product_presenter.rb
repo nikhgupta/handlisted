@@ -36,7 +36,7 @@ class ProductPresenter < ApplicationPresenter
   def like_button(options = {})
     status = liked_by_current_user? ? :on : :off
     icon = h.fa_icon(status == :on ? 'heart' : 'heart-o', class: "fa-2x")
-    h.link_to icon, h.like_product_path(model), remote: true, method: :post, data: { like: status }
+    h.link_to icon, h.like_product_path(model), { remote: true, method: :post, data: { like: status } }.merge(options)
   end
 
   def liked_by_current_user?
