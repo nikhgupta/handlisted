@@ -97,3 +97,4 @@ end
 
 # others
 gem 'roadie-rails'
+gem "skylight"
