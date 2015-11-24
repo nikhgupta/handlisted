@@ -7,6 +7,7 @@ class @FormsValidator
   constructor: (selector, @options = {}) -> @selector = $(selector)
 
   validatorOptions:
+    onfocusout: (element, event) -> $(element).valid()
     highlight: (element, errorClass, validClass) ->
       $(element).closest('.field').addClass(errorClass).removeClass validClass
     unhighlight: (element, errorClass, validClass) ->
@@ -31,4 +32,5 @@ class @FormsValidator
       @optional(element) or regex.test(value)
     ), 'Please enter a valid value with <strong>{0}</strong> only.'
 
-    @selector.validate $.extend(@options, @validatorOptions)
+    options = $.extend(@options, @validatorOptions)
+    @selector.each -> $(@).validate options

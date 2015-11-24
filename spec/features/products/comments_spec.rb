@@ -70,7 +70,8 @@ RSpec.feature "product comments" do
 
     scenario "displays validation errors when they occur" do
       add_comment text: "short comment"
-      expect(page).to have_selector(".input-footer em.state-error", "too short")
+      message = "Please enter at least 20 characters."
+      expect(page).to have_selector(".input-footer em.state-error", text: message)
 
       allow_any_instance_of(Comment).to receive(:save).and_return(false)
       add_comment text: "comment that will not be saved"
@@ -118,7 +119,8 @@ RSpec.feature "product comments" do
 
     scenario "displays validation errors when they occur", :js do
       add_comment text: "short comment"
-      expect(page).to have_selector(".input-footer em.state-error", "too short")
+      message = "Please enter at least 20 characters."
+      expect(page).to have_selector(".input-footer em.state-error", text: message)
 
       allow_any_instance_of(Comment).to receive(:save).and_return(false)
       add_comment text: "comment that will not be saved"
