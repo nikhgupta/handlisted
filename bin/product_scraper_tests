@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+repo=product_scraper
+ghuser=nikhgupta
+repourl="https://github.com/${ghuser}/${repo}"
+gempath="./vendor/gems/${repo}"
+format="Fuubar"
+
+echo -ne "Running tests on ProductScraper gem...\n\n\n"
+
+[ -d "${gempath}" ] || git clone "${repourl}" "${gempath}"
+
+cd "${gempath}"
+git checkout master && git pull origin master
+
+bundle install
+if [ -z "${CI}" ]; then
+  bundle exec rspec --require spec_helper --color --format "${format}"
+else
+  bundle exec rspec --require spec_helper --format RspecJunitFormatter \
+    --out "${CIRCLE_TEST_REPORTS}/rspec/${repo}.xml"
+fi

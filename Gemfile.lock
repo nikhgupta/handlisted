@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/nikhgupta/product_scraper.git
-  revision: a5d5edb8f789ce38e49d6067768d278a4bf02bc5
+  revision: 500565a0fca68ac218a1bfcb029ee7071a168ad8
   branch: master
   specs:
     product_scraper (0.1.1)
@@ -153,6 +153,9 @@ GEM
     formtastic_i18n (0.4.1)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    fuubar (2.0.0)
+      rspec (~> 3.0)
+      ruby-progressbar (~> 1.4)
     gibbon (2.1.2)
       faraday (>= 0.9.1)
       multi_json (>= 1.11.0)
@@ -332,6 +335,10 @@ GEM
       roadie (~> 3.1)
     rollbar (2.5.2)
       multi_json
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
     rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -349,6 +356,10 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.0)
+    rspec_junit_formatter (0.2.2)
+      builder (< 4)
+      rspec-core (>= 2, < 4, != 2.12.0)
+    ruby-progressbar (1.7.5)
     safe_yaml (1.0.4)
     sanitize (4.0.0)
       crass (~> 1.0.2)
@@ -451,6 +462,7 @@ DEPENDENCIES
   factory_girl_rails
   foreman
   friendly_id
+  fuubar
   gibbon
   google_currency
   high_voltage
@@ -475,6 +487,7 @@ DEPENDENCIES
   roadie-rails
   rollbar (~> 2.5.0)
   rspec-rails
+  rspec_junit_formatter (= 0.2.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers

@@ -1,0 +1,15 @@
+machine:
+  environment:
+    COVERAGE: "1"
+    DEVISE_EMAIL_FROM: '"Handlisted.in Tests" <tests@handlisted.in>'
+    RAILS_ENV: "test"
+
+test:
+  post:
+    - ./bin/product_scraper_tests
+
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    commands:
+      - bundle exec cap production deploy

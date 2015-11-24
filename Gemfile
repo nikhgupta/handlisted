@@ -83,6 +83,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'rspec_junit_formatter', '0.2.2' # for Circle-CI metadata inference
+  gem 'fuubar'
 end
 
 group :test, :development do

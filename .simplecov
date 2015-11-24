@@ -19,5 +19,7 @@ else
     add_group 'Sidekiq',    'app/jobs'
   end
   SimpleCov.command_name 'RSpec'
-  SimpleCov.coverage_dir 'tmp/simplecov/output'
+
+  coverage_dir = ENV['CI'] ? ENV['CIRCLE_ARTIFACTS'] : "tmp/coverage"
+  SimpleCov.coverage_dir coverage_dir
 end unless ENV['COVERAGE'].to_s.strip.empty?
