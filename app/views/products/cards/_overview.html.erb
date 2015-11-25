@@ -40,7 +40,7 @@
         <div class="row">
           <% @product.related_products.take(6).each do |product| %>
             <div class="col-xxs-6 col-xs-4 col-sm-3 col-md-2">
-              <%= render "products/cards/mini", product: product, presenter: present(product) %>
+              <%= link_to render("products/cards/mini", product: product, presenter: present(product)), product_path(product), class: "related-product" %>
             </div>
           <% end %>
         </div>

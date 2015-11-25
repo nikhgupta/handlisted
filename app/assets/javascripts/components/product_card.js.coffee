@@ -6,24 +6,37 @@
 #
 class @ProductCard
   constructor: (options) ->
-    @card = $(options.element)
-    @image = @card.find('.product-image')
+    @card    = $(options.element)
+    @type    = options.type
+    @image   = @card.find('.product-image')
+    @related = @card.find('.related-product')
 
   init: ->
     @markAsInitialized()
-    @attachModal()
+    @attachModal() if @type is "default"
+    @attachToRelatedProducts() if @type is "overview"
 
   markAsInitialized: ->
     @card.addClass('cardified')
 
-  attachModal: ->
-    @image.on 'click', (e) =>
+  _openModalOrPage: (nodes, cb) ->
+    nodes.on 'click', (e) ->
+      url = cb($(@))
       if $(window).width() < 540
-        window.location = @image.data("link")
+        window.location = url
       else
-        # Preventing default action will make links unusable inside .panel-body
-        # e.preventDefault()
-        $.getScript "#{@image.data('link')}.js"
+        e.preventDefault()
+        $.getScript "#{url}.js"
 
-$.fn.productCardify = ->
-  @each -> new ProductCard(element: @).init()
+
+  attachModal: ->
+    @_openModalOrPage @image, (node) -> node.data('link')
+
+  attachToRelatedProducts: ->
+    @_openModalOrPage @related, (node) -> node.find(".product-image").data('link')
+
+$.productCardify = (namespace) ->
+  mapping = { default: "", mini: "-mini", overview: "-overview" }
+  for key, val of mapping
+    $(".#{namespace}#{val}:not(.cardified)").each ->
+      new ProductCard(element: @, type: key).init()

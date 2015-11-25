@@ -21,8 +21,7 @@ class @ProductPaginator
     @pagination().html(html).addClass("bg-header #{"has-loader" if has_loader}")
 
   fetchCards: (url, cb = ->) ->
-    cards = $(".productCard:not(.cardified)")
-    $.getScript url, => cards.productCardify() and cb()
+    $.getScript url, => $.productCardify('productCard') and cb()
 
   convertPaginationToLoadMoreLink: ->
     ajaxHtml = "<a class='load-more' href='#{@paginationUrl()}'>Load More</a>"

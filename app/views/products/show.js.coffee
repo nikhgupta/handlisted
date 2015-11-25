@@ -6,4 +6,5 @@ new MagnificModal
   modalClass: "productModal"
   animation: "zoomIn"
 .open()
+$.productCardify("productCard")
 <% end %>
