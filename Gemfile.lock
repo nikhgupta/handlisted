@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/nikhgupta/product_scraper.git
-  revision: 500565a0fca68ac218a1bfcb029ee7071a168ad8
+  revision: 1fe8e6757cccd4e619260d87d5115e91b0575971
   branch: master
   specs:
-    product_scraper (0.1.1)
+    product_scraper (0.1.2)
       activesupport
       mechanize
       monetize
