@@ -12,7 +12,7 @@ module ProductScraper::Checkable
   private
 
   def find_product_hash
-    ProductScraper.url_hash_for(params[:search])
+    ProductScraper.uuid(params[:search])[:uuid]
   rescue ProductScraper::Error
     nil
   end

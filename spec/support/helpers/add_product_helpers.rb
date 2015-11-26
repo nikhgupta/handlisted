@@ -39,8 +39,8 @@ module AddProductHelpers
     expect(progress_status).to be >= 10
     expect(ProductScraperJob.jobs.size).to eq 1
     if block_given?
-      method = ProductScraper.method(:fetch_basic_info)
-      allow(ProductScraper).to receive(:fetch_basic_info) do |args|
+      method = ProductScraper.method(:fetch)
+      allow(ProductScraper).to receive(:fetch) do |args|
         yield
         method.call(*args)
       end

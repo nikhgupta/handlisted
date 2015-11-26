@@ -116,7 +116,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "POST #verify_url" do
     it "checks if the url provided to search is parseable by the scraper" do
-      url = PRODUCTS_LIST[:amazon_echo][:url]
+      url = PRODUCTS_LIST[:kindle][:url]
       post :verify_url, { search: url, format: :json }, valid_session
       expect(response).to be_successful
       json = JSON.parse response.body

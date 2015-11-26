@@ -4,7 +4,7 @@ RSpec.feature "when not logged in", :slow, :vcr do
   scenario "adding products from search bar requires signing in", js: true do
     sign_out_if_logged_in
     visit root_path
-    add_product_via_sitewide_search(:amazon_echo)
+    add_product_via_sitewide_search(:kindle)
     expect(current_path).to eq new_user_session_path
   end
 end
@@ -18,7 +18,7 @@ RSpec.feature "add product from search bar", :slow, :vcr, js: true do
   end
 
   scenario "user adds a product" do
-    add_product_via_search_and_perform(:amazon_echo) do
+    add_product_via_search_and_perform(:kindle) do
       expect(page).to have_selector('header .progress-bar.progress-bar-warning')
       status = progress_status
       expect(status).to be >= 30
@@ -31,7 +31,7 @@ RSpec.feature "add product from search bar", :slow, :vcr, js: true do
       expect(progress_status).to be_within(0.1).of(status + 1)
     end
     expect(page).not_to have_selector('header .progress-bar')
-    product = Product.find_by(pid: PRODUCTS_LIST[:amazon_echo][:pid])
+    product = Product.find_by(pid: PRODUCTS_LIST[:kindle][:pid])
     expect(current_path).to eq product_path(product)
   end
 
@@ -42,7 +42,7 @@ RSpec.feature "add product from search bar", :slow, :vcr, js: true do
   end
 
   scenario "users adds a product which induces an error" do
-    allow(ProductScraper).to receive(:fetch_basic_info).and_raise(ProductScraper::Error, 'Some Error')
+    allow(ProductScraper).to receive(:fetch).and_raise(ProductScraper::Error, 'Some Error')
     expect {
       add_product_via_search_and_perform :invalid
     }.to raise_error(ProductScraper::Error)
@@ -52,7 +52,7 @@ RSpec.feature "add product from search bar", :slow, :vcr, js: true do
 
   scenario 'users adds a product that takes a long time to process' do
     allow(Sidekiq::Status).to receive(:status).and_return(nil)
-    add_product_via_search_and_perform :amazon_echo
+    add_product_via_search_and_perform :kindle
     expect(page).to have_selector('header .progress-bar-default')
     expect(page).to have_selector('.product-adder-errors', text: /sorry.*took\sa\slong\stime/i)
   end

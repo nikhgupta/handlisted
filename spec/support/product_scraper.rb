@@ -3,12 +3,12 @@ require 'webmock/rspec'
 require 'product_scraper/testing'
 
 PRODUCTS_LIST = {
-  amazon_echo: {
-    pid: 'B00X4WHP5E',
-    url: 'http://www.amazon.com/dp/B00X4WHP5E'
+  kindle: {
+    pid: 'B00QJDOEAO',
+    url: 'http://www.amazon.in/gp/product/B00QJDOEAO'
   }, invalid: {
-    pid: 'B00X4WHP5EX',
-    url: 'http://www.amazon.com/dp/B00X4WHP5EX'
+    pid: 'B00QJDOEAOX',
+    url: 'http://www.amazon.in/gp/product/B00QJDOEAOX'
   }, moto_x: {
     url: 'http://www.flipkart.com/moto-e-2nd-gen-4g/p/itme85hfdv6zztcj?pid=MOBE4G6GTH2QDACF',
     pid: 'MOBE4G6GTH2QDACF'
