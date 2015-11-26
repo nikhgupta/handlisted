@@ -27,7 +27,7 @@ class ProductPresenter < ApplicationPresenter
     return if model.url.blank?
     available = model.available? && model.price.to_i > 0
     options[:class] = options.fetch(:class) { (available ? "system" : "light") }
-    options[:class] = "btn btn-large light fs28 affiliate-button btn-#{options[:class]}"
+    options[:class] = "btn btn-large light affiliate-button btn-#{options[:class]}"
     options = { target: "_blank" }.merge(options)
     text = (affiliate_link_text + " " + h.fa_icon('external-link')).html_safe
     h.link_to text, h.visit_product_path(model), options

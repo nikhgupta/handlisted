@@ -200,5 +200,7 @@
   .affiliate-button {
     box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
     padding: 10px 20px;
+    font-size: 22px;
+    @media (min-width: 768px) { font-size: 28px; }
   }
 }
