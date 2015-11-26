@@ -9,3 +9,28 @@
     width: 90%;
   }
 }
+
+.productModal {
+  margin: 5px auto;
+  .panel-body { padding: 20px; }
+}
+.productModal.popup-full {
+  .mfp-close {
+    top: 50px;
+    right: 0;
+    background: #f8f8f8;
+    font-size: 2em;
+    border: 2px solid #e8e8e8;
+    height: 30px;
+    line-height: 29px;
+    width: 30px;
+    color: #666;
+  }
+  .panel {
+    margin-bottom: 10px;
+    border: 0;
+    border-radius: 0;
+    &.main { margin-top: 40px; }
+    .panel-heading { border-radius: 0; }
+  }
+}

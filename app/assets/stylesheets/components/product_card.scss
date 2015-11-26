@@ -89,24 +89,6 @@
   font-weight: bold;
 }
 
-.productModal {
-  margin: 5px auto;
-  .panel-body { padding: 20px; }
-}
-.productModal.popup-full {
-  .mfp-close {
-    top: 10px;
-    right: 10px;
-  }
-  .panel {
-    margin-bottom: 10px;
-    border: 0;
-    border-radius: 0;
-    &.main { margin-top: 40px; }
-    .panel-heading { border-radius: 0; }
-  }
-}
-
 .productCard-overview .action-icons {
   width: 80%;
   margin: -47px auto 10px;
