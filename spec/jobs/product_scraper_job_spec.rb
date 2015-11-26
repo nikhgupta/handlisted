@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ProductScraperJob, type: :job do
   let(:user) { create :confirmed_user }
-  let(:echo_url){ PRODUCTS_LIST[:amazon_echo][:url] }
-  let(:echo_pid){ PRODUCTS_LIST[:amazon_echo][:pid] }
+  let(:echo_url){ PRODUCTS_LIST[:kindle][:url] }
+  let(:echo_pid){ PRODUCTS_LIST[:kindle][:pid] }
 
   it 'queues the product in background queue' do
     expect {
@@ -53,12 +53,20 @@ RSpec.describe ProductScraperJob, type: :job do
   end
 
   it 'catches scraper errors and returns them as error messages' do
+    expect(ProductScraper).to receive(:fetch).and_raise ProductScraper::Error.new('some error')
     jid = described_class.perform_async(user.id, 'http://url.to/not-implemented/')
-    err = 'Merchant not implemented.'
-
-    expect { described_class.drain }.to raise_error(ProductScraper::Error).with_message(err)
+    expect { described_class.drain }.to raise_error(ProductScraper::Error).with_message('some error')
 
     expect(Sidekiq::Status.status(jid)).to eq(:failed)
+    expect(Sidekiq::Status.get_all(jid)).to include('errors' => 'some error')
+  end
+
+  it "returns relevant errors if product could not be imported due to known reasons" do
+    jid = described_class.perform_async(user.id, 'http://url.to/not-implemented/')
+    err = 'Merchant has not been implemented, yet!'
+
+    expect { described_class.drain }.not_to raise_error
+    expect(Sidekiq::Status.status(jid)).to eq(:complete)
     expect(Sidekiq::Status.get_all(jid)).to include('errors' => err)
   end
 end

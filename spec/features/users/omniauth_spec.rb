@@ -139,39 +139,6 @@ RSpec.feature "user registers with omniauth provider", :omniauth, :mailers do
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Facebook User"
   end
-
-  scenario "Issue #72: https://github.com/nikhgupta/handlisted.in/issues/72" do
-    user = sign_in_as :confirmed_user
-    visit edit_profile_path
-
-    add_provider_via_profile :facebook
-    expect(current_path).to eq edit_profile_path
-    expect(page).to have_alert("Successfully linked").as_notice
-
-    sign_out_if_logged_in
-    ActionMailer::Base.deliveries = []
-
-    visit new_user_registration_path
-    fill_in "Name", with: "testuser"
-    fill_in "Username", with: "testuser"
-    fill_in "Email", with: "testuser@facebook.com"
-    fill_in "Password (8 characters minimum)", with: "password"
-    fill_in "Password confirmation", with: "password"
-    click_on_button "Sign up"
-
-    deliver_enqueued_emails
-    click_first_link_matching "confirmation?confirmation_token"
-
-    expect(page).to have_alert("successfully confirmed").as_info
-    sign_in_with "testuser@facebook.com"
-    visit edit_profile_path
-    expect(page).to have_field("Email", with: "testuser@facebook.com")
-    sign_out_if_logged_in
-
-    sign_in_with_provider :facebook
-    visit edit_profile_path
-    expect(page).to have_field("Email", with: user.email)
-  end
 end
 
 RSpec.feature "user logins using omniauth provider", :omniauth do
