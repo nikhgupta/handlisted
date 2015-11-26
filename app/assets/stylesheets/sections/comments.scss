@@ -6,6 +6,7 @@
     }
   }
   .commentsList {
+    .paginator { margin: 10px 0; }
     .paging-info { margin: 19px 0; }
     .paging-links {
       span { padding: 0 4px; }
@@ -14,9 +15,6 @@
       .media-body {
         color: #666;
         h5 { color: #999; }
-        .comment {
-          white-space: pre;
-        }
       }
     }
   }

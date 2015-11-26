@@ -1,10 +1,10 @@
 <div class="commentsList">
   <% if comments.any? %>
     <div class="paginator row">
-      <div class="paging-info col-md-6 text-right">
+      <div class="paging-info col-sm-6 hidden-xs text-right">
         <%= page_entries_info comments %>
       </div>
-      <div class="paging-links col-md-6 text-left">
+      <div class="paging-links col-sm-6 col-xs-12 text-left">
         <%= paginate comments, remote: true, params: { resource: :comments } %>
       </div>
     </div>
