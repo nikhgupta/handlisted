@@ -21,6 +21,7 @@ class @MagnificModal
         preloader: true
         midClick: true
         removalDelay: 500
+        fixedContentPos: true
         items: src: $("##{@target}")
         mainClass: "mfp-#{@animation}"
         callbacks: @callbacks
