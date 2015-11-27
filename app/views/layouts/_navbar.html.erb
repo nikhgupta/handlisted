@@ -27,11 +27,11 @@
       <% if current_user.admin? %>
         <li> <div class="navbar-btn btn-group"> <%= link_to fa_icon('gear'), admin_dashboard_path, class: "btn btn-sm" %> </div> </li>
       <% end %>
-      <li> <div class="navbar-btn btn-group"> <%= link_to "Profile", edit_profile_path, class: "btn btn-sm" %> </div> </li>
-      <li> <div class="navbar-btn btn-group"> <%= link_to "Logout", destroy_user_session_path, class: "btn btn-sm" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "#{fa_icon 'user'} <span> Profile</span>".html_safe, edit_profile_path, class: "btn btn-sm" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "#{fa_icon 'sign-out'} <span>Logout</span>".html_safe, destroy_user_session_path, class: "btn btn-sm" %> </div> </li>
     <% else %>
-      <li> <div class="navbar-btn btn-group"> <%= link_to "Login", new_user_session_path, class: "btn btn-sm btn-login" %> </div> </li>
-      <li> <div class="navbar-btn btn-group"> <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-register" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "#{fa_icon 'sign-in'} <span>Login</span>".html_safe, new_user_session_path, class: "btn btn-sm btn-login" %> </div> </li>
+      <li> <div class="navbar-btn btn-group"> <%= link_to "#{fa_icon 'user-plus'} <span>Register</span>".html_safe, new_user_registration_path, class: "btn btn-sm btn-register" %> </div> </li>
     <% end %>
   </ul>
 </header>
