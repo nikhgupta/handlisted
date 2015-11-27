@@ -94,7 +94,7 @@ class ProductPresenter < ApplicationPresenter
 
     text += "<br/>"
     model.images.each do |image|
-      text += h.image_tag(image).html_safe + "<br/>"
+      text += h.image_tag(image) + "<br/>".html_safe
     end
 
     text
