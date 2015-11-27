@@ -41,7 +41,7 @@ class ProductMigratingService
       images: response['images']
     }
     data[:brand] = { name: response['brand_name'] } if response['brand_name']
-    data[:price] = response['price'] if response[:price]
+    data[:price] = response['price'] if response['price']
     data[:marked_price] = response['marked_price'] if response['marked_price']
     data[:url_hash] = response['uuid']
     data[:categories] = response['categories']
