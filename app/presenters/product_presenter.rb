@@ -64,6 +64,28 @@ class ProductPresenter < ApplicationPresenter
     h.social_share_button_tag(title.strip, hash)
   end
 
+  def rss_description
+    text  = "On #{model.merchant}<br/>"
+    text  = "By #{model.brand} #{text}" if model.brand.present?
+    if model.available? && model.price.to_f > 0
+      text += "Available for discounted price of #{price}"
+    elsif model.available? && model.marked_price.to_f > 0
+      text += "Available for a price of #{marked_price}"
+    elsif model.available?
+      text += "Available"
+    else
+      text += "Currently unavailable"
+    end
+    text += " on priority service" if model.prioritized?
+
+    text += "<br/>"
+    model.images.each do |image|
+      text += h.image_tag(image).html_safe + "<br/>"
+    end
+
+    text
+  end
+
 private
 
   def affiliate_link_text

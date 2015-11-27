@@ -67,7 +67,8 @@ Rails.application.routes.draw do
   get 'shop/:id' => "categories#show", as: :category
 
   post 'newsletter/subscribe' => 'services/newsletter#subscribe', as: :newsletter_subscription
-  get  'feeds/recent' => 'services/feeds#recent', defaults: { format: :rss }, constraints: { format: :rss }
+  get  'feeds/recent' => 'services/feeds#recent', as: :recent_feed,
+    defaults: { format: :rss }, constraints: { format: :rss }
 
   get ':username' => 'users#show', as: :profile
   # The priority is based upon order of creation: first created -> highest priority.
