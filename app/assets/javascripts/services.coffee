@@ -1,6 +1,7 @@
 #= require services/magnific_modal
 #= require services/forms_validator
 #= require services/newsletter_subscriber
+#= require social-share-button
 
 ready = ->
   # validate all forms on this page using services/form_validator

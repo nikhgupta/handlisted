@@ -53,6 +53,17 @@ class ProductPresenter < ApplicationPresenter
     model.merchant.name.titleize
   end
 
+  def social_sharing(options = {})
+    title = model.name
+    title = "Found on HandListed.in: #{title}" if title.length < 90
+
+    hash  = { url: h.product_short_url(model.id) }
+    hash[:image] = cover_image if model.images && model.images.any?
+    hash.merge!(options)
+
+    h.social_share_button_tag(title.strip, hash)
+  end
+
 private
 
   def affiliate_link_text

@@ -21,6 +21,7 @@ xml.rss version: "2.0" do
         xml.price     present(product).send(product.price.to_f > 0 ? :price : :marked_price)
         xml.available product.available?
         xml.priority_service product.prioritized?
+        xml.guid      product.pid
         xml.images do
           product.images.each do |image|
             xml.image image_url(image)

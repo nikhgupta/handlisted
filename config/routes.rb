@@ -35,6 +35,11 @@ Rails.application.routes.draw do
   get "community", to: "users#index", as: :community
   # root to: 'high_voltage/pages#show', id: 'home'
 
+  get 'p/:id', as: :product_short, to: redirect{ |params, request|
+    path = Product.find(params[:id]).to_param
+    "#{request.scheme}://#{request.host_with_port}/products/#{path}"
+  }
+
   resources :products, only: [:index, :show, :create], concerns: :paginatable do
     collection do
       post 'create/status' => 'products#fetch_status', defaults: { format: :json }, constraints: { format: :json }

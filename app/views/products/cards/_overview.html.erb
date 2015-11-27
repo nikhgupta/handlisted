@@ -7,17 +7,18 @@
             <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
           </div>
           <div class="action-icons">
-            <span class="label bg-primary mr10 label-<%= product.merchant.identifier %>">
-              <%= presenter.merchant_name %>
-            </span>
-            <%= presenter.like_button class: "pull-right" %>
+            <%= presenter.like_button %>
+            <div class="pull-right"><%= presenter.social_sharing %></div>
           </div>
         </div>
         <div class="col-sm-6 product-details mb20">
           <div class="text-info">
             <h1 class="product-name pln"><%= presenter.name %></h1>
             <% if product.brand.present? %>
-              <h3 class="product-brand text-muted"> By <%= link_to product.brand.name, brand_path(product.brand), class: "text-dark" %> </h3>
+              <h3 class="product-brand text-muted">
+                By <%= link_to product.brand.name, brand_path(product.brand), class: "text-dark" %>
+                on <span class="merchant"><%= presenter.merchant_name %></span>
+              </h3>
             <% end %>
           </div>
           <%= presenter.affiliate_link_action_button target: '_blank' %>
