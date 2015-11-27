@@ -15,6 +15,7 @@ class @ProductCard
     @markAsInitialized()
     @attachModal() if @type is "default"
     @attachToRelatedProducts() if @type is "overview"
+    @hideReimportOnClick()
 
   markAsInitialized: ->
     @card.addClass('cardified')
@@ -28,12 +29,15 @@ class @ProductCard
         e.preventDefault()
         $.getScript "#{url}.js"
 
-
   attachModal: ->
     @_openModalOrPage @image, (node) -> node.data('link')
 
   attachToRelatedProducts: ->
     @_openModalOrPage @related, (node) -> node.find(".product-image").data('link')
+
+  hideReimportOnClick: ->
+    @card.find(".reimport").on 'click', (e) ->
+      $(@).replaceWith("<span class='label label-text'>reimporting...</span>")
 
 $.productCardify = (namespace) ->
   mapping = { default: "", mini: "-mini", overview: "-overview" }

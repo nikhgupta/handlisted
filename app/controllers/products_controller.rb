@@ -35,6 +35,15 @@ class ProductsController < ApplicationController
     end
   end
 
+  def reimport
+    @product = Product.find(params[:id])
+    @job_id  = ProductScraperJob.perform_async @product.founder_id, @product.url, force: true if @product
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Successfully queued.." }
+      format.js { render :reimport }
+    end
+  end
+
   # NOTE: this action simply queues the given product inside Sidekiq. When
   # sidekiq reports that the product has been imported (maybe, already), the
   # user is then redirected to product page using JS.

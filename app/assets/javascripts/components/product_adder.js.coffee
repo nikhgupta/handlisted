@@ -10,6 +10,7 @@ class @ProductAdder
   constructor: (@options) ->
     @form  = $(@options.form)
     @timer = null
+    @jobid = null
 
   setup: ->
     return false unless @form?
@@ -33,17 +34,23 @@ class @ProductAdder
         if response.valid and response.existing?
           window.location = response.existing
         else if response.valid
-          @switchToProgressBar()
-          $.post @endpoints.add, { url: @input.val() }, (response) =>
-            @form.data "job-id", response.id
-            @timer = setInterval (=> @getJobStatus()), 1000
+          @import @input.val()
         else
           @form.unbind('submit')
           @form.submit()
 
+  import: (url, job_id = null) ->
+    @switchToProgressBar()
+    if job_id
+      @jobid = job_id
+      @timer = setInterval (=> @getJobStatus()), 1000
+    else
+      $.post @endpoints.add, { url: url }, (response) =>
+        @jobid = response.id
+        @timer = setInterval (=> @getJobStatus()), 1000
+
   getJobStatus: ->
-    job_id = @form.data('job-id')
-    $.post @endpoints.status, { job_id: job_id }, (response) =>
+    $.post @endpoints.status, { job_id: @jobid }, (response) =>
       @status = response
       @progressbar.html(response.status)
       @updateProgressBarStyle()

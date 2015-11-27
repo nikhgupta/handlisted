@@ -39,7 +39,7 @@ RSpec.describe ProductPresenter, type: :presenter do
       allow(view).to receive(:current_user).and_return(build_stubbed(:user))
       html = Capybara.string presenter.like_button
       url  = "/products/moto-x-2nd-generation/like"
-      selector = "a[data-like='off'][href='#{url}'] i.fa.fa-heart-o.fa-2x"
+      selector = "a.like:not(.active)[href='#{url}'] i.fa.fa-heart-o.fa-2x"
       expect(html).to have_selector(selector)
     end
 
@@ -50,7 +50,7 @@ RSpec.describe ProductPresenter, type: :presenter do
 
       html = Capybara.string presenter.like_button
       url  = "/products/moto-x-2nd-generation/like"
-      selector = "a[data-like='on'][href='#{url}'] i.fa.fa-heart.fa-2x"
+      selector = "a.like.active[href='#{url}'] i.fa.fa-heart.fa-2x"
       expect(html).to have_selector(selector)
     end
   end

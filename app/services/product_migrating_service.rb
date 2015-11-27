@@ -1,17 +1,18 @@
 class ProductMigratingService
-  attr_accessor :user, :data
+  attr_accessor :user, :data, :force
 
   def initialize(options = {})
     self.user = options[:user]
     self.data = sanitize_data options[:data]
+    self.force = options.fetch(:force, false)
     raise ArgumentError, "User or data is missing!" if user.blank? || data.blank?
   end
 
   def run
     merchant = @data.delete(:merchant)
     merchant = Merchant.find_or_create_by(merchant)
-    product  = merchant.products.where(pid: @data[:pid])
-    return { id: product.first.to_param } if product.exists?
+    product  = merchant.products.where(pid: @data[:pid]).first
+    return { id: product.to_param } if product.present? && !@force
 
     brand = @data.delete(:brand)
     brand = merchant.brands.find_or_create_by(name: brand[:name]) if brand.present?
@@ -19,8 +20,14 @@ class ProductMigratingService
     categories = @data.delete(:categories).select{ |cat| cat.present? }
     categories = Category.create_hierarchy categories
 
-    product = merchant.products.build data
-    product.founder = user
+    if product.blank?
+      product = merchant.products.build @data
+      product.founder = user
+    else
+      product.assign_attributes(@data)
+      product.updated_at = Time.now
+    end
+
     product.brand   = brand if brand.present?
     product.category = categories.last if categories.any?
 

@@ -34,13 +34,27 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def like_button(options = {})
-    status = liked_by_current_user? ? :on : :off
-    icon = h.fa_icon(status == :on ? 'heart' : 'heart-o', class: "fa-2x")
-    h.link_to icon, h.like_product_path(model), { remote: true, method: :post, data: { like: status } }.merge(options)
+    status = liked_by_current_user? ? :active : nil
+    icon = h.fa_icon(status ? 'heart' : 'heart-o', class: "fa-2x")
+    h.link_to icon, h.like_product_path(model), {
+      remote: true, method: :post, class: "like #{status}".strip, title: "Like product"
+    }.merge(options)
+  end
+
+  def reimport_button(options = {})
+    return if !h.current_user || (freshly_imported? && !h.current_user.admin?)
+    icon = h.fa_icon('cloud-download', class: "fa-2x")
+    h.link_to icon, h.reimport_product_path(model), {
+      remote: true, method: :post, class: "reimport", title: "Re-import product"
+    }.merge(options)
   end
 
   def liked_by_current_user?
     h.current_user.try :liking?, model
+  end
+
+  def freshly_imported?
+    model.updated_at >= 24.hours.ago
   end
 
   def price_badge

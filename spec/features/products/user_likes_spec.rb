@@ -10,7 +10,7 @@ RSpec.feature "liking a product" do
     visit products_path
     expect(page).to have_product_card_for(@product)
 
-    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+    find("[data-pid='#{@product.pid}'] a.like").trigger("click")
     wait_for_traffic
 
     expect(current_path).to eq new_user_session_path
@@ -23,15 +23,15 @@ RSpec.feature "liking a product" do
     visit products_path
     expect(page).to have_product_card_for(@product)
 
-    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+    find("[data-pid='#{@product.pid}'] a.like").trigger("click")
 
-    expect(page).to have_selector("[data-pid='#{@product.pid}'] a[data-like='on']")
+    expect(page).to have_selector("[data-pid='#{@product.pid}'] a.like.active")
     expect(current_path).to eq products_path
     expect(@user).to be_liking(@product)
 
-    find("[data-pid='#{@product.pid}'] a[data-like]").trigger("click")
+    find("[data-pid='#{@product.pid}'] a.like").trigger("click")
 
-    expect(page).to have_selector("[data-pid='#{@product.pid}'] a[data-like='off']")
+    expect(page).to have_selector("[data-pid='#{@product.pid}'] a.like:not(.active)")
     expect(current_path).to eq products_path
     expect(@user).not_to be_liking(@product)
   end

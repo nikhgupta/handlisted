@@ -3,6 +3,7 @@
 @import "components/product_paginator";
 @import "components/products_collection";
 
-// for the like button
-a[data-like='on']  .fa { color: #df5640; }
-a[data-like='off'] .fa { color: grey; }
+a.like .fa, a.reimport .fa { color: grey; }
+a.like.active .fa { color: #df5640; }
+a.reimport.active .fa { color: #279; }
+a.active .fa{ text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }

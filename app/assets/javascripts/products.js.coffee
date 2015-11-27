@@ -9,7 +9,7 @@ ready = ->
   new ProductPaginator(offset: 200).init()
 
   # Sidekiq Queue results on Search/Add Product Page
-  new ProductAdder(
+  window.product_adder = new ProductAdder(
     form:  '.navbar-search',
     input: '#product_search'
     default_input_text: "Search.."
@@ -17,7 +17,8 @@ ready = ->
       status: "/products/create/status.json"
       check: "/products/create/check.json"
       add: "/products.json"
-  ).init()
+  )
+  window.product_adder.init()
 
 $(document).ready(ready)
 $(document).on('pages:load', ready)

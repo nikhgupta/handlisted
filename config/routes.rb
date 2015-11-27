@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     member do
       get 'go' => 'products#visit', as: :visit
       post 'like', defaults: { format: :js }, constraints: { format: :js }
+      post 'reimport', defaults: { format: :js }, constraints: { format: :js }
     end
 
     resources :comments, only: [:new, :create]

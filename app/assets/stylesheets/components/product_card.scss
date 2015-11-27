@@ -88,6 +88,10 @@
   font-size: 1.4em;
   font-weight: bold;
 }
+.productCard .label, .productCard-overview .label {
+  vertical-align: bottom;
+  &.label-text { vertical-align: top; color: #444; }
+}
 
 .productCard-overview .action-icons {
   width: 80%;

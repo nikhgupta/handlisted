@@ -7,7 +7,7 @@ class ProductScraperJob
     @expiration ||= 60  # 1 minute
   end
 
-  def perform(user_id, url)
+  def perform(user_id, url, options = {})
     url      = "http://#{url}" unless url.starts_with?("http")
     user     = User.find user_id
     data     = ProductScraper.fetch url
@@ -19,7 +19,8 @@ class ProductScraperJob
     elsif data["response_code"] >= 400
       store_errors "There is no product over here."
     else
-      response = ProductMigratingService.new(user: user, data: data).run
+      force = options.fetch 'force', false
+      response = ProductMigratingService.new(user: user, data: data, force: force).run
       store id: response[:id]
       store_errors response[:errors] if response[:errors]
     end
