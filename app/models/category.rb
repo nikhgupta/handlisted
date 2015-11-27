@@ -19,6 +19,7 @@ class Category < ActiveRecord::Base
   def to_param
     slug
   end
+  alias :to_s :to_param
 
   def cover_product
     products_for(:self_and_descendants).first

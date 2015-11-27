@@ -49,10 +49,10 @@ class Product < ActiveRecord::Base
     }
   }, order_within_rank: 'average_rating DESC'
 
-  def to_s
-    return name if name.present?
-    original_name
+  def name
+    super || original_name
   end
+  alias :to_s :name
 
   def to_param
     slug

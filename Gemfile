@@ -98,3 +98,5 @@ end
 # others
 gem 'roadie-rails'
 gem "skylight"
+
+gem 'social-share-button'
