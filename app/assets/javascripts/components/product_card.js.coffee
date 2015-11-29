@@ -38,6 +38,7 @@ class @ProductCard
   hideReimportOnClick: ->
     @card.find(".reimport").on 'click', (e) ->
       $(@).replaceWith("<span class='label label-text'>reimporting...</span>")
+      $(".reimport").hide()
 
 $.productCardify = (namespace) ->
   mapping = { default: "", mini: "-mini", overview: "-overview" }

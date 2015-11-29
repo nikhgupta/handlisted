@@ -39,7 +39,7 @@ module ApplicationHelper
   end
 
   def version_image_tag(version, options = {})
-    image_or_html "#{version}.png", version.to_s.titleize, { class: "version" }.merge(options)
+    image_or_html "#{version}.png", version.to_s.titleize, { class: "version", width: "40" }.merge(options)
   end
 
   def link_logo_to(path, options = {})
