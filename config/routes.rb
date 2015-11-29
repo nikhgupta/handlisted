@@ -31,9 +31,13 @@ Rails.application.routes.draw do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end
 
-  root to: "products#index"
+  # root to: "products#index"
   get "community", to: "users#index", as: :community
-  # root to: 'high_voltage/pages#show', id: 'home'
+
+  authenticated :user do
+    root to: "products#index", as: :authenticated_root
+  end
+  root to: 'high_voltage/pages#show', id: 'home'
 
   get 'p/:id', as: :product_short, to: redirect{ |params, request|
     path = Product.find(params[:id]).to_param
@@ -48,8 +52,8 @@ Rails.application.routes.draw do
     end
     member do
       get 'go' => 'products#visit', as: :visit
-      post 'like', defaults: { format: :js }, constraints: { format: :js }
-      post 'reimport', defaults: { format: :js }, constraints: { format: :js }
+      post 'like', defaults: { format: :js }
+      post 'reimport', defaults: { format: :js }
     end
 
     resources :comments, only: [:new, :create]

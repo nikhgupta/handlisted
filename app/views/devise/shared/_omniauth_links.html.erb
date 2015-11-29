@@ -1,13 +1,15 @@
-<% providers = { "google-plus" => "Google+", "twitter" => "Twitter", "facebook" => "Facebook" } %>
-<% providers.each do |provider, title| %>
-  <div class="col-sm-4 hidden-xs">
-    <%= link_to "<span>#{fa_icon provider}</span> #{title}".html_safe,
-      omniauth_authorize_path(:user, provider.to_s.underscore),
-      class: "button btn-social btn-block #{provider.underscore.camelize.parameterize} span-left mr5" %>
-  </div>
-  <div class="col-xs-4 visible-xs-block text-center">
-    <%= link_to fa_icon(provider),
-      omniauth_authorize_path(:user, provider.to_s.underscore),
-      class: "btn btn-social btn-icon #{provider.underscore.camelize.parameterize}" %>
-  </div>
-<% end %>
+<button class="btn btn-block btn-twitter" type="button">
+  <span class="pull-left"><i class="fa fa-twitter"></i>
+  </span>
+  <span class='bold'><%= link_to "Login with Twitter", user_omniauth_authorize_path(:twitter) %></span>
+</button>
+<button class="btn btn-block btn-google-plus" type="button">
+  <span class="pull-left"><i class="fa fa-google-plus"></i>
+  </span>
+  <span class='bold'><%= link_to "Login with Google+", user_omniauth_authorize_path(:google_plus) %></span>
+</button>
+<button class="btn btn-block btn-facebook" type="button">
+  <span class="pull-left"><i class="fa fa-facebook"></i>
+  </span>
+  <span class='bold'><%= link_to "Login with Facebook", user_omniauth_authorize_path(:facebook) %></span>
+</button>

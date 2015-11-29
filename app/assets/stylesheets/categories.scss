@@ -1,0 +1,17 @@
+.categoryCard {
+  .panel-heading {
+    min-height: 100px !important;
+    .panel-title {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+  .panel-image {
+    @include centered-image-container(300px, 70%);
+  }
+  small.text-hint {
+    font-size: 50%;
+  }
+}

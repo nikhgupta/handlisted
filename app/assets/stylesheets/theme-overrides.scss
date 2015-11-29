@@ -1,0 +1,53 @@
+[class^="pg-"], [class*=" pg-"] {
+  line-height: inherit;
+}
+
+.page-sidebar .sidebar-menu .menu-items > li > a {
+  line-height:47px;
+}
+
+.fa {
+  line-height: inherit;
+}
+
+.portlet-progress {
+  z-index: 100;
+}
+
+.login-wrapper {
+  .bg-pic > img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@mixin social-button($color: #333) {
+  color: #fff;
+  text-align: left;
+  border-color: $color;
+  background-color: $color;
+  span.pull-left { width: 25px; }
+  span.bold { text-align: left; padding-left: 10px; }
+  a { color: #fff; }
+  &:hover {
+    color: #fff;
+    border-color: lighten($color, 5%);
+    background-color: lighten($color, 5%);
+    a { color: #fff; }
+  }
+}
+
+.btn-twitter {
+  @include social-button(#00acee);
+}
+.btn-facebook {
+  @include social-button(#3b5998);
+}
+.btn-google-plus {
+  @include social-button(lighten(#8d2418, 10%));
+}
+
+.header a.btn {
+  color: #fff !important;
+  font-weight: bold;
+}

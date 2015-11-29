@@ -15,7 +15,7 @@ class CommentFormBuilder < ActionView::Helpers::FormBuilder
         content_tag(:span, class: "input-footer") do
           concat content_tag(:button, "Add Comment", class: "btn btn-xs btn-primary", type: :submit)
           concat raw(" &nbsp; &nbsp; ")
-          concat content_tag(:em, nil, class: "state-error", style: "display: none")
+          concat content_tag(:em, nil, class: "error", style: "display: none")
         end
       )
     end

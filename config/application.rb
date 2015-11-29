@@ -37,5 +37,7 @@ module HandListed
       authentication: :plain,
       enable_starttls_auto: true
     } if ENV['SMTP_USERNAME'].present?
+
+    config.assets.paths << Rails.root.join("vendor", "pages").to_s
   end
 end

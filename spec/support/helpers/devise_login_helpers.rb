@@ -60,13 +60,12 @@ module Devise
 
     def sign_in_with_provider(provider)
       visit new_user_session_path
-      provider = provider.to_s.camelize.parameterize
-      click_on_selector "a.btn-social.#{provider}", match: :first
+      provider = provider.to_s.titleize.parameterize
+      click_on_selector ".btn-block.btn-#{provider} a", match: :first
     end
 
     def add_provider_via_profile(provider)
-      selector = "a.btn-social.#{provider.to_s.camelize.parameterize}"
-      click_on_selector selector, match: :first
+      click_on "Connect #{provider.to_s.titleize}"
     end
 
     # TODO: preferably, restore login and url path

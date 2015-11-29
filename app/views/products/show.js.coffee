@@ -1,3 +1,8 @@
+# el = $('#<%= present(@product).id %>')
+# el.replaceWith('<%= j render "products/cards/overview", presenter: present(@product) %>')
+# el = $('#<%= present(@product).id :overview %>')
+# new ProductCard(el, 'overview').init()
+
 <% if @pagination_for == "comments" %>
 <%= render("comments/lists/default", comments: @comments) %>
 <% else %>

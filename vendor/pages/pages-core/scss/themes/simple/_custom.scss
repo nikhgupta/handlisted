@@ -1,0 +1,12 @@
+//Theme Overwrite
+
+.page-sidebar .sidebar-header{
+	background-color: $color-success;
+}
+.page-container .header{
+	background: transparent;
+}
+
+.social-wrapper .social .feed > .day > .item{
+	border: 0;
+}

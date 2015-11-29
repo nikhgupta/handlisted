@@ -1,0 +1,35 @@
+<section id="footer">
+  <div class="container">
+    <div class="row">
+      <%= render "services/newsletter/form" %>
+      <div class="col-sm-7 footer-about p-l-60">
+        <%= link_logo_to root_path %>
+        <h5 class='m-t-5'>
+          Discover amazing products from Indian merchants, curated by a community with a great taste.
+        </h5>
+
+        <ul class="footer-nav">
+          <li><%= link_to 'About', page_path("about") %></li>
+          <li class='hidden-xs'><%= link_to 'Add Products', page_path("add-products") %></li>
+          <% if current_user %>
+            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to 'Log in', new_user_session_path %></li>
+            <li><%= link_to 'Register', new_user_registration_path %></li>
+          <% end %>
+          <li><%= link_to 'Send feedback', 'mailto:feedback@handlisted.in' %></li>
+        </ul>
+        <p class='small'>handlisted.in is an independent company.<br>
+          Merchants that appear on this website have their respective trademarks.<br>
+          ©2015 handlisted.in. All rights reserved.</p>
+
+        <ul class="social-links">
+          <li><a href="http://twitter.com/handlisted"><i class="fa fa-twitter fa-2x"></i></a> </li>
+          <li><a href="http://instagram.com/handlisted"><i class="fa fa-instagram fa-2x"></i></a> </li>
+          <li><a href="http://facebook.com/handlisted"><i class="fa fa-facebook fa-2x"></i></a> </li>
+          <li><a href="http://pinterest.com/handlisted"><i class="fa fa-pinterest fa-2x"></i></a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

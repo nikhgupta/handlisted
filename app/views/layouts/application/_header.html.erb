@@ -1,0 +1,43 @@
+<nav class="header bg-header <%= home_page? ? 'transparent-light' : 'minimized dark' %>" data-pages="header" data-pages-header='<%= "autoresize" if home_page? %>' data-pages-resize-class="<%= "dark" if home_page? %>">
+  <div class="container relative">
+    <div class="pull-left">
+      <div class="header-inner">
+        <%= link_logo_to root_path, dark_bg: true %>
+      </div>
+    </div>
+    <div class="pull-right">
+      <div class="header-inner">
+        <div class="visible-sm-inline visible-xs-inline menu-toggler pull-right p-l-10" data-pages="header-toggle" data-pages-element="#header">
+          <div class="one"></div>
+          <div class="two"></div>
+          <div class="three"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pull-right menu-content mobile-dark clearfix" data-pages="menu-content" data-pages-direction="slideRight" id="header">
+      <div class="pull-right">
+        <a href="#" class="padding-10 visible-xs-inline visible-sm-inline pull-right m-t-10 m-b-10 m-r-10" data-pages="header-toggle" data-pages-element="#header">
+          <i class=" pg-close_line"></i>
+        </a>
+      </div>
+      <div class="header-inner">
+        <ul class="menu">
+          <a href="#" class="search-link" data-toggle="search">
+            <i class="pg-search"></i>Type anywhere to <span class="bold">search</span>
+          </a>
+          <li><%= link_to 'Home', root_path, data: { text: "Home" }, class: on_page?(:root, :active) %></li>
+          <%# <li><%= link_to 'About', page_path(:about), data: { text: "About" }, class: on_page?(:page, :about, :active) %1></li> %>
+          <%# <li><%= link_to 'How it Works?', page_path("add-products"), data: { text: "How it Works?" }, class: on_page?(:page, "add-products", :active) %1></li> %>
+          <li><%= link_to 'Discover', products_path, data: { text: "Discover" }, class: "b-r b-transparent-white #{on_page?(:products, :active)}" %></li>
+          <% if current_user.present? %>
+            <li><%= link_to "#{fa_icon 'user', class: "m-r-10"} Profile".html_safe, profile_path(current_user.model), data: { text: "Profile" }, class: on_page?(:profile, current_user, :active) %></li>
+            <li><%= link_to "#{fa_icon 'sign-out', class: "m-r-10"} Log out".html_safe, destroy_user_session_path, data: { text: "Log out" } %></li>
+          <% else %>
+            <li><%= link_to "#{fa_icon 'sign-in', class: "m-r-10"} Log in".html_safe, new_user_session_path, data: { text: "Log in" }, class: on_page?(:new_user_session, :active) %></li>
+            <li><%= link_to "#{fa_icon 'user-plus', class: "m-r-10"} Register".html_safe, new_user_registration_path, data: { text: "Register" }, class: on_page?(:new_user_registration, :active) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

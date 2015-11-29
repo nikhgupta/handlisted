@@ -1,10 +1,10 @@
 RSpec::Matchers.define :have_validation_error do |text|
   match do |page|
-    expect(page).to have_css(".state-error", text: text)
+    expect(page).to have_css(".has-error + .error", text: text)
   end
 
   match_when_negated do |page|
-    expect(page).to have_no_css(".state-error", text: text)
+    expect(page).to have_no_css(".error", text: text)
   end
 
   failure_message do |page|

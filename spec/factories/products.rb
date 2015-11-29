@@ -15,7 +15,7 @@ FactoryGirl.define do
     price_currency { %w[INR USD AUD GBP].sample }
     marked_price_cents { price_cents + rand(40000) }
     marked_price_currency { price_currency }
-    url 'http://url.to/product/'
+    url { "http://url.to/product/#{pid}" }
     url_hash { Digest::MD5.hexdigest url }
 
     trait :with_images do

@@ -82,6 +82,10 @@ class Product < ActiveRecord::Base
     category.products_for(:self_and_descendants).where("id != '?'", self.id)
   end
 
+  def freshly_imported?
+    updated_at >= 1.day.ago
+  end
+
   private
 
   def brand_belongs_to_merchant?

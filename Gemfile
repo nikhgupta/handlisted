@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
+ruby '2.3.0'
 
 gem 'rails', '~> 4.2.2'
 gem 'pg'
@@ -98,5 +98,6 @@ end
 # others
 gem 'roadie-rails'
 gem "skylight"
+gem 'haml'
 
 gem 'social-share-button'

@@ -1,22 +1,16 @@
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }, builder: UserFromBuilder) do |f| %>
-  <div class="panel-body bg-light p30">
-    <div class="row">
-      <div class="col-sm-7 pr30">
-        <%= devise_error_messages! %>
+<p class="p-t-35">Resend account unlock email</p>
+<%= devise_error_messages! %>
+<%= render 'devise/shared/omniauth_links' %>
 
-        <%= f.email_field :login, autofocus: true, class: "gui-input", icon: "user", placeholder: "Email or Username", required: true, minlength: 4 %>
-
-      </div>
-
-      <div class="col-sm-5 devise-aside">
-        <%= link_to "Log in", new_user_session_path, class: "btn btn-sm btn-primary" %>
-        or
-        <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-primary" %>
-      </div>
+<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { class: "p-t-15", role: "form", method: :post }) do |f| %>
+  <div class="form-group form-group-default">
+    <%= f.label :login %>
+    <div class="controls">
+      <%= f.text_field :login, autofocus: true, class: "form-control", required: true %>
     </div>
   </div>
 
-  <div class="panel-footer clearfix p10 ph15">
-    <%= f.submit "Unlock my account", class: "pull-left" %>
-  </div>
+  <%= f.submit "Send Unlock Email", class: "btn btn-primary btn-large btn-block m-t-10" %>
+  <%= link_to "Log in", new_user_session_path, class: "btn btn-primary btn-cons m-t-10" %>
+  <%= link_to "Register", new_user_registration_path, class: "btn btn-right btn-primary btn-cons m-t-10" %>
 <% end %>

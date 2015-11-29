@@ -1,24 +1,26 @@
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, builder: UserFormBuilder) do |f| %>
-  <div class="panel-body bg-light p30">
-    <div class="row">
-      <div class="col-sm-7 pr30">
-        <%= devise_error_messages! %>
-        <%= f.hidden_field :reset_password_token %>
+<p class="p-t-35">Change your password!</p>
+<%= devise_error_messages! %>
+<%# <%= render 'devise/shared/omniauth_links' %1> %>
 
-        <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 8, maxlength: 32,
-          label: (@minimum_password_length ? "Password <small>(#{@minimum_password_length} characters minimum)</small>" : nil) %>
-        <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', required: true, minlength: 8, maxlength: 32, equalTo: '#user_password' %>
-      </div>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "p-t-15", role: "form", method: :put }) do |f| %>
+  <%= f.hidden_field :reset_password_token %>
 
-      <div class="col-sm-5 devise-aside">
-        <%= link_to "Log in", new_user_session_path, class: "btn btn-sm btn-primary" %>
-        or
-        <%= link_to "Register", new_user_registration_path, class: "btn btn-sm btn-primary" %>
-      </div>
+  <div class="form-group form-group-default">
+    <%= f.label :password, "New Password" %>
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <div class="controls">
+      <%= f.text_field :password, autofocus: true, autocomplete: "off", class: "form-control", required: true %>
     </div>
   </div>
 
-  <div class="panel-footer clearfix p10 ph15">
-    <%= f.submit "Change my password", class: "pull-left" %>
+  <div class="form-group form-group-default">
+    <%= f.label :password_confirmation, "Confirm new Password" %>
+    <div class="controls">
+      <%= f.text_field :password_confirmation, autocomplete: "off", class: "form-control", required: true %>
+    </div>
   </div>
+
+  <%= f.submit "Change Password", class: "btn btn-primary btn-large btn-block m-t-10" %>
 <% end %>

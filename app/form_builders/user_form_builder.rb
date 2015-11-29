@@ -4,11 +4,13 @@ class UserFormBuilder < ActionView::Helpers::FormBuilder
   %w[text_field password_field email_field text_area].each do |method_name|
     define_method(method_name) do |name, *args|
       options = args.last.is_a?(Hash) ? args.last : {}
-      content_tag :div, class: 'section' do
-        label(name, options[:label].to_s.html_safe, class: "field-label text-muted fs18 mb10") +
-          label(name, class: "field prepend-icon") do
-            super(name, *args) + label(name, fa_icon(options[:icon] || :user), class: "field-icon")
-          end
+      content_tag :div, class: "form-group form-group-default #{"required" if options[:required]}" do
+        label(name, options[:label].to_s.html_safe) + super(name, *args)
+          # content_tag(:div, class: "input-group transparent") do
+          #   content_tag(:span, name, class: "input-group-addon") do
+          #     fa_icon(options[:icon] || :user)
+          #   end + super(name, *args)
+          # end
       end
     end
   end

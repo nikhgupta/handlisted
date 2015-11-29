@@ -1,10 +1,40 @@
 class ProductPresenter < ApplicationPresenter
+
+  def hash
+    Digest::MD5.hexdigest model.url_hash
+  end
+
+  def id(type = :default)
+    "productCard#{"-" + type.to_s if type && type != :default}-#{hash}"
+  end
+
   def name
     model.name || model.original_name
   end
 
+  def link
+    h.link_to name, h.product_path(model)
+  end
+
+  def merchant_name
+    model.merchant.name.titleize
+  end
+
+  def merchant_link
+    h.link_to merchant_name, h.merchant_path(model.merchant)
+  end
+
+  def brand_name
+    model.brand.name.titleize if model.brand.present?
+  end
+
+  def brand_link
+    h.link_to brand_name, h.brand_path(model.brand) if model.brand.present?
+  end
+
   def cover_image
-    model.images && model.images.any? ? model.images.first : h.image_path("product-missing.png")
+    return model.images.first if model.images && model.images.any?
+    h.image_path("product-missing.png")
   end
 
   def cover_image_tag(options = {})
@@ -12,59 +42,66 @@ class ProductPresenter < ApplicationPresenter
   end
 
   def price
-    model.price.format(no_cents: true, display_free: "N/A")
+    to_currency model.price
   end
 
   def marked_price
     model.marked_price.format(no_cents: true, display_free: "N/A")
   end
 
-  def marked_description
-    model.description.present? ? markdown(model.description) : ""
+  def refresh_button(options = {})
+    return if !h.current_user || (freshly_imported? && !h.current_user.admin?)
+    iconic_button_for :refresh, {
+      icon: :refresh,
+      data: { toggle: "refresh" },
+      link: h.reimport_product_path(model),
+      title: "Re-import product information from #{merchant_name}!"
+    }.merge(options)
   end
 
-  def affiliate_link_action_button(options = {})
-    return if model.url.blank?
-    available = model.available? && model.price.to_i > 0
-    options[:class] = options.fetch(:class) { (available ? "system" : "light") }
-    options[:class] = "btn btn-large light affiliate-button btn-#{options[:class]}"
-    options = { target: "_blank" }.merge(options)
-    text = (affiliate_link_text + " " + h.fa_icon('external-link')).html_safe
-    h.link_to text, h.visit_product_path(model), options
+  def report_button(options = {})
+    return if h.current_user.blank?
+    iconic_button_for :report, {
+      icon: "exclamation-circle",
+      title: "Report for incorrect product information!"
+    }.merge(options)
   end
 
   def like_button(options = {})
-    status = liked_by_current_user? ? :active : nil
-    icon = h.fa_icon(status ? 'heart' : 'heart-o', class: "fa-2x")
-    h.link_to icon, h.like_product_path(model), {
-      remote: true, method: :post, class: "like #{status}".strip, title: "Like product"
+    liked = liked_by_current_user?
+    iconic_button_for :like, {
+      icon: liked ? "heart" : "heart-o",
+      link: h.like_product_path(model, kind: options[:kind]),
+      title: "Like this product!",
+      class: liked ? "active" : ""
     }.merge(options)
   end
 
-  def reimport_button(options = {})
-    return if !h.current_user || (freshly_imported? && !h.current_user.admin?)
-    icon = h.fa_icon('cloud-download', class: "fa-2x")
-    h.link_to icon, h.reimport_product_path(model), {
-      remote: true, method: :post, class: "reimport", title: "Re-import product"
+  def visit_button(options = {})
+    iconic_button_for :visit, {
+      link:  h.visit_product_path(model),
+      icon:  "external-link", target: "_blank",
+      title: "Visit this product on #{merchant_name}",
+      method: nil, remote: false
     }.merge(options)
   end
 
-  def liked_by_current_user?
-    h.current_user.try :liking?, model
+  def price_or_marked_price_on_merchant_link(options = {})
+    merc = "<span>on #{merchant_name}</span>"
+    html = h.content_tag(:span, class: 'unavailable'){ "Maybe Unavailable #{merc}" }
+    html = "#{marked_price} #{merc}" if model.marked_price.to_f > 0
+    html = "#{price} #{merc}" if model.price.to_f > 0
+    h.link_to html.html_safe, h.visit_product_path(model), { target: "_blank", class: "afflink" }.merge(options)
   end
 
-  def freshly_imported?
-    model.updated_at >= 24.hours.ago
-  end
-
-  def price_badge
-    badge_type = model.prioritized? ? 'bg-success' : 'bg-warning'
-    badge_type = 'bg-light dark' if model.price.to_i < 1
-    h.content_tag(:span, class: "price #{badge_type}") { price }
-  end
-
-  def merchant_name
-    model.merchant.name.titleize
+  def affiliate_button(options = {})
+    return if model.url.blank?
+    available = model.available? && model.price.to_i > 0
+    options[:class] = options.fetch(:class) { (available ? "success" : "light") }
+    options[:class] = "btn affiliate-button btn-#{options[:class]}"
+    options = { target: "_blank" }.merge(options)
+    text = "<span class='bold'>#{affiliate_link_text}</span> #{h.fa_icon('external-link')}".html_safe
+    h.link_to text, h.visit_product_path(model), options
   end
 
   def social_sharing(options = {})
@@ -76,6 +113,10 @@ class ProductPresenter < ApplicationPresenter
     hash.merge!(options)
 
     h.social_share_button_tag(title.strip, hash)
+  end
+
+  def markdowned_description
+    model.description.present? ? markdown(model.description) : ""
   end
 
   def rss_description
@@ -95,12 +136,24 @@ class ProductPresenter < ApplicationPresenter
     text += "<br/>"
     model.images.each do |image|
       text += h.image_tag(image) + "<br/>".html_safe
-    end
+    end if model.images.present?
 
     text
   end
 
-private
+  protected
+
+  def liked_by_current_user?
+    h.current_user.try :liking?, model
+  end
+
+  def to_currency(amount)
+    amount.format(no_cents: true, display_free: "N/A")
+  end
+
+  def iconic_button_for(name, options = {})
+    super(:product, name, options)
+  end
 
   def affiliate_link_text
     model.available? && model.price > 0 ? "#{price} on #{merchant}" : "Maybe Unavailable"

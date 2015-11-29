@@ -162,6 +162,8 @@ GEM
       activesupport (>= 4.1.0)
     google_currency (3.2.0)
       money (~> 6.5.0)
+    haml (4.0.7)
+      tilt
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
@@ -469,6 +471,7 @@ DEPENDENCIES
   fuubar
   gibbon
   google_currency
+  haml
   high_voltage
   jbuilder (~> 2.0)
   jquery-rails

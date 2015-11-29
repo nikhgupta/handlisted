@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @type = params.fetch("type", :default)
   end
 
   # NOTE: Brakeman reports this falsely under insecure redirect, but the
@@ -25,13 +26,14 @@ class ProductsController < ApplicationController
   end
 
   def like
+    @kind  = params[:kind] if params[:kind] && params[:kind] != "default"
     method = current_user.liking?(@product) ? :unlike : :like
+    @success = current_user.send method, @product
+    @flash = { alert: "There was an error when liking this product." }
+    @flash = { notice: "Successfully queued.." } if @success.present?
     respond_to do |format|
-      if current_user.send method, @product
-        format.js { render :like }
-      else
-        format.js { render :toggle_error, action: :like }
-      end
+      format.js   { render :like }
+      format.html { redirect_to root_path, @flash }
     end
   end
 
@@ -39,8 +41,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @job_id  = ProductScraperJob.perform_async @product.founder_id, @product.url, force: true if @product
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Successfully queued.." }
       format.js { render :reimport }
+      format.html { redirect_to root_path, notice: "Successfully queued.." }
     end
   end
 

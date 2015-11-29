@@ -3,15 +3,15 @@ module CustomMatchersForCapybara
     def initialize(expected)
       @message  = []
       @expected = expected
-      @selector = "[data-pid='#{@expected.pid}']"
+      @selector = "#productCard-#{Digest::MD5.hexdigest(@expected.url_hash)}"
     end
 
     def matches?(page)
       @page = page
       raise_error_if_rack_test_driver!
 
-      %w[product_card image_container merchant_label no_errors price
-      product_image hidden_product_details].each do |feat|
+      %w[product_card image_container merchant_info no_errors pricing_info
+      product_image action_buttons].each do |feat|
         return false unless send("has_#{feat}?")
       end
 
@@ -40,19 +40,19 @@ module CustomMatchersForCapybara
     end
 
     def has_image_container?
-      verify_selector ".product-image .container",
+      verify_selector ".panel-image-centered .image-container",
         message: "card does not include an image container"
     end
 
-    def has_merchant_label?
-      verify_selector ".label.label-#{@expected.merchant.identifier}",
-        message: "card has no (or wrong) label for the merchant",
-        text: @expected.merchant.to_s.titleize
+    def has_merchant_info?
+      verify_selector "a.afflink", visible: false,
+        text: @expected.merchant.to_s.titleize,
+        message: "card has no (or wrong) label for the merchant"
     end
 
-    def has_price?
+    def has_pricing_info?
       price = @expected.price.format(no_cents: true, display_free: "N/A")
-      verify_selector ".price", text: price,
+      verify_selector "a.afflink", text: price, visible: false,
         message: "card has incorrect price information"
     end
 
@@ -61,16 +61,18 @@ module CustomMatchersForCapybara
         message: "card contains an error"
     end
 
-    def has_hidden_product_details?
-      selector = ".product-image .product-details"
-      verify_selector selector, absence: true, visible: true,
-        message: "card has visible product details by default"
-      verify_selector selector, visible: false,
-        message: "card has no hidden product details"
+    def has_action_buttons?
+      verify_selector ".product-like", visible: true,
+        message: "card has no button to like itself"
+      verify_selector ".product-visit", visible: true,
+        message: "card has no button to visit the product URL"
+      # NOTE: refresh button is dependent on loggedin user
+      # verify_selector ".product-refresh", visible: false,
+      #   message: "card has no button to refresh itself"
     end
 
     def has_product_image?
-      image = @page.find("#{@selector} .container")
+      image = @page.find("#{@selector} .image-container")
       regex = /^background-image:\s*url\(.+?\).?$/
       match = image[:style].match(regex) ||
         @message << "found no image: #{match.try(:[], 1)}"

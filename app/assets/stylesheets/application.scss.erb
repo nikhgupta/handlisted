@@ -1,0 +1,58 @@
+/*
+*= require pages-plugins/pace/pace-theme-flash
+*= require pages-plugins/boostrapv3/css/bootstrap
+*= require pages-plugins/font-awesome/css/font-awesome
+*= require pages-plugins/jquery-scrollbar/jquery.scrollbar
+*= require pages-plugins/bootstrap-select2/select2
+*= require pages-plugins/switchery/css/switchery.min
+*= require frontend/pages-plugins/swiper/css/swiper
+*= require pages-core/css/pages-icons
+*/
+
+@import 'pages-core/scss/mixins';
+@import 'mixins';
+@import 'products';
+@import 'categories';
+@import 'social-share-button';
+
+.container-fluid { margin-top: 60px; }
+
+.social-share-button {
+  margin: 20px 0;
+  span {
+    font-weight: bold;
+    vertical-align: super;
+    display: none;
+    @media(min-width: 400px) {
+      display: inline-block;
+    }
+  }
+  a {
+    background-image: none;
+    margin: 2px;
+    padding: 5px;
+    width: 32px;
+    height: 32px;
+    .fa {
+      color: #888;
+    }
+  }
+}
+
+#footer {
+  ul.footer-nav, ul.social-links {
+    padding-left: 0;
+    li {
+      display: inline-block;
+      padding: 5px 20px 5px 0;
+    }
+  }
+  ul.social-links a { color: #aaa; }
+
+  padding-left: 20px;
+  padding-right: 20px;
+  @media(min-width: 600px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}

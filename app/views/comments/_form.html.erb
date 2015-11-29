@@ -1,0 +1,16 @@
+<% if current_user.present? %>
+  <div class="admin-form commentForm">
+    <%= form_for [@commentable, @comment], remote: true, authenticity_token: true,
+      builder: CommentFormBuilder do |f| %>
+      <%= f.text_area_with_submit :comment,
+        placeholder: "Respond with a comment..",
+        class: "gui-textarea", icon: 'comments', required: true %>
+    <% end %>
+    <div class="new-comment-error" style="display: none"></div>
+  </div>
+<% else %>
+  <div class="alert alert-sm alert-warning pastel mt20 flash-SignInRequired">
+    <i class="fa fa-warning pr10"></i>
+    <strong>Please, <%= link_to "login", new_user_session_path %> to add comments.</strong>
+  </div>
+<% end %>

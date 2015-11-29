@@ -1,19 +1,16 @@
-<div class="newsletter">
-  <h3> Want beautiful products delivered right to your inbox?</h3>
-  <p class='action'>Subscribe to our newsletter.</p>
-  <div class="admin-form theme-primary">
-    <div class="panel panel-primary">
-      <%= form_tag newsletter_subscription_path, method: :post, remote: true do %>
-        <div class="panel-body row">
-          <div class="section col-xs-8 col-sm-6">
-            <%= label_tag :email, class: "field prepend-icon" do %>
-              <%= email_field_tag :email, nil, placeholder: "Email address", class: "gui-input", required: true, email: true %>
-              <%= label_tag :email, fa_icon('envelope').html_safe, class: "field-icon" %>
-            <% end %>
-          </div>
-          <%= submit_tag 'Subscribe', class: "button btn-primary col-xs-4 col-sm-4" %>
-        </div>
-      <% end %>
+<div class="col-sm-5 footer-newsletter p-r-60 b-r b-grey">
+  <h3 class="light m-t-5">Subscribe to our newsletter</h3>
+  <h5 class="hint-text">Want beautiful products delivered right to your inbox?</h5>
+  <%= form_tag newsletter_subscription_path, method: :post, remote: true, class: "m-t-30 m-b-20", role: "form" do %>
+    <div class="row">
+      <div class="form-group form-group-default input-group col-xs-8 col-sm-8">
+        <%= label_tag :email %>
+        <%= email_field_tag :email, nil, placeholder: "Email address", required: true, email: true, class: "form-control" %>
+      </div>
+      <div class='col-xs-4 col-sm-4'>
+        <%= submit_tag "Subscribe", class: "btn btn-primary btn-block" %>
+      </div>
     </div>
-  </div>
+    <p class="font-arial fs-12 hint-text">We value your <strong>privacy</strong>. None of the details supplied will be shared with external parties</p>
+  <% end %>
 </div>

@@ -1,4 +1,6 @@
-card = $("[data-pid='<%= @product.pid %>']")
-like = card.find("a.like")
-like.toggleClass('active')
-like.find("i.fa").toggleClass('fa-heart fa-heart-o')
+card = $('#<%= present(@product).id @kind %>')
+<% if @success.present? %>
+card.find(".product-like").toggleClass('active').find(".fa").toggleClass('fa-heart fa-heart-o')
+<% else %>
+card.portlet error: "Encountered an error! Please, try again."
+<% end %>

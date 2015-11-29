@@ -25,7 +25,8 @@ module AddProductHelpers
   end
 
   def click_for_product_info_modal(product)
-    find("[data-pid='#{product.pid}'] .product-image").trigger("click")
+    selector = card_selector_for(product) + " .image-container"
+    find(selector).trigger("click")
   end
 
   # Add a product by given URL (or symbol), ensures that the Queued status is
@@ -48,5 +49,22 @@ module AddProductHelpers
     ProductScraperJob.drain
   ensure
     wait_for_traffic
+  end
+
+  def card_selector_for(product, card: :default)
+    hash = Digest::MD5.hexdigest product.url_hash
+    selector = "-#{card}" if card && card != :default
+    "#productCard#{selector}-#{hash}"
+  end
+
+  def toggle_like_for_product(*args)
+    selector = card_selector_for(*args) + " a.product-like"
+    find(selector).trigger 'click'
+    wait_for_traffic
+  end
+
+  def like_status_for(*args)
+    selector = card_selector_for(*args) + " a.product-like"
+    find(selector)['class'].include? 'active'
   end
 end

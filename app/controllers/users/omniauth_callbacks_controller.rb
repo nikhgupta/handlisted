@@ -32,10 +32,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @identity.linked?
       sign_in @identity.user
-      redirect_to root_url, notice: "Signed in via #{@identity.provider.titleize}!"
+      redirect_to root_path, notice: "Signed in via #{@identity.provider.titleize}!"
     elsif user = User.confirm_via_omniauth(@auth)
       sign_in user
-      redirect_to root_url, notice: "Signed in via #{@identity.provider.titleize}! Confirmed email: #{user.email}!"
+      redirect_to root_path, notice: "Signed in via #{@identity.provider.titleize}! Confirmed email: #{user.email}!"
     else
       user = User.create_from_omniauth(@auth)
       if user.persisted?

@@ -14,24 +14,26 @@ class ApplicationPresenter
     Kramdown::Document.new(text, options).to_html.strip
   end
 
-  # tiny magic to allow:
-  # - presenter code to refer to object via its name, e.g. `user`
-  # - instantiating presenter from a method on object, e.g. `user.presenter_for(view)`
-  #
-  # Note: disabled for now, since changes on object are not reflected on
-  # presenter, when presenter is created using: `object.presenter_for(view)`
-  #
-  # def self.inherited(name)
-  #   name = name.to_s.gsub(/Presenter$/, '').underscore
-  #   klass, object_klass = self, name.to_s.camelize.constantize
+  def model
+    @object
+  end
 
-  #   define_method(name){ @object }
-  #   object_klass.send(:define_method, :presenter_for) do |view|
-  #     klass.new(self, view)
-  #   end
-  # end
+  protected
+  def to_currency(amount)
+    amount.format(no_cents: true, display_free: "N/A")
+  end
 
-private
+  def iconic_button_for(model, name, options = {})
+    path = options.delete(:link) || "#"
+    size = options.delete(:size)
+    options[:class] = "#{options[:class]} iconic-btn #{model}-#{name}"
+    h.iconic_link_to nil, path, {
+      icon: "fa #{size ? "fa-#{size}x" : "fs-16"} fa-#{options.delete(:icon) || name}",
+      remote: true, method: :post
+    }.merge(options)
+  end
+
+  private
 
   def self.presents(name)
     define_method(name){ @object }
@@ -39,10 +41,6 @@ private
 
   def h
     @template
-  end
-
-  def model
-    @object
   end
 
   def method_missing(*args, &block)

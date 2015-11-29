@@ -17,6 +17,7 @@ class UserPresenter < ApplicationPresenter
 
   # NOTE: Obtrusive JS is present, since that is the only reliable way to ensure
   # broken avatar images are not present even when avatars are loaded via AJAX.
+  # TODO: use retina
   def avatar_tag(options = {})
     klass = "#{options.delete(:class)} media-object avatar"
     on_error = "this.onerror=null;this.src='#{default_avatar}';"

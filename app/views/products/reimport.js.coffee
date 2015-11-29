@@ -1,1 +1,1 @@
-window.product_adder.import "<%= @product.url %>", "<%= @job_id %>"
+$('#<%= present(@product).id %>').trigger("poll", '<%= @job_id %>')

@@ -1,0 +1,11 @@
+.iconic-button, .iconic-btn {
+  .portlet-icon, .fa {
+    color: #aaa;
+  }
+  &:hover {
+    .portlet-icon, .fa {
+      color: #666;
+    }
+  }
+}
+

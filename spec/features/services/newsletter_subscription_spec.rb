@@ -12,10 +12,11 @@ RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feat
     expect(Services::NewsletterSubscriptionJob).to receive(:perform_async)
       .with("someone@example.com", "abcdef")
 
-    within(".newsletter") do
+    within(".footer-newsletter") do
       fill_in "email", with: "someone@example.com"
-      click_on 'Subscribe'
+      expect(page).not_to have_validation_error
 
+      click_on 'Subscribe'
       expect(page).to have_content "Thank you for subscribing with us!"
       expect(page).to have_content /confirm your subscription.*someone@example.com/
     end
@@ -25,7 +26,7 @@ RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feat
     sign_in_as :confirmed_user
     visit product_path(create :product)
 
-    within(".newsletter") do
+    within(".footer-newsletter") do
       fill_in "email", with: "someone@example.com"
       click_on 'Subscribe'
 
@@ -36,10 +37,10 @@ RSpec.feature "Services: Newsletter Subscription", :background, :js, type: :feat
 
   scenario "validation errors are shown for the subscription form" do
     visit root_path
-    within(".newsletter") do
+    within(".footer-newsletter") do
       fill_in "email", with: "someone"
       click_on 'Subscribe'
-      expect(page).to have_selector "em.state-error", text: "Please enter a valid email address"
+      expect(page).to have_validation_error("Please enter a valid email address")
     end
   end
 end

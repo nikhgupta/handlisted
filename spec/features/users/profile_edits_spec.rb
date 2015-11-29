@@ -28,13 +28,15 @@ RSpec.feature "user edit his profile" do
       expect(page).to have_field("Name", with: "Another Smith")
     end
 
-    scenario "along with password" do
+    scenario "along with password", js: true do
       fill_in "Name", with: "Another Smith"
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newpassword"
+      expect(page).to have_no_selector(".error")
+
       click_on_button "Update info"
+      expect(current_path).to eq(products_path)
       expect(page).to have_alert("successfully updated").as_notice
-      expect(current_path).to eq(root_path)
 
       sign_in_with @user.email, "newpassword"
       expect(page).to have_alert("Signed in successfully").as_notice
@@ -59,8 +61,8 @@ RSpec.feature "user edit his profile" do
       fill_in "Password", with: "newpassword", exact: true
       fill_in "Password confirmation", with: "newwrongpassword"
       click_on_button "Update info"
-      expect(page).to have_validation_error("Please enter the same value again.")
       expect(current_path).to eq edit_profile_path
+      expect(page).to have_validation_error("Please enter the same value again.")
     end
   end
 end

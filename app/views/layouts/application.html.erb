@@ -1,64 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <%= render "layouts/head" %>
-  <body class="sb-r-c sb-l-c <%= home_page? ? 'home-page' : '' %>">
-    <div id="main">
-      <%= render partial: 'layouts/navbar' %>
+  <%= render "layouts/application/head" %>
+  <body class="fixed-header menu-behind <%= 'pages' if static_page? %>">
+    <%# <%= render "layouts/application/sidebar" %1> %>
 
-      <%# render 'shared/sidebar' if current_user.present? %>
+    <%= render "layouts/application/header" %>
 
-      <% if home_page? && current_user.blank? %>
-        <%= render 'application/promotions/default' %>
-      <% else %>
-        <%= yield :primary_box %>
-      <% end %>
+    <%= yield :primary_box %>
 
-      <section id="content_wrapper">
-        <section id="content" class="animated fadeIn">
-          <% flash.each do |name, msg| %>
-            <%= content_tag :div, class: "alert alert-#{%w[error alert].include?(name.to_s) ? "danger" : "success" } alert-dismissable", role: "alert" do %>
-              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <%= msg %>
-            <% end %>
-          <% end %>
-
-          <%= yield %>
-
-        </section>
-      </section>
-
-      <footer id='site-wide-footer' class='row'>
-        <div class="col-md-6 col-sm-5">
-          <%= render partial: "services/newsletter/form" %>
+    <% if static_page? %>
+      <%= yield %>
+    <% else %>
+      <div class="page-content-wrapper">
+        <div class="content sm-gutter">
+          <div class='container-fluid padding-25 sm-padding-10'>
+            <%= render 'layouts/application/notices' %>
+            <%= yield %>
+          </div>
         </div>
+      </div>
+      <%= render "layouts/application/quickview" %>
+    <% end %>
 
-        <div class="col-md-6 col-sm-7 footer-about">
-          <h3>Discover amazing products from leading merchant sites,
-            curated by a community with a great taste.</h3>
-
-          <ul class='footer-nav'>
-            <li><%= link_to "About", page_path("about") %></li>
-            <li><%= link_to "Add Products", page_path("add-products") %></li>
-            <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
-          </ul>
-          <p>handlisted.in is an independent company.<br/>
-            Merchants that appear on this website have their respective trademarks.<br/>
-            ©2015 handlisted.in. All rights reserved.</p>
-
-          <ul class='footer-links'>
-            <li><%= link_to "Send feedback", "mailto:feedback@handlisted.in" %></li>
-          </ul>
-
-          <ul class='social-links'>
-            <li><%= link_to fa_icon(:twitter,   class: "fa-2x"), "http://twitter.com/handlisted" %>
-            <li><%= link_to fa_icon(:instagram, class: "fa-2x"), "http://instagram.com/handlisted" %>
-            <li><%= link_to fa_icon(:facebook,  class: "fa-2x"), "http://facebook.com/handlisted" %>
-            <li><%= link_to fa_icon(:pinterest, class: "fa-2x"), "http://pinterest.com/handlisted" %>
-          </ul>
-        </div>
-      </footer>
-
-    </div>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= render "layouts/application/footer" %>
+    <%= render "layouts/application/search" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>
   </body>
 </html>

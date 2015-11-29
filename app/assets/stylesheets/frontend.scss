@@ -1,0 +1,10 @@
+@import 'pages-core/scss/mixins';
+@import 'mixins';
+@import 'frontend/pages-core/css/pages';
+.pages section {
+  padding-top: 60px;
+  padding-bottom: 20px;
+}
+#home-featured {
+  margin-bottom: -30px;
+}

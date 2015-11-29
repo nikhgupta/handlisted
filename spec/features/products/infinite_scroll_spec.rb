@@ -8,7 +8,7 @@ RSpec.feature "infinite scrolling for products listing", :js do
   scenario "loads more records when 'load more' button is clicked" do
     create_list(:product, @per_page + 1)
     expect(Product.count).to be > @per_page
-    visit root_path
+    visit products_path
 
     expect(page).to have_link("Load More")
     expect(page).to have_css(".productCard", count: @per_page)

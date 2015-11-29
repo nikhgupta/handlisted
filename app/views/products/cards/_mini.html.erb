@@ -1,8 +1,38 @@
-<div class="panel panel-tile text-center productCard-mini" data-pid="<%= product.pid %>">
-  <div class="panel-body">
-    <div class="product-image" data-link="<%= product_path(product) %>">
-      <div class="container" style='background-image: url("<%= presenter.cover_image %>")'></div>
+<div id="<%= presenter.id %>" class="productCard-mini panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <%= presenter.price_or_marked_price_on_merchant_link %>
+    </div>
+
+    <div class="panel-controls">
+      <ul>
+        <li><%= presenter.refresh_button %></li>
+        <li><%= presenter.visit_button   %></li>
+        <li><%= presenter.like_button    %></li>
+      </ul>
     </div>
   </div>
-</div>
 
+  <div class="panel-body">
+    <div class='panel-image panel-image-centered'>
+      <div class='image-container' style='background-image: url("<%= presenter.cover_image %>")'></div>
+    </div>
+
+    <div class="overlayer bottom-left full-width">
+      <div class="overlayer-wrapper item-info">
+        <div class="p-l-20 p-r-20 p-t-20 p-b-5">
+          <div class="item-footer">
+            <p class="item-name pull-left fs-11 font-montserrat all-caps">
+              <%= presenter.link %>
+            </p>
+            <p class="pull-right">
+              <%= presenter.report_button %>
+            </p>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

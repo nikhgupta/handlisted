@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
-  before_action :set_kind_and_counts, only: [:show, :edit]
+  before_action :set_group_and_counts, only: [:show, :edit]
 
   # GET /users/1/edit
   def edit
@@ -24,9 +24,9 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if user_params["password"].present? && @user.update(user_params)
-        format.html { redirect_to root_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to products_path, notice: 'User was successfully updated.' }
       elsif @user.update_without_password(user_params)
-        format.html { redirect_to edit_profile_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to profile_edit_path, notice: 'User was successfully updated.' }
       else
         # NOTE: This does not preserve changes made by the user
         session['devise.user_errors'] = @user.errors.full_messages
@@ -37,15 +37,15 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user  = User.find(params[:username])
+      @user  = User.find_by username: params[:username]
     end
 
     def set_current_user
       @user = current_user
     end
 
-    def set_kind_and_counts
-      @kind  = params[:kind]
+    def set_group_and_counts
+      @kind, @group = params[:kind], params[:group]
       @liked = @user.likes.count
       @found = @user.found_products_count
     end

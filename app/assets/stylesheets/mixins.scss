@@ -1,12 +1,25 @@
-@mixin centered-image-container() {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: all 0.2s ease-in-out;
+@mixin display-on-hover($child, $opacity: 1, $duration: 0.4s) {
+  #{$child} { @include opacity(0); }
+  .open-details & #{$child} { @include opacity(1); }
+  &:hover #{$child} {
+    @include opacity($opacity);
+    transition: all $duration ease-in-out;
+  }
+}
+
+@mixin centered-image-container($height: 300px, $ratio: 80%) {
+  height: $height;
+  position: relative;
+  .image-container {
+    top: 0; left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: $ratio;
+    height: $ratio;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }

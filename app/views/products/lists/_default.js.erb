@@ -1,8 +1,10 @@
-<% kind = kind.present? ? ".productList-#{kind}" : '' %>
-$(".productList<%= kind %>").append "
+<% klass  = kind.present? ? ".productList-#{kind}" : '' %>
+<% klass += group.present? ? ".productList-#{group}" : '' %>
+
+$(".productList<%= klass %>").append "
   <% products.each do |product| %>
     <div class='col-sm-6 col-md-4'>
-      <%= j render('products/cards/default', product: product, presenter: present(product)) %>
+      <%= j render("products/cards/#{kind ? kind : :default}", product: product, presenter: present(product)) %>
     </div>
   <% end %>
 "

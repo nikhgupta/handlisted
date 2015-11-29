@@ -1,19 +1,11 @@
-<% if users.any? || primary.present? %>
-  <div class="usersList-mini">
-    <div class="wrapper">
-      <% [primary, users].flatten.uniq.take(11).each do |user| %>
-        <%= render "users/cards/mini", presenter: present(user), primary: user == primary %>
-      <% end %>
-      <% if users.count > 12 %>
-        <div class="userCard-mini counterCard">
-          <span>+<%= users.count - 10 %></span>
-        </div>
-      <% end %>
+<div class='usersList-mini'>
+  <% [primary, users].flatten.uniq.take(10).each.with_index do |user, i| %>
+    <%= render "users/cards/mini", user: user, presenter: present(user), primary: i == 0 %>
+  <% end %>
+
+  <% if users.count > 10 %>
+    <div class="userCard-mini">
+      <span>+<%= users.count - 10 %></span>
     </div>
-  </div>
-<% elsif block_given? %>
-  <div class="alert alert-sm alert-warning pastel mt40">
-    <i class="fa fa-warning pr10"></i>
-    <%= yield %>
-  </div>
-<% end %>
+  <% end %>
+</div>

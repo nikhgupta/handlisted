@@ -1,76 +1,30 @@
-.userProfileBox {
+.userCard-mini {
+  width:  128px;
+  height: 128px;
+  margin: 4px;
+  border: 4px solid #d8d8d8;
+  background-color: #d8d8d8;
   .avatar {
-    max-width: 150px !important;
-    border: 5px solid rgba(0,0,0,0.15);
-  }
-  .media-heading {
-    color: #fff;
-    small {
-      color: #d8d8d8;
-    }
-  }
-  .lead {
-    color: #fff;
-    font-weight: 400;
-    span.level { font-weight: 600;}
-  }
-}
-.userProfileBox-info {
-  .field-label {
-    font-size: 18px;
-  }
-  label:not(.url) {
-    margin-bottom: 10px;
-  }
-  label.url {
-    padding: 10px;
-    border-radius: 3px;
-    background-color: #d8d8d8;
-    min-width: 100%;
-    display: table;
+    width: 100%;
+    height: 100%;
   }
 }
 
 .usersList-mini {
-  margin: 40px auto 10px;
-  width: 100%;
-  .wrapper {
-    width: 282px;
-    margin: 0 auto;
-    @media (min-width: 540px) { width: 340px; }
-    @media (min-width: 600px) { width: 450px; }
-    @media (min-width: 768px) { width: 340px; margin: 0; }
-    @media (min-width: 1140px) { width: 450px; }
-  }
-}
-.userCard-mini {
-  width: 52px;
-  float: left;
-  border: 3px solid #f8f8f8;
-  margin: 2px;
-  img {
-    width: 48px;
-    height: 48px;
-    background-color: #ddd;
-  }
-}
-.userCard-mini.counterCard {
-  width: 52px;
-  height: 54px;
-  font-weight: bold;
-  font-size: 1.3em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #f8f8f8;
-}
-.userCard-mini.highlight {
-  width: 110px;
-  border: 3px solid #3bafda;
-  img {
-    width: 104px;
-    height: 104px;
-    background-color: #3bafda; 
+  .userCard-mini {
+    float: left;
+    width: 60px;
+    height:60px;
+    margin: 2px;
+    text-align: center;
+    vertical-align: top;
+    line-height: 60px;
+    font-size: 1.4em;
+    &.primary {
+      width: 124px;
+      height:124px;
+      border-color: #F77975;
+      background-color: #F77975;
+    }
   }
 }

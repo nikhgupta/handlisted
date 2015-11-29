@@ -1,6 +1,6 @@
 module ApplicationHelper
   def present(object, klass=nil)
-    unless object.is_a?(ApplicationPresenter)
+    unless object.nil? || object.is_a?(ApplicationPresenter)
       klass ||= "#{object.class}Presenter".constantize
       object = klass.new(object, self)
     end
@@ -42,13 +42,6 @@ module ApplicationHelper
     image_or_html "#{version}.png", version.to_s.titleize, { class: "version", width: "40" }.merge(options)
   end
 
-  def link_logo_to(path, options = {})
-    image = "handlisted-text-logo#{"-dark-bg" if options.delete(:dark_bg)}.png"
-    html  = "#{image_tag(image, class: "img-responsive logo", alt: "handlisted.in")}"
-    html += "#{version_image_tag :beta, class: "version"}"
-    link_to html.html_safe, path, options
-  end
-
   def fa_icon(name, options = {})
     options[:class] = "fa fa-#{name} #{options[:class]}"
     "<i #{options.map{|k,v| "#{k}=\"#{v}\""}.join(" ")}></i>".html_safe
@@ -67,10 +60,38 @@ module ApplicationHelper
     link_to html.html_safe, link, options
   end
 
-  def products_listing_for(products, kind: nil)
-    locals = { products: products, kind: kind }
+  def products_listing_for(products, kind: nil, group: nil)
+    locals = { products: products, kind: kind, group: group }
     render layout: "products/lists/default", locals: locals do
       yield if block_given?
     end
+  end
+
+
+  #### AFTER PAGES THEME ################
+
+  def static_page?
+    controller.is_a? HighVoltage::PagesController
+  end
+
+  def on_page?(path, *args)
+    text = args.pop
+    return text if request.path == send("#{path}_path", *args)
+  end
+
+  # TODO: use retina logo
+  def link_logo_to(path, options = {})
+    image = "handlisted-text-logo#{"-dark-bg" if options.delete(:dark_bg)}"
+    # html  = image_tag "#{image}.png", alt: "logo", data: {
+    #   "src" => image_url("#{image}.png"), "src-retina" => image_url("#{image}_2x.png")
+    # }
+    html = image_tag "#{image}.png", alt: "logo", width: 120, height: 24,
+      data: { "src" => image_url("#{image}.png") }
+    link_to html.html_safe, path, options
+  end
+
+  def iconic_link_to(title, path, options = {})
+    html = content_tag :i, nil, class: options.delete(:icon)
+    link_to "#{html} #{title}".html_safe, path, options
   end
 end

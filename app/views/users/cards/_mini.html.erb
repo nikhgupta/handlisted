@@ -1,4 +1,3 @@
-<div class="userCard-mini <%= primary ? 'highlight' : '' %>">
-  <%= presenter.avatar_link %>
-</div>
-
+<%= div_for user, class: "userCard-mini #{'primary' if primary}" do %>
+  <%= presenter.avatar_tag %>
+<% end %>

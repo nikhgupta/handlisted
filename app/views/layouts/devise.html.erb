@@ -1,58 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <%= render "layouts/head" %>
-  <body id="devise-page" class="external-page sb-l-c sb-r-c">
-    <!-- Start: Main -->
-    <div id="main" class="animated fadeIn">
+  <%= render "layouts/application/head" %>
 
-      <!-- Start: Content-Wrapper -->
-      <section id="content_wrapper">
-
-        <div id="canvas-wrapper" style="height: 455px;">
-          <%# TODO: change 'demo-canvas' id in js file for CanvasBG %>
-          <canvas id="demo-canvas" width="1440" height="455"></canvas>
+  <body class="fixed-header">
+    <div class="login-wrapper ">
+      <div class="bg-pic">
+        <%= image_tag "featured.jpg", class: "lazy" %>
+        <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
+          <h2 class="semi-bold text-white">
+            Discover, curate, and review products that you love!
+          </h2>
         </div>
+      </div>
 
-        <!-- Begin: Content -->
-        <section id="content">
-
-          <div class="admin-form theme-info" id="user-forms">
-
-            <div class="row mb15 table-layout">
-              <div class="col-xs-6 va-m pln">
-                <%= link_logo_to root_path, title: "Return Home", class: "navbar-brand light", dark_bg: true %>
-              </div>
-              <div class="col-xs-6 text-right va-b pr5">
-                <div class="login-links">
-                  <%= link_to "Log In", new_user_session_path, class: path_is?(new_user_session_path) ? "active" : '', title: "Log In" %>
-                  <span class="text-white"> | </span>
-                  <%= link_to "Register", new_user_registration_path, class: path_is?(new_user_registration_path) ? "active" : '', title: "Register" %>
-                </div>
-              </div>
-            </div>
-
-            <div class="panel panel-info mt10 br-n">
-
-              <div class="panel-heading heading-border bg-white">
-                <span class="panel-title hidden"> <%= fa_icon('sign-in') %>Register</span>
-                <div class="section row mn">
-                  <%= render "devise/shared/omniauth_links" %>
-                </div>
-              </div>
-
-              <!-- end .form-header section -->
-              <%= yield %>
-            </div>
-          </div>
-
-        </section>
-        <!-- End: Content -->
-
-      </section>
-      <!-- End: Content-Wrapper -->
-
+      <div class="login-container bg-white">
+        <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+          <%= link_logo_to root_path %>
+          <%= yield %>
+        </div>
+      </div>
     </div>
-    <!-- End: Main -->
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>
   </body>
 </html>

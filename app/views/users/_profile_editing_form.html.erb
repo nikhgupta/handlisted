@@ -1,6 +1,6 @@
 <div class="panel heading-border panel-alert">
   <div class="panel-body light">
-    <%= form_for(@user, url: edit_profile_path, html: { class: "form-horizontal", role: "form" }, builder: UserFormBuilder) do |f| %>
+    <%= form_for(@user, url: edit_profile_path, html: { role: "form" }, builder: UserFormBuilder) do |f| %>
       <% if @user.errors.any? %>
         <div class="alert alert-danger alert-dismissable" role="alert">
           <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -15,18 +15,18 @@
 
       <div class="row">
         <div class="col-md-6">
-          <%= f.text_field :name, placeholder: "Enter email", class: "gui-input", icon: 'user', required: true %>
+          <%= f.text_field :name, placeholder: "Enter email", class: "form-control", icon: 'user', required: true %>
         </div>
         <div class="col-md-6">
-          <%= f.email_field :email, placeholder: "Enter email", class: "gui-input", icon: 'user', required: true, email: true %>
+          <%= f.email_field :email, placeholder: "Enter email", class: "form-control", icon: 'user', required: true, email: true %>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <%= f.password_field :password, autocomplete: 'off', class: "gui-input", icon: 'lock', minlength: 4, maxlength: 32 %>
+          <%= f.password_field :password, autocomplete: 'off', class: "form-control", icon: 'lock', minlength: 4, maxlength: 32 %>
         </div>
         <div class="col-md-6">
-          <%= f.password_field :password_confirmation, autocomplete: 'off', class: "gui-input", icon: 'lock', minlength: 4, maxlength: 32, equalTo: "#user_password" %>
+          <%= f.password_field :password_confirmation, autocomplete: 'off', class: "form-control", icon: 'lock', minlength: 4, maxlength: 32, equalTo: "#user_password" %>
         </div>
       </div>
       <%= f.submit 'Update info', class: "btn-alert" %>
