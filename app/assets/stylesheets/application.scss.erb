@@ -15,7 +15,13 @@
 @import 'categories';
 @import 'social-share-button';
 
-.container-fluid { margin-top: 60px; }
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+body.fixed-header .page-container {
+  padding-left: 0;
+}
 
 .social-share-button {
   margin: 20px 0;
@@ -54,5 +60,35 @@
   @media(min-width: 600px) {
     padding-left: 40px;
     padding-right: 40px;
+  }
+}
+
+.widget {
+  & > div {
+    height: 150px;
+  }
+  .counter {
+    position: absolute;
+    right: 25px;
+    bottom: 40px;
+    font-size: 80px;
+  }
+}
+.panel-scrollable {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.paginator {
+  .bg-header {
+    width: 100%;
+    background: rgba(0,0,0,0.07);
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+    border-radius: 0;
+    a {
+      color: #444;
+      font-weight: bold;
+    }
   }
 }

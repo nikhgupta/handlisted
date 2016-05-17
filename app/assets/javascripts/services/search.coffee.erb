@@ -1,0 +1,65 @@
+class @SiteWideSearch
+  constructor: (@element) ->
+    @timer = 0
+    @options =
+      onKeyEnter: @onKeyEnter
+      searchField: "#overlay-search"
+      closeButton: ".overlay-close"
+      suggestions: "#overlay-suggestions"
+      searchResults: ".search-results"
+      onSearchSubmit: @onSearchSubmit
+      getResults: @getResults
+
+  init: ->
+    @search = $(@element).search @options
+
+  onKeyEnter: (query) ->
+    clearTimeout @timer
+    @timer = setTimeout (=> @getResults(query)), 400
+
+  onSearchSubmit: (query) ->
+    @onKeyEnter query
+
+  getResults: (query) ->
+    $.post '/products/search.json', search: query, (products) =>
+      $.each products, (index, product) =>
+        html = null
+
+        if product.images?
+          html = "<img width='50' height='50' src='#{product.images?[0]}' alt=''/>"
+        else
+          html = "<div>#{product.name[0].toUpperCase()}</div>"
+
+        html = "<div class='col-md-4'>
+            <div class=''>
+              <div class='thumbnail-wrapper d48 circular bg-success text-white inline m-t-10'>
+                <div>#{html}</div>
+              </div>
+
+              <div class='p-l-10 inline p-t-5'>
+                <h5 class='m-b-5'><span class='semi-bold result-name'>#{product.name}</h5>
+                <p class='hint-text'>via #{product.merchant.name}</p>
+              </div>
+            </div>
+        "
+        $(@searchResults).append html
+
+  #   ###
+  #       Do AJAX call here to get search results
+  #       and update DOM and use the following block
+  #       'searchResults.find('.result-name').each(function() {...}'
+  #       inside the AJAX callback to update the DOM
+  #   ###
+
+  #   # # Timeout is used for DEMO purpose only to simulate an AJAX call
+  #   # clearTimeout $.data(this, 'timer')
+  #   # searchResults.fadeOut 'fast'
+  #   # # hide previously returned results until server returns new results
+  #   # wait = setTimeout((->
+  #   #   searchResults.find('.result-name').each ->
+  #   #     if searchField.val().length != 0
+  #   #       $(this).html searchField.val()
+  #   #       searchResults.fadeIn 'fast'
+  #   #       # reveal updated results
+  #   # ), 500)
+  #   # $(this).data 'timer', wait

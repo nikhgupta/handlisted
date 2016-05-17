@@ -1,9 +1,9 @@
 ---
-:daemon: false
 :concurrency: 5
 :pidfile: ./tmp/pids/sidekiq.pid
-:logfile: ./log/sidekiq.log
 production:
+  :daemon: true
+  :logfile: ./log/sidekiq.log
   :concurrency: 20
 :queues:
   - [low_priority,  1]

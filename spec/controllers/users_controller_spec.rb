@@ -101,12 +101,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(edit_profile_path)
       end
 
-      it "updates the requested user password and redirects to home page" do
+      it "updates the requested user password and redirects to product page" do
         new_attributes = { password: "password2", password_confirmation: "password2" }
         put :update, {:id => @user.to_param, :user => new_attributes}, valid_session
         @user.reload
         expect(@user).to be_valid_password("password2")
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(products_path)
       end
 
       it "assigns the requested user as @user" do

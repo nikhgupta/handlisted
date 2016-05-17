@@ -20,10 +20,8 @@ class @ProductCard
 
   statusPollerFor: (job_id) -> new StatusPoller
     job_id: job_id
-    onTick: (response) =>
-      @setProgressBarTo(response.status)
-    onComplete: (response) =>
-      $.getScript "/products/#{response.id}.js", type: @cardType()
+    onTick: (response) => @setProgressBarTo(response.status)
+    onComplete: (response) => $.getScript "/products/#{response.id}.js", type: @cardType()
 
   cardType: ->
     return 'overview' if @card.hasClass 'overview'
@@ -53,7 +51,7 @@ class @ProductCard
 
   attachModal: ->
     @_openModalOrPage @image, (node) ->
-      card = node.parents(".productCard")
+      card = node.parents(".product.card")
       card.find(".item-name a").attr('href')
 
   attachToRelatedProducts: ->

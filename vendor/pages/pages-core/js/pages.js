@@ -1366,7 +1366,7 @@
                 timeout: 0,
                 type: 'danger',
                 onShown: function() {
-                    _this.$loader.find('> div').fadeOut()
+                    if (_this.$loader) _this.$loader.find('> div').fadeOut();
                 },
                 onClosed: function() {
                     _this.refresh(false)

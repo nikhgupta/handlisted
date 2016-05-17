@@ -1,3 +1,5 @@
+Rails.application.routes.default_url_options = { host: 'localhost', port: 12000 }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -15,7 +17,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 12000 }
+  config.action_mailer.default_url_options = Rails.application.routes.default_url_options
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   config.roadie.url_options = { host: 'localhost', port: 12000, scheme: "http" }
 
@@ -41,4 +43,12 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.add_footer = true
+  end
 end
+

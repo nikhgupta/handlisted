@@ -38,6 +38,15 @@ class User < ActiveRecord::Base
     identities.where(provider: name).exists?
   end
 
+  def likes_gained_count
+    products = found_products.includes(:likes_as_target)
+    products.map{|fp| fp.likes_as_target_ids.count}.sum
+  end
+
+  def likes_count
+    liking_ids.count
+  end
+
   def merge_data_from_omniauth(auth)
     auth = auth.is_a?(Extractor::Base) ? auth.attributes_data : auth
     auth = Hash[auth.map{|k,v| [k.to_s,v]}]

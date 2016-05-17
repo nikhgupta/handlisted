@@ -13,6 +13,8 @@
 
 #= require jquery
 #= require jquery_ujs
+#= require riot
+#= require riot_rails
 
 # BEGIN VENDOR JS FOR PAGES (plus add in jquery.turbolinks)
 #= require pages-plugins/pace/pace.min
@@ -47,10 +49,10 @@
 
 
 # Custom scripts
-#= require search
 # require gallery
 #
 #= require products
+#= require services/search
 #= require services/status_poller
 #= require services/social-sharing
 #= require services/forms_validator
@@ -63,9 +65,12 @@ $(document).ajaxError (e, XHR, options) ->
     window.location.replace("/login?unauthorized")
 
 ready = ->
+
   if $('[data-toggle="velocity"]').length > 0
     $('[data-toggle="velocity"]').click ->
       $($(@).attr('data-target')).velocity 'scroll', duration: 800
+
+  $(".panel-scrollable").each -> $(@).css "height", $(@).height() + 20
 
   if $(window).scrollTop() > 10
     $('nav.header').header('addMinimized')
@@ -73,4 +78,7 @@ ready = ->
   new FormsValidator('form').init()
   # new FormsValidator('form', errorClass: 'state-error', validClass: 'state-success', errorElement: "em").init()
 
+  new SiteWideSearch('[data-pages="search"]').init()
+
+  # $("[data-pages='search']").data("pg.search").toggleOverlay("show")
 $ -> ready()

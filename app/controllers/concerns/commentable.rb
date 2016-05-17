@@ -8,9 +8,11 @@ module Commentable
   end
 
   def comments
+    # per_page = params[:per_page] || Kaminari.config.default_per_page
+    per_page = params[:per_page] || 3
     @commentable = find_commentable
     @pagination_for = params[:resource]
-    @comments = @commentable.paginated_comments(page: params[:page])
+    @comments = @commentable.paginated_comments(page: params[:page], per_page: per_page)
     @comment = Comment.new
   end
 

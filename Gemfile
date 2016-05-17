@@ -88,6 +88,7 @@ group :test do
 end
 
 group :test, :development do
+  gem 'bullet'
   gem 'byebug'
   gem 'spring'
   gem 'pry-rails'
@@ -101,3 +102,5 @@ gem "skylight"
 gem 'haml'
 
 gem 'social-share-button'
+gem 'active_model_serializers'
+gem 'riot_js-rails'

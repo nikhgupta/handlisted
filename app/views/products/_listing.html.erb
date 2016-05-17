@@ -1,8 +1,8 @@
 <% if products.any? %>
-  <div class="row productList <%= "productList-#{kind}" if kind.present? %> <%= "productList-#{group}" if group.present? %>">
+  <div class="row products list <%= kind if kind.present? %> <%= group if group.present? %>">
     <% products.each do |product| %>
-      <div class="col-sm-<%= kind == :mini ? 3 : 6 %> col-md-<%= kind == :mini ? 2 : 4 %>">
-        <%= render "products/cards/#{kind ? kind : :default}", product: product, presenter: present(product) %>
+      <div class="<%= html[:class] || "col-sm-6 col-md-4" %>">
+        <%= render "products/card", product: product, presenter: present(product) %>
       </div>
     <% end %>
   </div>

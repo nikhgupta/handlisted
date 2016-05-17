@@ -51,10 +51,8 @@ module AddProductHelpers
     wait_for_traffic
   end
 
-  def card_selector_for(product, card: :default)
-    hash = Digest::MD5.hexdigest product.url_hash
-    selector = "-#{card}" if card && card != :default
-    "#productCard#{selector}-#{hash}"
+  def card_selector_for(product)
+    ".product.card[data-pid='#{product.pid}']"
   end
 
   def toggle_like_for_product(*args)

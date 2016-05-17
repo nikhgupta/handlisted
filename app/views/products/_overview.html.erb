@@ -1,12 +1,10 @@
-<div id="<%= presenter.id :overview %>" class="productCard-overview">
+<div id="<%= presenter.id :overview %>" class="product overview bg-transparent">
   <div class="row jumbotron" data-pages="parallax">
     <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
       <div class="inner">
         <ul class="breadcrumb">
           <li><%= presenter.merchant_link %></li>
-          <% if presenter.brand.present? %>
-            <li><%= presenter.brand_link %></li>
-          <% end %>
+          <% if presenter.brand.present? %><li><%= presenter.brand_link %></li><% end %>
         </ul>
 
         <div class="container-md-height m-b-20">
@@ -32,7 +30,7 @@
 
             <div class="col-md-height col-md-6 col-top">
               <div class="panel panel-transparent">
-                <div class="panel-heading">
+                <div class="panel-heading p-t-0 m-b-10">
                   <div class="panel-title"><%= presenter.name %></div>
                 </div>
                 <div class="panel-body">
@@ -43,7 +41,7 @@
                       <%= presenter.social_sharing popup: true, via: "handlisted" %>
                     </div>
                     <div class='col-xs-12 col-sm-6 col-md-12'>
-                      <%= render "users/lists/mini", users: presenter.likers, primary: presenter.founder %>
+                      <%= render "users/listing", users: presenter.likers, primary: presenter.founder %>
                     </div>
                   </div>
                 </div>
@@ -55,59 +53,48 @@
     </div>
   </div>
 
-  <% if @product.description.present? %>
-    <div class='container-fluid container-fixed-lg'>
-      <div class='row'>
-        <div class='col-md-7'>
-          <div class='panel panel-default product-description'>
-            <div class='panel-heading'>
-              <div class='panel-title'>Product Description</div>
-            </div>
-            <div class='panel-body'>
-              <%= presenter.markdowned_description.try :html_safe %>
-            </div>
-          </div>
-        </div>
-
-        <div class='col-md-5'>
-          <div class='panel panel-transparent related-products'>
-            <div class='panel-heading'>
-              <div class='panel-title'>Comments/Reviews</div>
-            </div>
-            <div class='panel-body'>
-              <%= render "comments/form" %>
-              <%= render "comments/lists/default", comments: product.comments %>
-            </div>
-          </div>
-        </div>
+  <% if presenter.note.present? %>
+    <div class='panel panel-default product-note bg-master'>
+      <div class='panel-heading text-center'>
+        <div class='panel-title text-warning'>Editor's Note</div>
+      </div>
+      <div class='panel-body'>
+        <%= presenter.note.try :html_safe %>
+      </div>
+    </div>
+  <% elsif presenter.description.present? %>
+    <div class='panel panel-default product-description m-t-20'>
+      <div class='panel-heading'>
+        <div class='panel-title'>Product Description</div>
+      </div>
+      <div class='panel-body'>
+        <%= presenter.markdowned_description.try :html_safe %>
       </div>
     </div>
   <% end %>
 
-  <% if @product.related_products.any? %>
-    <div class='container-fluid container-fixed-lg'>
-      <div class='panel panel-transparent related-products'>
+  <div class="row">
+    <div class="col-md-9">
+      <% if presenter.related_products.any? %>
+        <div class='panel panel-transparent related-products'>
+          <div class='panel-heading'>
+            <div class='panel-title'>Related Products</div>
+          </div>
+          <div class='panel-body'>
+            <%= render "products/listing", products: presenter.related_products, kind: :mini, group: :related, html: { class: "col-sm-6 col-md-3" } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-3">
+      <div class='panel product-comments'>
         <div class='panel-heading'>
-          <div class='panel-title'>Related Products</div>
+          <div class='panel-title'>Comments/Reviews</div>
         </div>
         <div class='panel-body'>
-          <%= render "products/lists/mini", products: product.related_products %>
+          <%= render "comments/form" %>
+          <%= render "comments/lists/default", comments: @comments %>
         </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="panel panel-success panel-comments">
-    <div class="panel-heading text-center">
-      <h3>Comments</h3>
-    </div>
-    <div class="panel-body chat-widget">
-      <% self.formats = [:html] %>
-      <%= render "comments/add" %>
-      <%# NOTE: for product info modal, content type is JS, but we want to render HTML. %>
-      <div class="commentsList-ajax">
-        <%= render "comments/lists/default", comments: @comments %>
       </div>
     </div>
   </div>
-</div>

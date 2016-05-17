@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     collection do
       post 'create/status' => 'products#fetch_status', defaults: { format: :json }, constraints: { format: :json }
       post 'create/check' => 'products#verify_url', defaults: { format: :json }, constraints: { format: :json }
-      post 'search', as: :search_or_add
+      match 'search', as: :search_or_add, via: [:get, :post]
     end
     member do
       get 'go' => 'products#visit', as: :visit

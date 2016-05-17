@@ -1,15 +1,10 @@
-# el = $('#<%= present(@product).id %>')
-# el.replaceWith('<%= j render "products/cards/overview", presenter: present(@product) %>')
-# el = $('#<%= present(@product).id :overview %>')
-# new ProductCard(el, 'overview').init()
-
 <% if @pagination_for == "comments" %>
-<%= render("comments/lists/default", comments: @comments) %>
+<%= j render("comments/lists/default", comments: @comments) %>
 <% else %>
 new MagnificModal
-  html: "<%= j render('products/cards/overview', product: @product, presenter: present(@product)) %>"
+  html: "<%= j render('products/overview', presenter: present(@product), founder: present(@product.founder)) %>"
   modalClass: "productModal"
   animation: "zoomIn"
 .open()
-$.productCardify("productCard")
+$.productCardify(".product.card")
 <% end %>

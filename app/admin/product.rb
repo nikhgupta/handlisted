@@ -1,4 +1,9 @@
 ActiveAdmin.register Product do
+  permit_params :founder_id, :merchant_id, :brand_id, :category_id, :images,
+    :pid, :slug, :original_name, :url, :name, :note, :features, :description,
+    :price_cents, :price_currency, :marked_price_cents, :marked_price_currency, :available,
+    :prioritized, :average_rating, :ratings_count, :lock_version, :url_hash
+
   actions :all, except: [:new, :create]
   index do
     selectable_column

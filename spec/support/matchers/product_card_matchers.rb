@@ -3,7 +3,7 @@ module CustomMatchersForCapybara
     def initialize(expected)
       @message  = []
       @expected = expected
-      @selector = "#productCard-#{Digest::MD5.hexdigest(@expected.url_hash)}"
+      @selector = ".product.card[data-pid='#{@expected.pid}']"
     end
 
     def matches?(page)

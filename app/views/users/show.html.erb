@@ -1,31 +1,46 @@
-<%= render "profile_box", presenter: present(@user), liked: @liked, found: @found %>
+<% presenter = present(@user); link = presenter.username_link %>
+<%= render partial: "profile_box", locals: { presenter: presenter, liked: @liked, found: @found } %>
 
-<div class="row">
-  <div class="col-md-12 text-center">
-    <ul class="nav nav-pills mb20">
-      <li class="active bg-alert">
-        <a href="#found-products" data-toggle="tab" class="btn">Products He <%= fa_icon('search') %></a>
-      </li>
-      <li class="bg-danger">
-        <a href="#liked-products" data-toggle="tab" class="btn">Products He <%= fa_icon('heart') %></a>
-      </li>
-    </ul>
+<div class="row user-product-listing">
+  <div class="col-sm-6">
+    <div class="panel bg-transparent">
+      <div class="panel-heading">
+        <div class='panel-title text-black hint-text'>
+          <span class="font-montserrat fs-11 all-caps">
+            Products Liked by <%= link %> <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+      <div class="panel-body panel-scrollable">
+        <div id="liked-products" class="tab-pane">
+          <%= products_listing_for @products[:liked], kind: :mini, group: :liked, html: { class: "col-sm-4" } do %>
+            Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
+            <%= link_to "like some products", page_path("add-products"), class: "alert-link" %>
+            for you to be able to discover his likes!
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="tab-content br-n pn">
-  <div id="found-products" class="tab-pane active">
-    <%= products_listing_for @products[:found], kind: :mini, group: :found do %>
-      Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
-      <%= link_to "find some products", page_path("add-products"), class: "alert-link" %>
-      for you to be able to discover his taste!
-    <% end %>
-  </div>
-  <div id="liked-products" class="tab-pane">
-    <%= products_listing_for @products[:liked], kind: :mini, group: :liked do %>
-      Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
-      <%= link_to "like some products", page_path("add-products"), class: "alert-link" %>
-      for you to be able to discover his likes!
-    <% end %>
+  <div class="col-sm-6">
+    <div class="panel bg-transparent">
+      <div class="panel-heading">
+        <div class='panel-title text-black hint-text'>
+          <span class="font-montserrat fs-11 all-caps">
+            Products Found by <%= link %> <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+      <div class="panel-body panel-scrollable">
+        <div id="found-products" class="tab-pane active">
+          <%= products_listing_for @products[:found], kind: :mini, group: :found, html: { class: "col-sm-4" } do %>
+            Oh snap! <strong>@<%= @user.username %></strong> seems a bit shy. He needs to
+            <%= link_to "find some products", page_path("add-products"), class: "alert-link" %>
+            for you to be able to discover his taste!
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

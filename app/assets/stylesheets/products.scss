@@ -1,1 +1,43 @@
-@import "components/products/cards";
+.product{
+  &.overview {
+    .panel-image {
+      @include centered-image-container(300px, 70%);
+    }
+    .affiliate-button {
+      margin-bottom: 20px;
+      @media(min-width: 320px) {
+        padding-left: 28px;
+        padding-right: 28px;
+        line-height: 23px;
+      }
+      @media(min-width: 400px) {
+        font-size: 1.6em;
+        padding: 16px 32px;
+        box-shadow: 1px 2px 2px rgba(0,0,0,0.07);
+      }
+    }
+    .product-description {
+      max-height: 240px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+    .product-note {
+      margin: 20px -25px 0;
+      padding: 15px 40px;
+      .panel-body {
+        color: #eed;
+        text-align: justify;
+        font-family: 'Montserrat';
+        font-size: 1.2em;
+      }
+    }
+  }
+}
+
+// .products.list {
+//   &.mini {
+//     .product {
+//       @extend .product.card.mini;
+//     }
+//   }
+// }

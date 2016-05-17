@@ -20,6 +20,11 @@ module ApplicationHelper
     request.path == root_path
   end
 
+  def logo_link(options = {})
+    image = image_tag "handlisted-text-logo.png", options
+    link_to image, root_path
+  end
+
   def badge_tag_for(*args)
     badge = args.first.is_a?(Merit::Badge) ? args.first : Merit::Badge.find_by_name_and_level(*args)
     difficulty = badge.custom_fields["difficulty"]
@@ -43,7 +48,8 @@ module ApplicationHelper
   end
 
   def fa_icon(name, options = {})
-    options[:class] = "fa fa-#{name} #{options[:class]}"
+    klass = options.delete(:not_fa) ? name : "fa fa-#{name}"
+    options[:class] = "#{klass} #{options[:class]}"
     "<i #{options.map{|k,v| "#{k}=\"#{v}\""}.join(" ")}></i>".html_safe
   end
 
@@ -60,9 +66,9 @@ module ApplicationHelper
     link_to html.html_safe, link, options
   end
 
-  def products_listing_for(products, kind: nil, group: nil)
-    locals = { products: products, kind: kind, group: group }
-    render layout: "products/lists/default", locals: locals do
+  def products_listing_for(products, kind: nil, group: nil, html: {})
+    locals = { products: products, kind: kind, group: group, html: html }
+    render layout: "products/listing", locals: locals do
       yield if block_given?
     end
   end

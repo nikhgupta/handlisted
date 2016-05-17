@@ -82,6 +82,7 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe "POST #like" do
+    render_views
     # NOTE: this is actually happening via JS, but rack-test passes since devise
     # sends a redirect anyways on no auth.
     # TODO: test this inside request specs.
@@ -102,7 +103,6 @@ RSpec.describe ProductsController, type: :controller do
       post :like, { id: product.to_param, format: :js }, valid_session
       expect(response).to be_successful
       expect(user).not_to be_liking(product)
-
     end
     it "displays an error when product like can not be toggled" do
       sign_in user
@@ -110,7 +110,10 @@ RSpec.describe ProductsController, type: :controller do
       allow(user).to receive(:like).with(product).and_return(nil)
       post :like, { id: product.to_param, format: :js }, valid_session
       expect(response).to be_successful
-      expect(response).to render_template('toggle_error')
+      expect(response).to render_template('like')
+
+      # this response is only partial returned by this action
+      expect(response.body).to have_text "Encountered an error!"
     end
   end
 

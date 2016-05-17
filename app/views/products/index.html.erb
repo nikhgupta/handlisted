@@ -1,15 +1,4 @@
-<%# <div class='row'> %>
-<%#   <% @products.each do |product| %1> %>
-<%#     <div class="col-xs-12 col-sm-6 col-md-4"> %>
-<%#       <%= render "products/cards/default", presenter: present(product) %1> %>
-<%#     </div> %>
-<%#   <% end %1> %>
-<%# </div> %>
-<%= products_listing_for @products do %>
-  Oh snap! <strong>No matching products were found for this search.</strong>
-  Perhaps, you would like to search again?
-  <br/><br/>
-  <strong>If you were trying to add a product</strong>:
-  Alas! we either do not support this merchant (yet),
-  or we could not find a product at that URL.
-<% end %>
+<products-listing data-riot data-opts="<%= {
+  products: @products.map{|p| ProductSerializer.new(p, scope: self)},
+  paginator: paginate(@products)
+}.to_json %>"></products-listing>

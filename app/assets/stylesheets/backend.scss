@@ -40,3 +40,5 @@ $assets-url: "/assets";
 @import 'theme-overrides';
 @import 'theme-custom';
 @import 'users';
+
+br { clear: none; }

@@ -1,4 +1,4 @@
-<nav class="header bg-header <%= home_page? ? 'transparent-light' : 'minimized dark' %>" data-pages="header" data-pages-header='<%= "autoresize" if home_page? %>' data-pages-resize-class="<%= "dark" if home_page? %>">
+<nav class="header bg-header <%= static_page? ? 'transparent-light' : 'minimized dark' %>" data-pages="header" data-pages-header='<%= "autoresize" if static_page? %>' data-pages-resize-class="<%= "dark" if static_page? %>">
   <div class="container relative">
     <div class="pull-left">
       <div class="header-inner">
@@ -21,10 +21,10 @@
         </a>
       </div>
       <div class="header-inner">
+        <%= link_to fa_icon('pg-search', not_fa: true) +
+          "Type anywhere to <span class='bold'>search</span>".html_safe,
+          '#', class: 'search-link', data: { toggle: "search" } %>
         <ul class="menu">
-          <a href="#" class="search-link" data-toggle="search">
-            <i class="pg-search"></i>Type anywhere to <span class="bold">search</span>
-          </a>
           <li><%= link_to 'Home', root_path, data: { text: "Home" }, class: on_page?(:root, :active) %></li>
           <%# <li><%= link_to 'About', page_path(:about), data: { text: "About" }, class: on_page?(:page, :about, :active) %1></li> %>
           <%# <li><%= link_to 'How it Works?', page_path("add-products"), data: { text: "How it Works?" }, class: on_page?(:page, "add-products", :active) %1></li> %>

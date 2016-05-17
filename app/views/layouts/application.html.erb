@@ -6,24 +6,25 @@
 
     <%= render "layouts/application/header" %>
 
-    <%= yield :primary_box %>
-
-    <% if static_page? %>
-      <%= yield %>
-    <% else %>
-      <div class="page-content-wrapper">
-        <div class="content sm-gutter">
-          <div class='container-fluid padding-25 sm-padding-10'>
-            <%= render 'layouts/application/notices' %>
-            <%= yield %>
+    <div class="page-container">
+      <% if static_page? %>
+        <%= yield %>
+      <% else %>
+        <div class="page-content-wrapper">
+          <div class="content sm-gutter">
+            <%# <%= yield :primary_box %1> %>
+            <div class='container-fluid padding-25 sm-padding-10'>
+              <%= render 'layouts/application/notices' %>
+              <%= yield %>
+            </div>
           </div>
         </div>
-      </div>
-      <%= render "layouts/application/quickview" %>
-    <% end %>
+        <%= render "layouts/application/quickview" %>
+      <% end %>
 
-    <%= render "layouts/application/footer" %>
-    <%= render "layouts/application/search" %>
+      <%= render "layouts/application/footer" %>
+      <%= render "layouts/application/search" %>
+    </div>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>
   </body>
 </html>

@@ -9,13 +9,28 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    query = params[:product][:search] rescue nil
-    scope = query.present? ? Product.search(query) : Product.order(updated_at: :desc)
+    scope = Product.includes(:merchant, :brand, :category, :founder, :likers)
+    scope = scope.order(updated_at: :desc)
+    @products = scope.all.page params[:page]
+    respond_to do |format|
+      format.html
+      format.json { render json: @products }
+    end
+  end
+
+  def search
+    query = params[:search] rescue nil
+    scope = Product.search query
+    scope = scope.includes :merchant, :brand, :founder, :category
     @products = scope.all.page params[:page]
   end
 
   def show
     @type = params.fetch("type", :default)
+    respond_to do |format|
+      format.html
+      format.json { render json: @product }
+    end
   end
 
   # NOTE: Brakeman reports this falsely under insecure redirect, but the
@@ -26,14 +41,13 @@ class ProductsController < ApplicationController
   end
 
   def like
-    @kind  = params[:kind] if params[:kind] && params[:kind] != "default"
     method = current_user.liking?(@product) ? :unlike : :like
     @success = current_user.send method, @product
-    @flash = { alert: "There was an error when liking this product." }
-    @flash = { notice: "Successfully queued.." } if @success.present?
+    flash = { alert: "Product could not be #{method}d for some reason."}
+    flash = { notice: "Product was successfully #{method}d by you!" } if @success
     respond_to do |format|
-      format.js   { render :like }
-      format.html { redirect_to root_path, @flash }
+      format.json { render json: @product, status: (@success ? :ok : :bad_request) }
+      format.html { redirect_to products_path, flash }
     end
   end
 
@@ -41,7 +55,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @job_id  = ProductScraperJob.perform_async @product.founder_id, @product.url, force: true if @product
     respond_to do |format|
-      format.js { render :reimport }
+      format.json { render json: { job_id: @job_id }.to_json }
       format.html { redirect_to root_path, notice: "Successfully queued.." }
     end
   end
@@ -60,6 +74,6 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.includes(:merchant).find(params[:id])
     end
 end
