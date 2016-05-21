@@ -1,21 +1,66 @@
 <products-listing>
-  <div class="row products list">
-    <div class="col-sm-6 col-md-4" each={item in products}>
+  <div class="row products list {mini: opts.mini} {group: opts.group }">
+    <div class="col-sm-6 col-md-4 products-container" each={item in products}>
       <product-card product={item}/>
+      </div>
+    </div>
+
+    <div class="paginator" if={ !pagination.last_page || !pagination.first_page }>
+      <div class="pagination bg-header has-loader">
+        <a if={ !ajax_in_progress && !pagination.last_page } class='load-more' href="/{path_prefix}.json?page={pagination.next_page}&group={opts.group}" rel="next">Load More</a>
+        <img if={ ajax_in_progress} src='/images/ajax-loader.gif' width="40" height="40"/>
+        <strong if={ pagination.last_page }>Whoa! You've reached the end of the world!</strong>
+      </div>
     </div>
   </div>
 
-  <div class="paginator"><raw content="{ paginator }"/></div>
+  <style type='text/scss'>
+    .paginator {
+      margin: -10px -25px 0;
+      .pagination {
+        padding: 20px;
+      }
+      .bg-header {
+        width: 100%;
+        background: rgba(0,0,0,0.07);
+        padding: 10px;
+        text-align: center;
+        margin: 0;
+        border-radius: 0;
+        a {
+          color: #444;
+          font-weight: bold;
+        }
+      }
+    }
+  </style>
 
   <script type="text/coffee">
+    @path_prefix = opts.path_prefix || "products"
     @products   = opts.products
-    @paginator  = opts.paginator
-    @pagination = $(".pagination", @root)
-    @ajaxLoader = '<img src="/images/ajax-loader.gif" alt="Ajax loader" />'
-    @pagingUrl  = @pagination.find("a[rel='next']").attr("href")
+    @pagination = {last_page: opts.last_page, next_page: 2, first_page: true}
+    @reachedEnd = => $(window).scrollTop() > $(document).height() - $(window).height() - opts.offset
+    @ajax_in_progress = false
 
-    @reachedEnd = =>
-      $(window).scrollTop() > $(document).height() - $(window).height() - opts.offset
+    @loadMoreProductsFrom = (url, callback = ->) =>
+      return unless url?
+      @ajax_in_progress = true; @update()
+      $.get url, {group: @group}, (response, status, xhr) =>
+        $.merge @products, response
+        callback(response)
+        @pagination = $.parseJSON xhr.getResponseHeader("X-Pagination")
+        @ajax_in_progress = false; @update()
+
+    @on 'mount', =>
+      $(window).scroll =>
+        el = $("a.load-more.clicked", @root)
+        return unless @reachedEnd() and el.length > 0
+        @loadMoreProductsFrom el.attr("href")
+
+      $("a.load-more", @root).on 'click', (e) =>
+        e.preventDefault()
+        $("a.load-more", @root).addClass('clicked')
+        @loadMoreProductsFrom $(e.target).attr('href')
 
   </script>
 </products-listing>

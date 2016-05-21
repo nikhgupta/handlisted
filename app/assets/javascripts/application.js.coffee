@@ -51,13 +51,16 @@
 # Custom scripts
 # require gallery
 #
-#= require products
 #= require services/search
 #= require services/status_poller
 #= require services/social-sharing
 #= require services/forms_validator
 #= require services/newsletter_subscriber
 #= require services/magnific_modal
+#
+#= require tags/raw
+#= require tags/product_card
+#= require tags/products_listing
 
 $(document).ajaxError (e, XHR, options) ->
   message = "You need to sign in or sign up before continuing."

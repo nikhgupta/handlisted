@@ -11,11 +11,11 @@ RSpec.feature "infinite scrolling for products listing", :js do
     visit products_path
 
     expect(page).to have_link("Load More")
-    expect(page).to have_css(".productCard", count: @per_page)
+    expect(page).to have_css(".product.card", count: @per_page)
 
     click_on_link "Load More"
     expect(page).not_to have_css('.pagination img')
-    expect(page).to have_css(".productCard", count: Product.count)
+    expect(page).to have_css(".product.card", count: Product.count)
   end
 
   scenario "loads more records when scrolled to bottom of page once 'load more' has been clicked", :slow do
@@ -26,12 +26,12 @@ RSpec.feature "infinite scrolling for products listing", :js do
     expect(page).to have_link("Load More")
 
     click_on_link "Load More"
-    expect(page).to have_css(".productCard", count: @per_page * 2)
+    expect(page).to have_css(".product.card", count: @per_page * 2)
 
     page.execute_script('window.scrollTo(0,100000)')
     expect(page).to have_css('.pagination img')
     expect(page).not_to have_css('.pagination img')
-    expect(page).to have_css(".productCard", count: Product.count)
-    expect(page).to have_css("p.bg-header", text: "reached the end")
+    expect(page).to have_css(".product.card", count: Product.count)
+    expect(page).to have_css(".bg-header", text: "reached the end")
   end
 end

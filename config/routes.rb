@@ -75,6 +75,8 @@ Rails.application.routes.draw do
   get  'feeds/recent' => 'services/feeds#recent', as: :recent_feed,
     defaults: { format: :rss }, constraints: { format: :rss }
 
+  get ':username/liked' => "users#liked", as: :user_liked
+  get ':username/found' => "users#found", as: :user_found
   get ':username' => 'users#show', as: :profile
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

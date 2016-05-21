@@ -8,6 +8,20 @@ module ApplicationHelper
     object
   end
 
+  def listing_of(key, objects, options = {})
+    key = key.to_s.underscore.pluralize
+    klass = "#{key.singularize}_serializer".camelize.constantize
+    serialized = objects.map{|p| klass.new(p, scope: self) }
+    options = {key => serialized, last_page: objects.last_page?}.merge(options)
+    riot_component "#{key}_listing", options
+  end
+
+  def card_for(object)
+    key = object.class.name.underscore
+    serialized = "#{key.camelize}Serializer".constantize.new(object, scope: self)
+    riot_component "#{key}_card", key => object
+  end
+
   def current_user
     present(super) if super
   end

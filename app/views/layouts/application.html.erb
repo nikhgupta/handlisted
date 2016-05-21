@@ -6,10 +6,12 @@
 
     <%= render "layouts/application/header" %>
 
-    <div class="page-container">
-      <% if static_page? %>
-        <%= yield %>
-      <% else %>
+    <% if static_page? %>
+      <%= yield %>
+      <%= render "layouts/application/footer" %>
+      <%= render "layouts/application/search" %>
+    <% else %>
+      <div class="page-container">
         <div class="page-content-wrapper">
           <div class="content sm-gutter">
             <%# <%= yield :primary_box %1> %>
@@ -20,11 +22,10 @@
           </div>
         </div>
         <%= render "layouts/application/quickview" %>
-      <% end %>
-
-      <%= render "layouts/application/footer" %>
-      <%= render "layouts/application/search" %>
-    </div>
+        <%= render "layouts/application/footer" %>
+        <%= render "layouts/application/search" %>
+      </div>
+    <% end %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>
   </body>
 </html>

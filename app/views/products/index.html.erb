@@ -1,4 +1,4 @@
 <products-listing data-riot data-opts="<%= {
-  products: @products.map{|p| ProductSerializer.new(p, scope: self)},
-  paginator: paginate(@products)
+  offset: 200,
+  products: @products.map{|p| ProductSerializer.new(p, scope: self)}
 }.to_json %>"></products-listing>

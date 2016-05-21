@@ -1,15 +1,15 @@
 <product-card>
-  <div id="{ product.id }" class="product card panel panel-default" data-pid="{ product.pid }">
+  <div id="{ product.id }" class="product card panel panel-default {mini: mini}" data-pid="{ product.pid }">
     <div class='panel-heading'>
       <div class="panel-title">
         <a href="{ product.merchant_url }" target="_blank" class="afflink">
-          <raw content="{ product.display_price }"/> on <span>{ product.merchant.name }</span>
+          <raw content="{ product.display_price }"/><span if={!mini}> on { product.merchant.name }</span>
         </a>
       </div>
 
       <div class="panel-controls">
         <ul>
-          <li>
+          <li if={ !product.states.fresh }>
             <a data-toggle="refresh" title="Re-import product information from { product.merchant.name }!"
               class="iconic-btn product-refresh" rel="nofollow" href="#" onclick={ refreshed }>
               <i class="fa fs-16 fa-refresh"></i>
@@ -43,6 +43,9 @@
                 <a href="{ product.url }">{ product.name }</a>
               </p>
               <p class="pull-right">
+                <a class="iconic-btn product-report" title="Report for incorrect product information!" rel="nofollow" href='#' onclick={ reported }>
+                  <i class="fa fs-16 fa-exclamation-circle"></i>
+                </a>
               </p>
               <div class="clearfix"></div>
             </div>
@@ -125,7 +128,6 @@
         .product-like.active .fa { color: #f04; }
 
         &.mini {
-          .panel-title span { display: none; }
           .panel-image {
             height: 128px !important;
           }
@@ -135,6 +137,7 @@
   </style>
 
   <script type='text/coffee'>
+    @mini        = @parent.opts.mini || opts.mini
     @product     = opts.product
     @url         = @product.url
     @sidekiq_url = "/products/create/status.json"
@@ -186,7 +189,11 @@
         window.location = @url
       else
         $.get("#{@url}.json").done (response) =>
+          console.log "product details were asked for"
           console.log response
+
+    @reported = (e) =>
+      console.log "product was reported for incorrect information"
 
     @on 'mount', =>
       @card = $(".product.card", @root).addClass 'cardified'

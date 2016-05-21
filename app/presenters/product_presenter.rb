@@ -49,51 +49,6 @@ class ProductPresenter < ApplicationPresenter
     model.marked_price.format(no_cents: true, display_free: "N/A")
   end
 
-  def refresh_button(options = {})
-    return if !h.current_user || (freshly_imported? && !h.current_user.admin?)
-    iconic_button_for :refresh, {
-      icon: :refresh,
-      data: { toggle: "refresh" },
-      link: h.reimport_product_path(model),
-      title: "Re-import product information from #{merchant_name}!"
-    }.merge(options)
-  end
-
-  def report_button(options = {})
-    return if h.current_user.blank?
-    iconic_button_for :report, {
-      icon: "exclamation-circle",
-      title: "Report for incorrect product information!"
-    }.merge(options)
-  end
-
-  def like_button(options = {})
-    liked = liked_by_current_user?
-    iconic_button_for :like, {
-      icon: liked ? "heart" : "heart-o",
-      link: h.like_product_path(model, kind: options[:kind]),
-      title: "Like this product!",
-      class: liked ? "active" : ""
-    }.merge(options)
-  end
-
-  def visit_button(options = {})
-    iconic_button_for :visit, {
-      link:  h.visit_product_path(model),
-      icon:  "external-link", target: "_blank",
-      title: "Visit this product on #{merchant_name}",
-      method: nil, remote: false
-    }.merge(options)
-  end
-
-  def price_or_marked_price_on_merchant_link(options = {})
-    merc = "<span>on #{merchant_name}</span>"
-    html = h.content_tag(:span, class: 'unavailable'){ "Maybe Unavailable #{merc}" }
-    html = "#{marked_price} #{merc}" if model.marked_price.to_f > 0
-    html = "#{price} #{merc}" if model.price.to_f > 0
-    h.link_to html.html_safe, h.visit_product_path(model), { target: "_blank", class: "afflink" }.merge(options)
-  end
-
   def affiliate_button(options = {})
     return if model.url.blank?
     available = model.available? && model.price.to_i > 0

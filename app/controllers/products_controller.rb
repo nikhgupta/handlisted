@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :visit, :like]
   before_action :authenticate_user!, only: [:like, :create]
+  set_pagination_headers :products, only: [:index, :search]
 
   include Commentable
   include Sidekiq::Statusable

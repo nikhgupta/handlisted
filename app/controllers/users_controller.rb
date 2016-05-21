@@ -1,23 +1,39 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :liked, :found]
   before_action :set_current_user, only: [:edit, :update]
   before_action :set_group_and_counts, only: [:show, :edit]
+  before_action :set_found_and_liked_products, only: [:show, :edit]
+  set_pagination_headers :products, only: [:liked, :found]
 
   # GET /users/1/edit
   def edit
     key = 'devise.user_errors'
     @user.errors.add(:base, *session.delete(key)) if session[key]
-    @products = {
-      liked: @user.liking.scope.page(params[:page]).per(6),
-      found: @user.found_products.scope.page(params[:page]).per(6),
-    }
   end
 
   def show
-    @products = {
-      liked: @user.liking.scope.page(params[:page]).per(6),
-      found: @user.found_products.scope.page(params[:page]).per(6),
-    }
+    respond_to do |format|
+      format.html
+      format.json{ render json: @user }
+    end
+  end
+
+  def liked
+    @products = @user.liking
+    @products = @products.includes(:merchant, :brand, :category, :founder)
+    @products = @products.page(params[:page]).per(params[:per_page] || 6)
+    respond_to do |format|
+      format.json { render json: @products }
+    end
+  end
+
+  def found
+    @products = @user.found_products
+    @products = @products.includes(:merchant, :brand, :category, :founder)
+    @products = @products.page(params[:page]).per(params[:per_page] || 6)
+    respond_to do |format|
+      format.json { render json: @products }
+    end
   end
 
   # PATCH/PUT /users/1
@@ -37,11 +53,18 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user  = User.find_by username: params[:username]
+      @user = User.includes(sash: :badges_sashes).find_by username: params[:username]
     end
 
     def set_current_user
-      @user = current_user
+      @user = User.includes(sash: :badges_sashes).find current_user.id
+    end
+
+    def set_found_and_liked_products
+      products  = { found: :found_products, liked: :liking }
+      products  = Hash[products.map{|k,m| [k, @user.send(m).includes(:merchant, :brand, :category, :founder)]}]
+      products  = Hash[products.map{|k,scope| [k, scope.page(params[:page]).per(6)]}]
+      @products = products
     end
 
     def set_group_and_counts
