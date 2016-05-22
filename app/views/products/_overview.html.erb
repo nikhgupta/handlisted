@@ -15,8 +15,8 @@
                 <div class="panel-heading">
                   <div class="panel-controls">
                     <ul>
-                      <li><%= presenter.refresh_button size: 2, class: "m-r-10" %></li>
-                      <li><%= presenter.like_button size: 2, kind: :overview %></li>
+                      <%# <li><%= presenter.refresh_button size: 2, class: "m-r-10" %1></li> %>
+                      <%# <li><%= presenter.like_button size: 2, kind: :overview %1></li> %>
                     </ul>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
                       <%= presenter.social_sharing popup: true, via: "handlisted" %>
                     </div>
                     <div class='col-xs-12 col-sm-6 col-md-12'>
-                      <%= render "users/listing", users: presenter.likers, primary: presenter.founder %>
+                      <%# <%= render "users/listing", users: presenter.likers, primary: presenter.founder %1> %>
                     </div>
                   </div>
                 </div>
@@ -81,7 +81,7 @@
             <div class='panel-title'>Related Products</div>
           </div>
           <div class='panel-body'>
-            <%= render "products/listing", products: presenter.related_products, kind: :mini, group: :related, html: { class: "col-sm-6 col-md-3" } %>
+            <%# <%= render "products/listing", products: presenter.related_products, kind: :mini, group: :related, html: { class: "col-sm-6 col-md-3" } %1> %>
           </div>
         </div>
       <% end %>

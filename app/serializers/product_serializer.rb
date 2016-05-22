@@ -12,7 +12,10 @@ class ProductSerializer < ActiveModel::Serializer
   belongs_to :category
   belongs_to :founder
 
-  attributes :note #, :description
+  has_many :likers
+  has_many :related_products
+
+  attributes :note, :description
   attributes :states
 
   def price

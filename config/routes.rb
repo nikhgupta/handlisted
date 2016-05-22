@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       get 'go' => 'products#visit', as: :visit
       post 'like', defaults: { format: :js }
       post 'reimport', defaults: { format: :js }
+      get 'likers', defaults: { format: :js }
+      get 'related', defaults: { format: :js }
     end
 
     resources :comments, only: [:new, :create]

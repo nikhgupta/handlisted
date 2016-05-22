@@ -16,10 +16,16 @@ module ApplicationHelper
     riot_component "#{key}_listing", options
   end
 
-  def card_for(object)
+  def card_for(object, options = {})
     key = object.class.name.underscore
     serialized = "#{key.camelize}Serializer".constantize.new(object, scope: self)
-    riot_component "#{key}_card", key => object
+    riot_component "#{key}_card", options.merge(key => serialized)
+  end
+
+  def overview_for(object, options = {})
+    key = object.class.name.underscore
+    serialized = "#{key.camelize}Serializer".constantize.new(object, scope: self)
+    riot_component "#{key}_overview", options.merge(key => serialized)
   end
 
   def current_user

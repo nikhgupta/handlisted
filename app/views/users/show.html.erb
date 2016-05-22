@@ -13,7 +13,8 @@
       </div>
       <div class="panel-body panel-scrollable">
         <div id="liked-products" class="tab-pane">
-          <%= listing_of :products, @products[:liked], offset: 200, end_notice: false, mini: true, group: :liked, path_prefix: "#{presenter.username}/liked" %>
+          <%= listing_of :products, @products[:liked], offset: 200, class: "col-xs-12 col-sm-6 col-md-4",
+            paging: 3, no_end_notice: true, mini: true, group: :liked, url: "/#{presenter.username}/liked.json" %>
         </div>
       </div>
     </div>
@@ -30,7 +31,8 @@
       </div>
       <div class="panel-body panel-scrollable">
         <div id="found-products" class="tab-pane active">
-          <%= listing_of :products, @products[:found], offset: 200, end_notice: false, mini: true, group: :found, path_prefix: "#{presenter.username}/found" %>
+          <%= listing_of :products, @products[:found], offset: 200, class: "col-xs-12 col-sm-6 col-md-4",
+            paging: 3, no_end_notice: true, mini: true, group: :found, url: "/#{presenter.username}/found.json" %>
         </div>
       </div>
     </div>

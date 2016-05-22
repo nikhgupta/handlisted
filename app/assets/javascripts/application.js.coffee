@@ -60,7 +60,10 @@
 #
 #= require tags/raw
 #= require tags/product_card
+#= require tags/product_overview
 #= require tags/products_listing
+#= require tags/user_card
+#= require tags/users_listing
 
 $(document).ajaxError (e, XHR, options) ->
   message = "You need to sign in or sign up before continuing."

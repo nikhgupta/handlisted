@@ -10,25 +10,40 @@
 </div>
 
 <hr/>
-
-<div class="row">
-  <div class="col-md-12 text-center">
-    <ul class="nav nav-pills mb20">
-      <li class="active bg-danger">
-        <a href="#liked-products" data-toggle="tab" class="btn">Products You <%= fa_icon('heart') %></a>
-      </li>
-      <li class="bg-alert">
-        <a href="#found-products" data-toggle="tab" class="btn">Products You <%= fa_icon('search') %></a>
-      </li>
-    </ul>
+<div class="row user-product-listing">
+  <div class="col-sm-6">
+    <div class="panel bg-transparent">
+      <div class="panel-heading">
+        <div class='panel-title text-black hint-text'>
+          <span class="font-montserrat fs-11 all-caps">
+            Products Liked by <%= link %> <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+      <div class="panel-body panel-scrollable">
+        <div id="liked-products" class="tab-pane">
+          <%= listing_of :products, @products[:liked], offset: 200,
+            no_end_notice: true, mini: true, group: :liked, url: "/#{presenter.username}/liked.json" %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="tab-content br-n pn">
-  <div id="liked-products" class="tab-pane active">
-    <%= ProductPresenter.listing_of @products[:liked], offset: 200, end_notice: false, scope: self %>
-  </div>
-  <div id="found-products" class="tab-pane">
-    <%= ProductPresenter.listing_of @products[:found], offset: 200, end_notice: false, scope: self %>
+  <div class="col-sm-6">
+    <div class="panel bg-transparent">
+      <div class="panel-heading">
+        <div class='panel-title text-black hint-text'>
+          <span class="font-montserrat fs-11 all-caps">
+            Products Found by <%= link %> <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
+      <div class="panel-body panel-scrollable">
+        <div id="found-products" class="tab-pane active">
+          <%= listing_of :products, @products[:found], offset: 200,
+            no_end_notice: true, mini: true, group: :found, url: "/#{presenter.username}/found.json" %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

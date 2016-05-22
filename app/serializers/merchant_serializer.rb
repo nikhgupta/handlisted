@@ -5,6 +5,10 @@ class MerchantSerializer < ActiveModel::Serializer
   has_many :brands
   has_many :products
 
+  def name
+    object.name.titleize
+  end
+
   def products_count
     object.product_ids.count
   end

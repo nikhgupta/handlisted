@@ -49,16 +49,6 @@ class ProductPresenter < ApplicationPresenter
     model.marked_price.format(no_cents: true, display_free: "N/A")
   end
 
-  def affiliate_button(options = {})
-    return if model.url.blank?
-    available = model.available? && model.price.to_i > 0
-    options[:class] = options.fetch(:class) { (available ? "success" : "light") }
-    options[:class] = "btn affiliate-button btn-#{options[:class]}"
-    options = { target: "_blank" }.merge(options)
-    text = "<span class='bold'>#{affiliate_link_text}</span> #{h.fa_icon('external-link')}".html_safe
-    h.link_to text, h.visit_product_path(model), options
-  end
-
   def social_sharing(options = {})
     title = model.name
     title = "Found on HandListed.in: #{title}" if title.length < 90

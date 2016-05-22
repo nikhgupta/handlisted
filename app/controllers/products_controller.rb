@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :visit, :like]
   before_action :authenticate_user!, only: [:like, :create]
-  set_pagination_headers :products, only: [:index, :search]
+  set_pagination_headers :users, only: [:likers]
+  set_pagination_headers :products, only: [:index, :search, :related]
 
   include Commentable
   include Sidekiq::Statusable
@@ -12,7 +13,7 @@ class ProductsController < ApplicationController
   def index
     scope = Product.includes(:merchant, :brand, :category, :founder, :likers)
     scope = scope.order(updated_at: :desc)
-    @products = scope.all.page params[:page]
+    @products = paginate scope.all
     respond_to do |format|
       format.html
       format.json { render json: @products }
@@ -23,14 +24,31 @@ class ProductsController < ApplicationController
     query = params[:search] rescue nil
     scope = Product.search query
     scope = scope.includes :merchant, :brand, :founder, :category
-    @products = scope.all.page params[:page]
+    @products = paginate scope.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @products }
+    end
   end
 
   def show
-    @type = params.fetch("type", :default)
     respond_to do |format|
       format.html
       format.json { render json: @product }
+    end
+  end
+
+  def likers
+    @users = paginate Product.includes(:likers).find(params[:id]).likers
+    respond_to do |format|
+      format.json { render json: @users }
+    end
+  end
+
+  def related
+    @products = paginate Product.find(params[:id]).related_products, 4
+    respond_to do |format|
+      format.json { render json: @products }
     end
   end
 
@@ -75,6 +93,13 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.includes(:merchant).find(params[:id])
+      scope = Product.includes(:merchant, :founder, :category, :brand)
+      @product = scope.find(params[:id])
+    end
+
+    def paginate(relation, per_page = nil)
+      per_page = params[:per_page] || per_page
+      per_page ||= Kaminari.config.default_per_page
+      relation.page(params[:page]).per(per_page)
     end
 end

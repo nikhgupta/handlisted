@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) do |example|
     if example.exception.present? && ENV['DEBUG'].present?
       save_and_open_page
-      save_and_open_screenshot if example.metadata[:js]
+      save_and_open_screenshot
     end
   end
 end

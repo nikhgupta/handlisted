@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
-  has_many :liking
-  has_many :found_products
+  # has_many :liking
+  # has_many :found_products
 
   attributes :id, :name, :slug, :username, :email, :admin
   attributes :gender, :image

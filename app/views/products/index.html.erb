@@ -1,4 +1,1 @@
-<products-listing data-riot data-opts="<%= {
-  offset: 200,
-  products: @products.map{|p| ProductSerializer.new(p, scope: self)}
-}.to_json %>"></products-listing>
+<%= listing_of :products, @products, offset: 200 %>

@@ -1,1 +1,2 @@
-<%= render "products/overview", presenter: present(@product), founder: present(@product.founder) %>
+<%= overview_for @product, social_sharing:
+  present(@product).social_sharing(popup: true, via: "handlisted") %>

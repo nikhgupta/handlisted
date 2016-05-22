@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def liked
     @products = @user.liking
     @products = @products.includes(:merchant, :brand, :category, :founder)
-    @products = @products.page(params[:page]).per(params[:per_page] || 6)
+    @products = paginate @products, 4
     respond_to do |format|
       format.json { render json: @products }
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def found
     @products = @user.found_products
     @products = @products.includes(:merchant, :brand, :category, :founder)
-    @products = @products.page(params[:page]).per(params[:per_page] || 6)
+    @products = paginate @products, 4
     respond_to do |format|
       format.json { render json: @products }
     end
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     def set_found_and_liked_products
       products  = { found: :found_products, liked: :liking }
       products  = Hash[products.map{|k,m| [k, @user.send(m).includes(:merchant, :brand, :category, :founder)]}]
-      products  = Hash[products.map{|k,scope| [k, scope.page(params[:page]).per(6)]}]
+      products  = Hash[products.map{|k,scope| [k, paginate(scope, 3)]}]
       @products = products
     end
 
@@ -77,6 +77,12 @@ class UsersController < ApplicationController
       params.require(:user).permit(
         :name, :email, :password, :password_confirmation, :gender, :image
       )
+    end
+
+    def paginate(relation, per_page = nil)
+      per_page = params[:per_page] || per_page
+      per_page ||= Kaminari.config.default_per_page
+      relation.page(params[:page]).per(per_page)
     end
 end
 

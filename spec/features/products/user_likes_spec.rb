@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.feature "liking a product" do
+RSpec.feature "liking a product", :js do
   background do
     @user = create :confirmed_user
     @product = create :product
   end
 
-  it "requires user to login", :js do
+  it "requires user to login" do
     visit products_path
     expect(page).to have_product_card_for(@product)
 
@@ -15,7 +15,7 @@ RSpec.feature "liking a product" do
     expect(page).to have_alert("need to sign in").as_error
   end
 
-  it "toggles like for the user", :js do
+  it "toggles like for the user" do
     sign_in_with @user.email
     visit products_path
     expect(page).to have_product_card_for(@product)
@@ -31,7 +31,7 @@ RSpec.feature "liking a product" do
     expect(like_status_for(@product)).to be_falsey
   end
 
-  it "displays errors when like can not be toggled", :js do
+  it "displays errors when like can not be toggled" do
     sign_in_with @user.email
     visit products_path
 
@@ -44,7 +44,7 @@ RSpec.feature "liking a product" do
   end
 end
 
-RSpec.feature "user likes on product pages" do
+RSpec.feature "user likes on product pages", :js do
   def add_likers(total: 5)
     total -= @product.likers.count
     if total > 0
@@ -73,10 +73,10 @@ RSpec.feature "user likes on product pages" do
     add_likers total: 15
     visit product_path(@product)
     expect(page).to have_selector(selector, count: 9)
-    expect(page).to have_selector(".user.card", text: "+5")
+    expect(page).to have_selector(".user.card", text: "+6")
   end
 
-  scenario "likes are displayed on info modal box", :js do
+  scenario "likes are displayed on info modal box" do
     visit products_path
     click_for_product_info_modal @product
     expect(page).to have_selector(".users.list .user.card.primary")

@@ -79,7 +79,7 @@ class Product < ActiveRecord::Base
 
   def related_products
     return self.class.where(id: nil) if category.blank?
-    category.products_for(:self_and_descendants).where("id != '?'", self.id)
+    category.products_for(:self_and_descendants).where("id != '?'", self.id).order(id: :desc)
   end
 
   def freshly_imported?
