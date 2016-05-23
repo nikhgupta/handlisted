@@ -21,10 +21,10 @@ class ProductsController < ApplicationController
   end
 
   def search
-    query = params[:search] rescue nil
-    scope = Product.search query
-    scope = scope.includes :merchant, :brand, :founder, :category
-    @products = paginate scope.all
+    @query = params[:search] rescue nil
+    scope = Product.includes :merchant, :brand, :founder, :category
+    scope = @query ? scope.search(@query).all : scope.none
+    @products = paginate scope
     respond_to do |format|
       format.html
       format.json { render json: @products }

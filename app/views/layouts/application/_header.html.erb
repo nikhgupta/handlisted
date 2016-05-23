@@ -21,9 +21,11 @@
         </a>
       </div>
       <div class="header-inner">
-        <%= link_to fa_icon('pg-search', not_fa: true) +
-          "Type anywhere to <span class='bold'>search</span>".html_safe,
-          '#', class: 'search-link', data: { toggle: "search" } %>
+        <sitewide-search id="product_search" data-riot>
+          <%= link_to fa_icon('pg-search', not_fa: true) +
+            "Type anywhere to <span class='bold'>search</span>".html_safe,
+            '#', class: 'search-link', data: { toggle: "search" } %>
+        </sitewide-search>
         <ul class="menu">
           <li><%= link_to 'Home', root_path, data: { text: "Home" }, class: on_page?(:root, :active) %></li>
           <%# <li><%= link_to 'About', page_path(:about), data: { text: "About" }, class: on_page?(:page, :about, :active) %1></li> %>

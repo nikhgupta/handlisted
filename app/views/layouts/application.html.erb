@@ -9,7 +9,6 @@
     <% if static_page? %>
       <%= yield %>
       <%= render "layouts/application/footer" %>
-      <%= render "layouts/application/search" %>
     <% else %>
       <div class="page-container">
         <div class="page-content-wrapper">
@@ -23,7 +22,6 @@
         </div>
         <%= render "layouts/application/quickview" %>
         <%= render "layouts/application/footer" %>
-        <%= render "layouts/application/search" %>
       </div>
     <% end %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>

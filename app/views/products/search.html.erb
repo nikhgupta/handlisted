@@ -1,0 +1,2 @@
+<h3 class="m-b-20">Searching for: <%= params[:search] %></h3>
+<%= listing_of :products, @products, offset: 200, url: "/products/search.json", params: {search: params[:search]} %>

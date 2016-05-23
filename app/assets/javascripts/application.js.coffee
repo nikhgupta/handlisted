@@ -51,19 +51,19 @@
 # Custom scripts
 # require gallery
 #
-#= require services/search
 #= require services/status_poller
 #= require services/social-sharing
 #= require services/forms_validator
 #= require services/newsletter_subscriber
 #= require services/magnific_modal
 #
-#= require tags/raw
-#= require tags/product_card
-#= require tags/product_overview
-#= require tags/products_listing
-#= require tags/user_card
-#= require tags/users_listing
+#= require components/raw
+#= require components/product_card
+#= require components/product_overview
+#= require components/products_listing
+#= require components/user_card
+#= require components/users_listing
+#= require components/sitewide_search
 
 $(document).ajaxError (e, XHR, options) ->
   message = "You need to sign in or sign up before continuing."
@@ -84,7 +84,7 @@ ready = ->
   new FormsValidator('form').init()
   # new FormsValidator('form', errorClass: 'state-error', validClass: 'state-success', errorElement: "em").init()
 
-  new SiteWideSearch('[data-pages="search"]').init()
+  # new SiteWideSearch('[data-pages="search"]').init()
 
   # $("[data-pages='search']").data("pg.search").toggleOverlay("show")
 $ -> ready()

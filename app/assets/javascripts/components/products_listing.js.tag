@@ -41,12 +41,15 @@
     @pagination  = {last_page: opts.last_page, next_page: 2, first_page: true}
     @reachedEnd  = => $(window).scrollTop() > $(document).height() - $(window).height() - opts.offset
     @ajax_in_progress = false
-    @url = opts.url || "/products.json"
+    @url = opts.url || "/products.json?"
+    @params = opts.params || {}
+    console.log @products
 
     @loadMoreProductsFrom = (url, callback = ->) =>
       return unless url?
       @ajax_in_progress = true; @update()
-      $.get url, {group: opts.group, per_page: opts.paging}, (response, status, xhr) =>
+      options = $.extend {}, @params, { group: opts.group, per_page: opts.paging}
+      $.get url, options, (response, status, xhr) =>
         $.merge @products, response
         callback(response)
         @pagination = $.parseJSON xhr.getResponseHeader("X-Pagination")
