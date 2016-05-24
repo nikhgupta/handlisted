@@ -43,7 +43,6 @@
     @ajax_in_progress = false
     @url = opts.url || "/products.json?"
     @params = opts.params || {}
-    console.log @products
 
     @loadMoreProductsFrom = (url, callback = ->) =>
       return unless url?

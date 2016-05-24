@@ -1,4 +1,17 @@
 module AddProductHelpers
+  def expect_search_to(*args)
+    within(".overlay"){ expect(page).to(*args) }
+  end
+
+  def expect_search_not_to(*args)
+    within(".overlay"){ expect(page).not_to(*args) }
+  end
+
+  def expect_search_to_show_message(message)
+    selector = ".overlay-content p strong"
+    expect_search_to have_selector(selector, count: 1, text: message)
+  end
+
   def add_product(user, url)
     pid, url = PRODUCTS_LIST[url][:pid], PRODUCTS_LIST[url][:url]
     ProductScraperJob.perform_async user.id, url
@@ -8,19 +21,31 @@ module AddProductHelpers
     product
   end
 
-  def add_product_via_sitewide_search(url)
-    url = PRODUCTS_LIST[url][:url] if url.is_a?(Symbol)
-    find('#product_search').tap do |box|
-      box.set url
-      box.native.send_keys :Enter
-    end
+  def add_product_via_sitewide_search(url, instant: true, &block)
+    url = PRODUCTS_LIST[url] ? PRODUCTS_LIST[url][:url] : url.to_s
+    click_on_link "anywhere to search" unless page.has_selector?(".overlay")
+    fill_in :search, with: url
+    find('input#overlay-search').native.send_keys :backspace if url.blank?
+    find('input#overlay-search').native.send_keys :Enter unless instant
+
+    url.blank? ? assert_not_running_ajax : assert_running_ajax
     wait_for_traffic
+    assert_not_running_ajax
+
+    within(".overlay"){ yield } if block_given?
   end
   alias :search_using_sitewide_search :add_product_via_sitewide_search
 
+  def assert_running_ajax
+    expect(page).to have_selector ".ajax-loader img"
+  end
+
+  def assert_not_running_ajax
+    expect(page).to have_no_selector ".ajax-loader img"
+  end
+
   def progress_status
-    # sleep 1     # progress status is reflected with some slight delay
-    bar = find("header .progress-bar:not([aria-valuenow='0'])")
+    bar = find("nav.header .progress-bar:not([aria-valuenow='0'])")
     bar["aria-valuenow"].to_i if bar
   end
 
@@ -33,10 +58,10 @@ module AddProductHelpers
   # reflected, and optionally, accepts a block to execute before the real
   # execution of job.
   #
-  def add_product_via_search_and_perform(url, &block)
-    add_product_via_sitewide_search(url)
-    # OPTIMIZE: commenting the next two lines will save 1-3 seconds of test runs
-    expect(page).to have_selector('header .active.progress-bar-dark')
+  def add_product_via_search_and_perform(url, instant: true, &block)
+    add_product_via_sitewide_search(url, instant: instant)
+    click_on_link "Import Product" if instant
+    expect(page).to have_selector('nav.header .progress-bar-master')
     expect(progress_status).to be >= 10
     expect(ProductScraperJob.jobs.size).to eq 1
     if block_given?

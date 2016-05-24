@@ -8,7 +8,7 @@ PRODUCTS_LIST = {
     url: 'http://www.amazon.in/gp/product/B00QJDOEAO'
   }, invalid: {
     pid: 'B00QJDOEAOX',
-    url: 'http://www.amazon.in/gp/product/B00QJDOEAOX'
+    url: 'http://www.amazonin.in/gp/product/B00QJDOEAOX'
   }, moto_x: {
     url: 'http://www.flipkart.com/moto-e-2nd-gen-4g/p/itme85hfdv6zztcj?pid=MOBE4G6GTH2QDACF',
     pid: 'MOBE4G6GTH2QDACF'

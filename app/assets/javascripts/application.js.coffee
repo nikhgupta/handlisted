@@ -56,8 +56,10 @@
 #= require services/forms_validator
 #= require services/newsletter_subscriber
 #= require services/magnific_modal
-#
+
+#= require_self
 #= require components/raw
+#= require components/progress_bar
 #= require components/product_card
 #= require components/product_overview
 #= require components/products_listing
@@ -65,10 +67,29 @@
 #= require components/users_listing
 #= require components/sitewide_search
 
+# redirect unauthorized XHR requests to login page
 $(document).ajaxError (e, XHR, options) ->
   message = "You need to sign in or sign up before continuing."
   if XHR.status is 401 and (XHR.responseText is message or XHR.responseJSON?.error is message)
     window.location.replace("/login?unauthorized")
+
+# override overlay toggle fn. to fix scrolling issues
+tgOld = $.fn.search.Constructor.prototype.toggleOverlay
+$.fn.search.Constructor.prototype.toggleOverlay = (action, key) ->
+  tgOld.apply(@, [action, key])
+  if action is 'show'
+    @$element.scrollTop = 0
+    $("body").addClass 'noscroll has-overlay'
+    @$element.attr("aria-hidden", false)
+    @$element.trigger('show')
+  else
+    $("body").removeClass 'noscroll has-overlay'
+    @$element.attr("aria-hidden", true)
+    @$element.trigger('hide')
+
+# $.ajax
+#   complete:   -> $(".ajax-loader").hide()
+#   beforeSend: -> $(".ajax-loader").show()
 
 ready = ->
 

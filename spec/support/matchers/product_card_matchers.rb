@@ -10,7 +10,7 @@ module CustomMatchersForCapybara
       @page = page
       raise_error_if_rack_test_driver!
 
-      %w[product_card image_container merchant_info no_errors pricing_info
+      %w[product_card image_container merchant_link no_errors pricing_info
       product_image action_buttons].each do |feat|
         return false unless send("has_#{feat}?")
       end
@@ -44,10 +44,10 @@ module CustomMatchersForCapybara
         message: "card does not include an image container"
     end
 
-    def has_merchant_info?
+    def has_merchant_link?
       verify_selector "a.afflink", visible: false,
-        text: @expected.merchant.to_s.titleize,
-        message: "card has no (or wrong) label for the merchant"
+        text: @expected.price.format,
+        message: "card has no link to the merchant page"
     end
 
     def has_pricing_info?

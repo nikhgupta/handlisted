@@ -8,7 +8,7 @@ module Sidekiq::Statusable
   end
 
   def fetch_status
-    render json: response_with_error_html.to_json
+    render json: response_data.to_json
   end
 
   private
@@ -44,13 +44,5 @@ module Sidekiq::Statusable
       id: sidekiq_data['id'],
       errors: sidekiq_data['errors'],
     }
-  end
-
-  def response_with_error_html
-    response_data[:error_html] = render_to_string(
-      partial: 'status_errors', formats: [:html],
-      layout: false, locals: { errors: response_data[:errors] }
-    ) if response_data[:errors].present?
-    response_data
   end
 end

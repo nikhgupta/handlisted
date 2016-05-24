@@ -1,15 +1,15 @@
 <button class="btn btn-block btn-twitter" type="button">
   <span class="pull-left"><i class="fa fa-twitter"></i>
   </span>
-  <span class='bold'><%= link_to "Login with Twitter", user_omniauth_authorize_path(:twitter) %></span>
+  <span class='bold'><%= link_to "Login with Twitter", user_twitter_omniauth_authorize_path %></span>
 </button>
 <button class="btn btn-block btn-google-plus" type="button">
   <span class="pull-left"><i class="fa fa-google-plus"></i>
   </span>
-  <span class='bold'><%= link_to "Login with Google+", user_omniauth_authorize_path(:google_plus) %></span>
+  <span class='bold'><%= link_to "Login with Google+", user_google_plus_omniauth_authorize_path %></span>
 </button>
 <button class="btn btn-block btn-facebook" type="button">
   <span class="pull-left"><i class="fa fa-facebook"></i>
   </span>
-  <span class='bold'><%= link_to "Login with Facebook", user_omniauth_authorize_path(:facebook) %></span>
+  <span class='bold'><%= link_to "Login with Facebook", user_facebook_omniauth_authorize_path %></span>
 </button>

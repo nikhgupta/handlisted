@@ -11,26 +11,26 @@ module ProductScraper::Checkable
 
   private
 
-  def find_product_hash
-    ProductScraper.uuid(params[:search])[:uuid]
-  rescue ProductScraper::Error
-    nil
+  def find_product_info
+    ProductScraper.uuid(params[:search][:url])
+  rescue StandardError => e
+    { error: e.message, error_class: e.class }
   end
 
   def valid?
-    @hash ||= find_product_hash
-    @hash.present?
+    @info ||= find_product_info
+    @info && @info.has_key?(:uuid)
   end
 
   def existing_product_path
     return unless valid?
-    product = Product.find_by(url_hash: @hash)
+    product = Product.find_by(url_hash: @info[:uuid])
     return unless product
     product_path(product)
   end
 
   # FIXME: key `valid` is not really required here!
   def response_hash
-    { valid: valid?, existing: existing_product_path }
+    { valid: valid?, existing: existing_product_path }.merge(find_product_info)
   end
 end

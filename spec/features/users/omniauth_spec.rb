@@ -176,7 +176,7 @@ RSpec.feature "user logins using omniauth provider", :omniauth do
       expect(element[:href]).to eq "#"
       expect(element[:style]).to include("opacity: 0.")
 
-      visit user_omniauth_authorize_path(:twitter)
+      visit user_twitter_omniauth_authorize_path
       expect(current_path).to eq edit_profile_path
       expect(page).to have_alert("already linked").as_notice
     end

@@ -137,7 +137,7 @@
   </style>
 
   <script type='text/coffee'>
-    @mini        = @parent.opts.mini || opts.mini
+    @mini        = @parent?.opts?.mini || opts.mini
     @product     = opts.product
     @url         = @product.url
     @sidekiq_url = "/products/create/status.json"
