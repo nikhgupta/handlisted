@@ -115,6 +115,7 @@ RSpec.feature "search products from search bar", :js, :slow do
       expect(progress_status).to be_within(0.1).of(status + 3)
     end
     expect(page).to have_selector('nav.header .progress-bar-success')
+    wait_for_traffic
     product = Product.find_by(pid: "B00L4VS12S")
     expect(product).to be_persisted
     expect(current_path).to eq root_path

@@ -23,7 +23,7 @@ module AddProductHelpers
 
   def add_product_via_sitewide_search(url, instant: true, &block)
     url = PRODUCTS_LIST[url] ? PRODUCTS_LIST[url][:url] : url.to_s
-    click_on_link "anywhere to search" unless page.has_selector?(".overlay")
+    click_on_link "anywhere to search"
     fill_in :search, with: url
     find('input#overlay-search').native.send_keys :backspace if url.blank?
     find('input#overlay-search').native.send_keys :Enter unless instant

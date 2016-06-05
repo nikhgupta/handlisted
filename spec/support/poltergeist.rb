@@ -16,3 +16,9 @@ Capybara.configure do |config|
   config.server_host = "localhost"
   config.server_port = "3000"
 end
+
+RSpec.configure do |config|
+  config.before(:each, type: :feature) do |example|
+    page.driver.browser.url_whitelist = ['http://localhost:3000']
+  end
+end
