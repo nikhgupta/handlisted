@@ -21,11 +21,21 @@ module AddProductHelpers
     product
   end
 
-  def add_product_via_sitewide_search(url, instant: true, &block)
+  def add_product_to_sitewide_search(url)
     url = PRODUCTS_LIST[url] ? PRODUCTS_LIST[url][:url] : url.to_s
     click_on_link "anywhere to search"
-    fill_in :search, with: url
+
+    fill_in :search, with: ""
+    find('input#overlay-search').native.send_keys :backspace
+
+    # fill_in :search, with: url
+    find('input#overlay-search').native.send_keys url
     find('input#overlay-search').native.send_keys :backspace if url.blank?
+    url
+  end
+
+  def add_product_via_sitewide_search(url, instant: true, &block)
+    url = add_product_to_sitewide_search(url)
     find('input#overlay-search').native.send_keys :Enter unless instant
 
     url.blank? ? assert_not_running_ajax : assert_running_ajax
@@ -64,16 +74,14 @@ module AddProductHelpers
     expect(page).to have_selector('nav.header .progress-bar-master')
     expect(progress_status).to be >= 10
     expect(ProductScraperJob.jobs.size).to eq 1
-    if block_given?
-      method = ProductScraper.method(:fetch)
-      allow(ProductScraper).to receive(:fetch) do |args|
-        yield
-        method.call(*args)
-      end
-    end
+    yield if block_given?
+    puts url
+    puts ProductScraperJob.jobs.map{|i| i['args'][1]}.join("\n")
     ProductScraperJob.drain
+    puts ProductScraperJob.jobs.map{|i| i['args'][1]}.join("\n")
   ensure
     wait_for_traffic
+    puts "traffic finished"
   end
 
   def card_selector_for(product)

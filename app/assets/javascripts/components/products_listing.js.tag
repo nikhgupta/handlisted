@@ -1,6 +1,6 @@
 <products-listing>
-  <div class="row products list {mini: opts.mini} {group: opts.group }">
-    <div class="{opts.class || "col-sm-6 col-md-3"} products-container" each={item in products}>
+  <div if="{ products && products.length > 0 }" class="row products list {mini: opts.mini} {group: opts.group }">
+    <div class="{opts.class || 'col-sm-6 col-md-3'} products-container" each={item in products}>
       <product-card product={item}/>
       </div>
     </div>
@@ -13,6 +13,7 @@
       </div>
     </div>
   </div>
+  <p if="{!products || products.length == 0}" class="alert alert-info">No matching products were found!</p>
 
   <style type='text/scss'>
     .paginator {

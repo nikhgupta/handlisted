@@ -128,7 +128,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'adds validation errors to @user' do
         put :update, {:id => @user.to_param, :user => invalid_attributes}, valid_session
-        expect(@user.errors.full_messages).to eq(['Name can\'t be blank'])
+        expect(assigns(:user).errors.full_messages).to eq(['Name can\'t be blank'])
       end
     end
   end

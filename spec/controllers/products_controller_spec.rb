@@ -82,7 +82,7 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe "POST #like" do
-    render_views
+    # render_views
     # NOTE: this is actually happening via JS, but rack-test passes since devise
     # sends a redirect anyways on no auth.
     # TODO: test this inside request specs.
@@ -95,25 +95,24 @@ RSpec.describe ProductsController, type: :controller do
     it "toggles user's like for a product" do
       sign_in user
       product = Product.create! valid_attributes
-      post :like, { id: product.to_param, format: :js }, valid_session
+      post :like, { id: product.to_param, format: :json }, valid_session
       expect(response).to be_successful
       expect(user).to be_liking(product)
-      expect(response).to render_template('like')
+      json = JSON.parse response.body
+      expect(json['states']['liked']).to be_truthy
 
-      post :like, { id: product.to_param, format: :js }, valid_session
+      post :like, { id: product.to_param, format: :json }, valid_session
       expect(response).to be_successful
       expect(user).not_to be_liking(product)
     end
-    it "displays an error when product like can not be toggled" do
+    it "throws an error when product like can not be toggled" do
       sign_in user
       product = Product.create! valid_attributes
       allow(user).to receive(:like).with(product).and_return(nil)
-      post :like, { id: product.to_param, format: :js }, valid_session
-      expect(response).to be_successful
-      expect(response).to render_template('like')
-
-      # this response is only partial returned by this action
-      expect(response.body).to have_text "Encountered an error!"
+      post :like, { id: product.to_param, format: :json }, valid_session
+      expect(response).to be_bad_request
+      json = JSON.parse response.body
+      expect(json['states']['liked']).to be_falsey
     end
   end
 

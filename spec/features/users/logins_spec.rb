@@ -17,17 +17,17 @@ RSpec.feature "user login" do
     end
   end
 
-  scenario "with invalid password" do
+  scenario "with invalid password", js: false do
     user = create(:confirmed_user, password: "password")
     sign_in_with user.email, "wrongpassword"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert("Invalid login or password").as_error
+    expect(page).to have_alert("Invalid Login or password").as_error
   end
 
   scenario "with invalid email" do
     sign_in_with "random@example.com", "password"
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_alert("Invalid login or password").as_error
+    expect(page).to have_alert("Invalid Login or password").as_error
     expect(page).to have_link("You can reset your password here.")
   end
 end
@@ -56,15 +56,16 @@ RSpec.feature "On user registration page" do
   # end
 
   context "notifies user of validation errors" do
-    scenario "from server side" do
-      sign_up_with "", "John Smith", "john@smith.com", "password"
-      expect(page).to have_alert("Username can't be blank").as_error
-    end
-
-    scenario "from client side", :js do
+    scenario "from client side", js: true do
+      visit new_user_registration_path
       fill_in "Username", with: "te s  "
       error = "valid value with alphabets and numbers only"
       expect(page).to have_selector('label#user_username-error.error', text: error)
+    end
+
+    scenario "from server side" do
+      sign_up_with "", "John Smith", "john@smith.com", "password"
+      expect(page).to have_alert("Username can't be blank").as_error
     end
   end
 end
@@ -82,6 +83,7 @@ RSpec.feature "When user registers", :mailers do
     expect(@user).to be_persisted
     expect(@user).not_to be_confirmed
     expect(deliveries).to be_empty
+    # binding.pry
 
     deliver_enqueued_emails
     expect(recipients_for_last_email).to include @user.email

@@ -133,7 +133,7 @@
       @timer = setTimeout((=> @getResults(query)), 400) unless query is ""
 
     @getResults = (query, callback = (q) ->) =>
-      $.post "/products/create/check.json", search: { url: query }, (response) =>
+      $.post "/products/create/check.json", search: query, (response) =>
         if response.valid and response.existing?
           window.location = response.existing
         else if response.valid

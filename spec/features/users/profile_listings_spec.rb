@@ -53,14 +53,14 @@ RSpec.feature "listings on user's public profile", :js do
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")
-      expect(page).to have_css(".productCard-mini", count: @per_page)
+      expect(page).to have_css(".product.card-mini", count: @per_page)
 
       click_on_link "Load More"
       expect(page).not_to have_css('.pagination img')
-      expect(page).to have_css(".productCard-mini", count: @per_page * 2)
+      expect(page).to have_css(".product.card-mini", count: @per_page * 2)
 
       page.execute_script('window.scrollTo(0,100000)')
-      expect(page).to have_css(".productCard-mini", count: liked.count)
+      expect(page).to have_css(".product.card-mini", count: liked.count)
       expect(page).to have_css("p.bg-header", text: "reached the end")
     end
   end
@@ -112,14 +112,14 @@ RSpec.feature "listings on user's personal profile", :js do
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")
-      expect(page).to have_css(".productCard-mini", count: @per_page)
+      expect(page).to have_css(".product.card-mini", count: @per_page)
 
       click_on_link "Load More"
       expect(page).not_to have_css('.pagination img')
-      expect(page).to have_css(".productCard-mini", count: @per_page * 2)
+      expect(page).to have_css(".product.card-mini", count: @per_page * 2)
 
       page.execute_script('window.scrollTo(0,100000)')
-      expect(page).to have_css(".productCard-mini", count: liked.count)
+      expect(page).to have_css(".product.card-mini", count: liked.count)
       expect(page).to have_css("p.bg-header", text: "reached the end")
     end
   end

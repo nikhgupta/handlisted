@@ -1,3 +1,4 @@
+<% presenter = present(@user); link = presenter.username_link %>
 <%= render "profile_box", presenter: current_user, liked: @liked, found: @found %>
 
 <div class="row admin-form">

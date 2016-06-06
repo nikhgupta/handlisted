@@ -8,6 +8,7 @@ RSpec.feature "search products from search bar", :js, :slow do
     @import  = "http://www.amazon.in/Physique-Grip-Trainer/dp/B00L4VS12S/ref=pd_sbs_200_5"
     @import2 = "http://www.amazon.in/Kingston-Micro-SDHC-class-memory/dp/B007W0NFCG/ref=sr_1_16"
     Product.where(pid: "B00L4VS12S").destroy_all
+    Product.where(pid: "B007W0NFCG").destroy_all
     create_list :product, 12, founder: @user
     visit root_path
   end
@@ -139,13 +140,13 @@ RSpec.feature "search products from search bar", :js, :slow do
     add_product_via_search_and_perform(@import)
     product = Product.find_by(pid: "B00L4VS12S")
 
+    add_product_to_sitewide_search(@import2)
+    expect(page).not_to have_text "Import was Successful"
+    expect_search_not_to have_product_card_for(product)
+
     add_product_via_search_and_perform(@import2) do
-      expect(page).not_to have_text "Import was Successful"
       expect_search_to have_selector('.progress-bar-master')
-      save_and_open_screenshot
-      expect_search_not_to have_product_card_for(product)
-      status = progress_status
-      expect(status).to be >= 30
+      expect(progress_status).to be >= 30
     end
 
     product = Product.find_by(pid: "B007W0NFCG")

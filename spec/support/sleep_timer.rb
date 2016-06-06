@@ -1,6 +1,9 @@
+def debug(message); puts message if ENV['DEBUG'].present?; end
+
 if ENV['SLEEP'].present?
   puts "Included SleepTimer to find bottlenecks..."
   puts "It is recommended to run RSpec in documentation format."
+  puts
 
   RSpec.configure do |config|
     config.before(:suite) do
@@ -25,7 +28,7 @@ if ENV['SLEEP'].present?
       is_normal = lines && lines.any? && args[0] > 0.1 && ENV['SLEEP'].present? && ENV['SLEEP'] != 'capybara' && ENV['SLEEP'] != 'traffic'
       $sleep[:overall] += args[0] if lines && lines.any?
       $sleep[:normal]  += args[0] if is_normal
-      puts "sleeping for #{args} seconds:\n#{lines.join("\n")}\n\n" if is_normal
+      debug "sleeping for #{args} seconds:\n#{lines.join("\n")}\n\n" if is_normal
       super
     end
   end
@@ -46,47 +49,47 @@ if ENV['SLEEP'].present?
           end
           sleep 0.10
           $sleep[:traffic] += 0.10
-          puts "waited #{"%0.2f" % (Time.now - start)} seconds for traffic: #{uris.join(",")} on line: #{line}" # if counter % 2 == 0
+          debug "waited #{"%0.2f" % (Time.now - start)} seconds for traffic: #{uris.join(",")} on line: #{line}" # if counter % 2 == 0
           traffic = page.driver.network_traffic.select{|i| i.response_parts.empty?}
         end
       end
     end
   end
-end
 
-# Monkey patching isn't elegant, but helps us to find unnecessary calls to
-# Capybara synchronization timeouts.
-module Capybara
-  module Node
-    class Base
-      def synchronize(seconds=Capybara.default_max_wait_time, options = {})
-        start_time = Time.now
+  # Monkey patching isn't elegant, but helps us to find unnecessary calls to
+  # Capybara synchronization timeouts.
+  module Capybara
+    module Node
+      class Base
+        def synchronize(seconds=Capybara.default_max_wait_time, options = {})
+          start_time = Time.now
 
-        if session.synchronized
-          yield
-        else
-          session.synchronized = true
-          begin
+          if session.synchronized
             yield
-          rescue => e
-            session.raise_server_error!
-            raise e unless driver.wait?
-            raise e unless catch_error?(e, options[:errors])
-            if (Time.now - start_time) >= seconds
-              raise e.class, e.message + "\nAdditionally, Capybara's timeout limit was reached here."
+          else
+            session.synchronized = true
+            begin
+              yield
+            rescue => e
+              session.raise_server_error!
+              raise e unless driver.wait?
+              raise e unless catch_error?(e, options[:errors])
+              if (Time.now - start_time) >= seconds
+                raise e.class, e.message + "\nAdditionally, Capybara's timeout limit was reached here."
+              end
+              sleep(0.05)
+              if ENV['SLEEP'] =~ /^capybara|all$/
+                $sleep[:capybara] += 0.05
+                line = caller.detect{|a| a =~ /\/spec\// && !(a =~ /\/spec\/support\/sleep_timer\.rb/) }
+                line = line.gsub(Regexp.new(Rails.root.to_s), '.')
+                debug "waited #{"%0.2f" % (Time.now - start_time)} seconds for capybara on line: #{line}: #{e.message}" # if counter % 2 == 0
+              end
+              raise Capybara::FrozenInTime, "time appears to be frozen, Capybara does not work with libraries which freeze time, consider using time travelling instead" if Time.now == start_time
+              reload if Capybara.automatic_reload
+              retry
+            ensure
+              session.synchronized = false
             end
-            sleep(0.05)
-            if ENV['SLEEP'] =~ /^capybara|all$/
-              $sleep[:capybara] += 0.05
-              line = caller.detect{|a| a =~ /\/spec\// && !(a =~ /\/spec\/support\/sleep_timer\.rb/) }
-              line = line.gsub(Regexp.new(Rails.root.to_s), '.')
-              puts "waited #{"%0.2f" % (Time.now - start_time)} seconds for capybara on line: #{line}: #{e.message}" # if counter % 2 == 0
-            end
-            raise Capybara::FrozenInTime, "time appears to be frozen, Capybara does not work with libraries which freeze time, consider using time travelling instead" if Time.now == start_time
-            reload if Capybara.automatic_reload
-            retry
-          ensure
-            session.synchronized = false
           end
         end
       end

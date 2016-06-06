@@ -34,6 +34,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.roadie.url_options = { host: 'localhost', port: 12000, scheme: "http" }
   config.action_mailer.default_url_options = Rails.application.routes.default_url_options
+  config.action_mailer.perform_deliveries = true
 
   # Randomize the order test cases are executed.
   config.active_support.test_order = :random

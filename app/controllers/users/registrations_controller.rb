@@ -24,7 +24,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def permit_for(action, *fields)
-    devise_parameter_sanitizer.for(action) do |user|
+    devise_parameter_sanitizer.permit(action) do |user|
       user.permit(*fields)
     end
   end

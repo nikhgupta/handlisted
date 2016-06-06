@@ -3,7 +3,7 @@ ActiveAdmin.setup do |config|
   # Custom configuration for ActiveAdmin (added via template)
   config.site_title_link       = "/"
   config.default_namespace     = :admin
-  config.show_comments_in_menu = false
+  # config.show_comments_in_menu = false
   config.authorization_adapter = ActiveAdmin::PunditAdapter
 
   config.namespace(:admin) do |namespace|

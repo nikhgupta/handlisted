@@ -41,16 +41,16 @@ RSpec.feature "category index" do
     visit category_path(@p2)
 
     expect(page).to have_selector('h3', text: "Parent2")
-    expect(page).to have_selector('.productCard', count: @per_page)
+    expect(page).to have_selector('.product.card', count: @per_page)
     expect(page).to have_link("Load More")
 
     click_on_link "Load More"
     expect(page).not_to have_css('.pagination img')
-    expect(page).to have_selector(".productCard", count: @per_page * 2)
+    expect(page).to have_selector(".product.card", count: @per_page * 2)
 
     page.execute_script('window.scrollTo(0,100000)')
     expect(page).to have_css('.pagination img')
     expect(page).not_to have_css('.pagination img')
-    expect(page).to have_selector(".productCard", count: @per_page * 2 + 1)
+    expect(page).to have_selector(".product.card", count: @per_page * 2 + 1)
   end
 end

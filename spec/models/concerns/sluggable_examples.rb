@@ -22,7 +22,7 @@ RSpec.shared_examples_for "sluggable" do |options = {}|
     instance = build(model, slug_field => "SomeModelName", slug: nil)
     expect(instance).to be_valid
 
-    instance.update_attributes(slug: "")
+    instance.save and instance.slug = ""
     expect(instance).not_to be_valid
     expect(instance.errors).not_to have_key(:friendly_id)
     expect(instance.errors[slug_field]).to include("can't be blank")

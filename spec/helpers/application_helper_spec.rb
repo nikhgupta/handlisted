@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
   it "presents current user when current user is present" do
     expect(helper.current_user).to be_nil
     user = create(:confirmed_user)

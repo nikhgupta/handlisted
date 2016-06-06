@@ -1,3 +1,4 @@
+Devise.mailer = Devise::Mailer
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.include FactoryGirl::Syntax::Methods
@@ -6,7 +7,7 @@ RSpec.configure do |config|
   config.include CustomMatchersForCapybara, type: :feature
   config.include Devise::IntegrationHelpers, type: :feature
   config.include ActionView::TestCase::Behavior, type: :presenter
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::ControllerHelpers, type: :controller
 
   config.include ActiveSupport::Testing::TimeHelpers, :timers

@@ -1,0 +1,102 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.amazon.in/dp/B007W0NFCG
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip,deflate,identity
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML,
+        like Gecko) Version/9.0.2 Safari/601.3.9
+      Accept-Charset:
+      - ISO-8859-1,utf-8;q=0.7,*;q=0.7
+      Accept-Language:
+      - en-us,en;q=0.5
+      Host:
+      - www.amazon.in
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 300
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 21 Sep 2016 21:00:18 GMT
+      Server:
+      - Server
+      Vary:
+      - Accept-Encoding,User-Agent
+      Content-Encoding:
+      - gzip
+      Cache-Control:
+      - no-transform
+      Content-Length:
+      - '2259'
+      Content-Type:
+      - text/html
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        AwtAOLfbGgAA
+    http_version: 
+  recorded_at: Wed, 21 Sep 2016 21:00:18 GMT
+recorded_with: VCR 3.0.3

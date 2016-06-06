@@ -12,7 +12,7 @@ module ProductScraper::Checkable
   private
 
   def find_product_info
-    ProductScraper.uuid(params[:search][:url])
+    ProductScraper.uuid(params['search'])
   rescue StandardError => e
     { error: e.message, error_class: e.class }
   end

@@ -10,7 +10,9 @@ module ApplicationHelper
 
   def listing_of(key, objects, options = {})
     key = key.to_s.underscore.pluralize
+    not_found = "<p class='alert alert-info'>No matching #{key} were found!</p>"
     klass = "#{key.singularize}_serializer".camelize.constantize
+    return not_found unless objects && objects.count > 0
     serialized = objects.map{|p| klass.new(p, scope: self) }
     options = {key => serialized, last_page: objects.last_page?}.merge(options)
     riot_component "#{key}_listing", options
@@ -88,9 +90,10 @@ module ApplicationHelper
 
   def products_listing_for(products, kind: nil, group: nil, html: {})
     locals = { products: products, kind: kind, group: group, html: html }
-    render layout: "products/listing", locals: locals do
-      yield if block_given?
-    end
+    listing_of :products, products, offset: 200
+    # render layout: "products/listing", locals: locals do
+    #   yield if block_given?
+    # end
   end
 
 

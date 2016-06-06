@@ -5,7 +5,7 @@
         <div class="inner">
           <ul class="breadcrumb">
             <li><a href='/merchants/{ product.merchant.slug }'>{ product.merchant.name }</a></li>
-            <li if={ product.brand }> <a href='/brands/{product.brand.slug}'>{ product.brand.name}</a> </li>
+            <li if={ product.brand }> <a href='/brands/{ product.merchant.slug }/{product.brand.slug}'>{ product.brand.name}</a> </li>
           </ul>
 
           <div class="container-md-height m-b-20">

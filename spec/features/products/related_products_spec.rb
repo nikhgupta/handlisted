@@ -12,7 +12,7 @@ RSpec.feature "related products for a product" do
 
   scenario "product has related products from descendants of its category hierarchy" do
     visit product_path(@product3)
-    selector = ".panel-related .productCard-mini"
+    selector = ".panel-related .product.card-mini"
 
     expect(page).to have_selector("#{selector}[data-pid='#{@product1.pid}']")
     expect(page).to have_selector("#{selector}[data-pid='#{@product2.pid}']")
@@ -21,7 +21,7 @@ RSpec.feature "related products for a product" do
 
   scenario "product does not have related products from ancestors of its category hierarchy" do
     visit product_path(@product1)
-    selector = ".panel-related .productCard-mini"
+    selector = ".panel-related .product.card-mini"
 
     expect(page).to have_selector("#{selector}[data-pid='#{@product2.pid}']")
     expect(page).to have_no_selector("#{selector}[data-pid='#{@product3.pid}']")
@@ -31,7 +31,7 @@ RSpec.feature "related products for a product" do
   scenario "related products can be clicked to view their overview" do
     visit product_path(@product1)
     find(".related-product").click
-    expect(page).to have_selector(".productCard-overview[data-pid='#{@product2.pid}']")
+    expect(page).to have_selector(".product.card-overview[data-pid='#{@product2.pid}']")
     expect(page.current_path).to eq product_path(@product2)
   end
 
@@ -41,13 +41,13 @@ RSpec.feature "related products for a product" do
 
     expect(page.current_path).to eq product_path(@product1)
     within "#modal-panel" do
-      expect(page).to have_selector(".productCard-overview[data-pid='#{@product2.pid}']")
+      expect(page).to have_selector(".product.card-overview[data-pid='#{@product2.pid}']")
       expect(page).to have_selector("h1", text: "Product 2")
       find(".related-product").trigger('click')
     end
 
     within "#modal-panel" do
-      expect(page).to have_selector(".productCard-overview[data-pid='#{@product1.pid}']")
+      expect(page).to have_selector(".product.card-overview[data-pid='#{@product1.pid}']")
       expect(page).to have_selector("h1", text: "Product 1")
     end
   end
