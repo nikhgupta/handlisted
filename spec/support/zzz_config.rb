@@ -1,6 +1,4 @@
-Devise.mailer = Devise::Mailer
 RSpec.configure do |config|
-  config.use_transactional_fixtures = false
   config.include FactoryGirl::Syntax::Methods
   config.include AddProductHelpers, type: :feature
   config.include DriverAgnosticHelpers, type: :feature
@@ -29,18 +27,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:suite) do
-    begin
-      DatabaseCleaner.start and FactoryGirl.lint
-    ensure
-      DatabaseCleaner.clean_with(:truncation)
-    end
-  end if config.files_to_run.count > 10
-
-  config.around(:each) do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.cleaning { example.run }
-  end
+  config.before(:suite){ FactoryGirl.lint } if config.files_to_run.count > 10
 
   config.after(:each, type: :feature) do |example|
     if example.exception.present? && ENV['DEBUG'].present?
