@@ -80,6 +80,12 @@
       overflow-y: scroll;
       background-color: rgba(248,248,248,0.96);
       top: 0; right: 0; bottom: 0; left: 0;
+      padding-left: 64px;
+      .overlay-search {
+        font-weight: 300;
+        height: 120px;
+        width: 90%;
+      }
       .card {
         border: 1px solid #e0e0e0;
       }
@@ -92,7 +98,10 @@
   <script type='text/coffee'>
     self = @; sidekiq_url = "/products/create/status.json"
 
-    @updateSearch = (options) => @[key] = value for key, value of options; @update()
+    @updateSearch = (options) =>
+      @[key] = value for key, value of options
+      @update()
+
     @reset = (options = {}) =>
       defaults =
         results: [], total: null, ajax_wip: false, import_status: null,
@@ -105,7 +114,7 @@
 
     @on 'mount', =>
       $(".product-importer a", @root).on 'click', (e) ->
-        self.addProduct $(@).data("target")
+        self.addProduct $(@).attr("data-target")
 
       search = $("[data-pages='search']", @root).search
         searchField: "#overlay-search"
@@ -120,7 +129,7 @@
     @onSearchSubmit = (query) =>
       query = query.replace /^\s+|\s+$/g, ""
       @getResults query, =>
-        if @url_to_import
+        if @url_to_import?
           @addProduct query
         else
           window.location = "/products/search?search=#{query}"
@@ -145,19 +154,17 @@
             callback(query)
 
     @addProduct = (url) =>
-      @updateSearch url_to_import: null, sidekiq_poll: true, ajax_wip: true
+      @updateSearch url_to_import: null, sidekiq_poll: true, ajax_wip: true, pollResults: []
       $.post '/products.json', url: url, (response) =>
-        @pollSidekiq(response.id) if response.id?
+        @poller = setInterval (=> @pollSidekiq response.id), 1000 if response.id? and !@poller?
 
     @pollSidekiq = (job_id, callback = ->) =>
+      return if job_id in @pollResults
       $.post sidekiq_url, { job_id: job_id }, (res) =>
         callback res
         progress = @tags.sidekiqbar
         progress.reset() if !@poller?
         progress.setStatus res.status.toLowerCase()
-        @poller = setInterval (=> @pollSidekiq job_id, callback), 1000 if !@poller?
-        clearInterval @poller unless res.status in ["Queued", "Working"]
-
         if res.status is "Queued"
           progress.setMinimumAndIncrement(10, 1)
         else if res.status is "Working"
@@ -165,10 +172,13 @@
         else if res.status is "Complete"
           $.get "/products/#{res.id}.json", (product) =>
             message = "Import was Successful! Congrats!"
+            clearInterval(@poller) and @pollResults.push(job_id)
             @updateSearch ajax_wip: false, found_product: product, import_status: message
         else if res.status is "Failed"
-          @updateSearch ajax_wip: false, import_status: "Import Failed. Errors: #{res.errors}"
+          clearInterval(@poller) and @pollResults.push(job_id)
+          @updateSearch ajax_wip: false, import_status: "Import Failed. Error: #{res.errors}"
         else if res.status is ""
-          @updateSearch ajax_wip: false, import_status: "Import Failed due to unknown reasons!"
+          clearInterval(@poller) and @pollResults.push(job_id)
+          @updateSearch ajax_wip: false, import_status: "Import failed due to unknown reasons!"
   </script>
 </sitewide-search>

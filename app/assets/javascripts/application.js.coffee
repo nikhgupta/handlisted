@@ -80,9 +80,11 @@ $.fn.search.Constructor.prototype.toggleOverlay = (action, key) ->
   if action is 'show'
     @$element.scrollTop = 0
     $("body").addClass 'noscroll has-overlay'
+    $("body nav.header").addClass('minimized')
     @$element.attr("aria-hidden", false)
     @$element.trigger('show')
   else
+    $("body nav.header").removeClass('minimized')
     $("body").removeClass 'noscroll has-overlay'
     @$element.attr("aria-hidden", true)
     @$element.trigger('hide')

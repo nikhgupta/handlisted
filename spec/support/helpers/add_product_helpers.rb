@@ -21,16 +21,20 @@ module AddProductHelpers
     product
   end
 
-  def add_product_to_sitewide_search(url)
-    url = PRODUCTS_LIST[url] ? PRODUCTS_LIST[url][:url] : url.to_s
-    click_on_link "anywhere to search"
-
+  def fill_sitewide_search_with(url)
     fill_in :search, with: ""
     find('input#overlay-search').native.send_keys :backspace
 
     # fill_in :search, with: url
     find('input#overlay-search').native.send_keys url
     find('input#overlay-search').native.send_keys :backspace if url.blank?
+  end
+
+  def add_product_to_sitewide_search(url)
+    url = PRODUCTS_LIST[url] ? PRODUCTS_LIST[url][:url] : url.to_s
+    click_on_link "anywhere to search"
+
+    fill_sitewide_search_with(url)
     url
   end
 
@@ -75,13 +79,10 @@ module AddProductHelpers
     expect(progress_status).to be >= 10
     expect(ProductScraperJob.jobs.size).to eq 1
     yield if block_given?
-    puts url
-    puts ProductScraperJob.jobs.map{|i| i['args'][1]}.join("\n")
     ProductScraperJob.drain
-    puts ProductScraperJob.jobs.map{|i| i['args'][1]}.join("\n")
+    sleep 2
   ensure
     wait_for_traffic
-    puts "traffic finished"
   end
 
   def card_selector_for(product)
