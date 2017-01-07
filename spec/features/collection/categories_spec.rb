@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "category index" do
+RSpec.feature "Categories" do
   background do
     @p1, c1, s1 = Category.create_hierarchy :parent1, :child1, :subchild1
     @p2, c2, s2 = Category.create_hierarchy :parent2, :child2, :subchild2

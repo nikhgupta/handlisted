@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "listings on user's public profile", :js do
+RSpec.feature "User Profiles :: Public Listing", :js do
   def setup(user, options = {})
     liked = create_list(:product, options[:likes] || 1)
     found = create_list(:product, (options[:found] || 1), founder: user)
@@ -66,7 +66,7 @@ RSpec.feature "listings on user's public profile", :js do
   end
 end
 
-RSpec.feature "listings on user's personal profile", :js do
+RSpec.feature "User Profiles :: Personal Listing", :js do
   def setup(user, options = {})
     liked = create_list(:product, options[:likes] || 1)
     found = create_list(:product, (options[:found] || 1), founder: user)

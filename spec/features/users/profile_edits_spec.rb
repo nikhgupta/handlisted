@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "user edit his profile" do
+RSpec.feature "User Profiles" do
   context "when not signed in" do
     background do
       sign_out_if_logged_in

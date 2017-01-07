@@ -2,7 +2,7 @@
 if defined?(Spring)
   message  = "Coverage tests while Spring is running are unreliable.\n"
   message += "Please, try again with Spring disabled.\n"
-  message += "Try Running: COVERAGE=1 bundle exec rspec --format Fuubar --format html --out tmp/rspec/results.html"
+  message += "Try running: bin/coverage"
   puts "\e[33m#{message}\e[0m"
 elsif SimpleCov.running
   puts "\e[37mSimpleCov is already running..\e[0m\n"

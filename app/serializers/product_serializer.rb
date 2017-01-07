@@ -15,7 +15,7 @@ class ProductSerializer < ActiveModel::Serializer
   has_many :likers
   has_many :related_products
 
-  attributes :note, :description
+  attributes :note, :description, :marked_description
   attributes :states
 
   def price
@@ -55,5 +55,15 @@ class ProductSerializer < ActiveModel::Serializer
   def cover_image
     return object.images.first if object.images.try(:any?)
     scope.image_path("product-missing.png")
+  end
+
+  def marked_description
+    options = {
+      auto_ids: false,
+      syntax_highlighter: nil,
+      entity_output: :as_input,
+      header_offset: 0
+    }
+    Kramdown::Document.new(object.description, options).to_html.strip
   end
 end

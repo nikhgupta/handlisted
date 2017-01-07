@@ -99,4 +99,10 @@ module AddProductHelpers
     selector = card_selector_for(*args) + " a.product-like"
     find(selector)['class'].include? 'active'
   end
+
+  def add_likers_for_product(product, count = 2)
+    create_list(:confirmed_user, count).each do |user|
+      user.like product
+    end
+  end
 end

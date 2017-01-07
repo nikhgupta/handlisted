@@ -25,6 +25,12 @@ RSpec.feature "Site Search", :js, :slow do
       search_using_sitewide_search nil
       expect_search_to_show_message "Instant search"
     end
+    scenario "search should notify when no matching products are found" do
+      visit root_path
+      search_using_sitewide_search :bags
+      expect(page).to have_text "No products were found for your query!"
+      expect(page).not_to have_css ".product.card"
+    end
   end
   context "with existing products" do
     background do
@@ -104,7 +110,6 @@ RSpec.feature "Site Search", :js, :slow do
       expect_search_to_show_message "Import was Successful"
       expect_search_to have_product_card_for(product)
     end
-
     scenario "user searches for a product after just adding a product" do
       create :product, founder: @user
       visit root_path
@@ -138,14 +143,11 @@ RSpec.feature "Site Search", :js, :slow do
       expect_search_to_show_message "Import was Successful"
       expect_search_to have_product_card_for(product)
     end
-
     scenario "detects a product url in a query that has already been imported"
-
     scenario "user adds product URL that does not exist" do
       add_product_via_sitewide_search :invalid
       expect(page).to have_text "No products were found for your query!"
     end
-
     scenario "user adds a product which induces an error" do
       allow(ProductScraper).to receive(:fetch).and_raise(ProductScraper::Error, 'Some Error')
       expect {
@@ -153,13 +155,11 @@ RSpec.feature "Site Search", :js, :slow do
       }.to raise_error(ProductScraper::Error)
       expect(page).to have_text "Import Failed. Error: Some Error"
     end
-
     scenario 'user adds a product that takes a long time to process' do
       allow(Sidekiq::Status).to receive(:status).and_return("Queued", nil)
       add_product_via_search_and_perform :kindle
       expect(page).to have_text "Import failed due to unknown reasons!"
     end
-
     scenario 'user adds a product that has already been imported'
   end
 
@@ -168,12 +168,10 @@ RSpec.feature "Site Search", :js, :slow do
       @user = sign_in_as :confirmed_user
       create_list :product, 12, founder: @user
     end
-
     scenario "instant search only displays upto 8 products" do
       search_using_sitewide_search('product')
       within(".overlay"){ expect(page).to have_selector ".product.card", count: 8 }
     end
-
     scenario "all search results can be seen by clicking view all results" do
       search_using_sitewide_search('product')
       within(".overlay"){ expect(page).to have_selector ".product.card", count: 8 }
@@ -181,7 +179,6 @@ RSpec.feature "Site Search", :js, :slow do
       expect(current_path).to eq search_or_add_products_path
       expect(page).to have_selector ".product.card", count: 12
     end
-
     scenario "all search results can be seen by pressing Enter when searching" do
       add_product @user, :moto_x
       search_using_sitewide_search('moto', instant: false)
@@ -192,7 +189,6 @@ RSpec.feature "Site Search", :js, :slow do
       expect(page).to have_selector ".product.card", count: 12
       expect(current_path).to eq search_or_add_products_path
     end
-
     scenario "search should behave similar to product listing"
     scenario "search should prioritize products for revenue and interest"
   end

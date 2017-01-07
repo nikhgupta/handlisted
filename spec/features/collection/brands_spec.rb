@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "brands index" do
+RSpec.feature "Brands" do
   background do
     @per_page  = Kaminari.config.default_per_page
 

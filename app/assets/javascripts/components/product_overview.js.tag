@@ -57,7 +57,7 @@
         <div class='panel-title'>Product Description</div>
       </div>
       <div class='panel-body'>
-        <raw content="{ product.description }" />
+        <raw content="{ product.marked_description }" />
       </div>
     </div>
 
@@ -92,6 +92,7 @@
     marked = @product.marked_price.replace(/[^0-9\.]/g, '')
     @aff_btn = if opts.product.available and price > 0 then "success" else "light"
 
-    @on 'mount', => console.log "mounted product overview"
+    @on 'mount', =>
+      # console.log "mounted product overview"
   </script>
 </product-overview>

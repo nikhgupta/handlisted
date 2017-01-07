@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "infinite scrolling for products listing", :js do
+RSpec.feature "Product Listing :: Infinite Listing", :js do
   background do
     @per_page = Kaminari.config.default_per_page
   end

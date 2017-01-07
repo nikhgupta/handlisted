@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "merchants index" do
+RSpec.feature "Merchants" do
   background do
     @per_page  = Kaminari.config.default_per_page
 

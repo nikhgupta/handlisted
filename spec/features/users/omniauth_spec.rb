@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "user registers with omniauth provider", :omniauth, :mailers do
+RSpec.feature "User Registration with Omniauth", :omniauth, :mailers do
   background do
     sign_out_if_logged_in
   end
@@ -141,7 +141,7 @@ RSpec.feature "user registers with omniauth provider", :omniauth, :mailers do
   end
 end
 
-RSpec.feature "user logins using omniauth provider", :omniauth do
+RSpec.feature "User Login with Omniauth", :omniauth do
   scenario "confirms email address" do
     user = create(:user, email: "testuser@facebook.com")
     expect(user).not_to be_confirmed

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "user login" do
+RSpec.feature "User Login" do
   context "with correct credentials" do
     background do
       @user = create(:confirmed_user, password: "password")
@@ -32,7 +32,7 @@ RSpec.feature "user login" do
   end
 end
 
-RSpec.feature "On user registration page" do
+RSpec.feature "User Registration Page" do
   background do
     visit user_registration_path
   end
@@ -70,7 +70,7 @@ RSpec.feature "On user registration page" do
   end
 end
 
-RSpec.feature "When user registers", :mailers do
+RSpec.feature "User Registration", :mailers do
   background do
     sign_up_with "john", "John Smith", "john@smith.com", "password"
     @user = User.find_by(email: "john@smith.com")

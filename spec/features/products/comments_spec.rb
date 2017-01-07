@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "product comments" do
+RSpec.feature "Product Comments" do
   def add_comment(text: nil)
     sign_in_as(:confirmed_user) unless @signed_in_user.present?
     visit product_path(@product)
