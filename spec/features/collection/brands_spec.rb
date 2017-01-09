@@ -1,29 +1,37 @@
 require 'rails_helper'
 
 RSpec.feature "Brands" do
+  let(:merch_x){ create :merchant, name: "Merchant X" }
+  let(:merch_y){ create :merchant, name: "Merchant Y" }
+  let(:brand_a) { create :brand, name: "Brand A", merchant: merch_x }
+  let(:brand_b) { create :brand, name: "Brand B", merchant: merch_y }
+
   background do
     @per_page  = Kaminari.config.default_per_page
-
-    @merchant1 = create :merchant, name: "Merchant X"
-    @brand1    = create :brand, name: "Brand Y", merchant: @merchant1
-    @product1  = create :product, brand: @brand1, merchant: @merchant1
-
-    merchant2  = create :merchant, name: "Merchant A"
-    brand2     = create :brand, name: "Brand B", merchant: merchant2
-    @product2  = create :product, brand: brand2, merchant: merchant2
   end
 
-  scenario "lists all brands across a given merchant" do
-    visit "/brands/merchant-x"
+  context "Index Page" do
+    scenario "lists all brands across a given merchant" do
+      visit merchant_brands_path(merch_x)
 
-    expect(page).to have_content("Brand Y")
-    expect(page).to have_content('Available Brands On Merchant X')
-    expect(page).to have_linkhref('/brands/merchant-x/brand-y')
-
-    expect(page).not_to have_content("Brand B")
-    expect(page).not_to have_content('Available Brands on Merchant A')
-    expect(page).not_to have_linkhref('/brands/merchant-a/brand-b')
+      expect(page).to     have_content('Available Brands On Merchant X')
+      expect(page).not_to have_content('Available Brands On Merchant Y')
+      expect(page).to     have_link("Brand A", brand_path(merch_x, brand_a))
+      expect(page).not_to have_link("Brand B", brand_path(merch_y, brand_b))
+    end
   end
+  # background do
+  #   @per_page  = Kaminari.config.default_per_page
+
+  #   @merchant1 = create :merchant, name: "Merchant X"
+  #   @brand1    = create :brand, name: "Brand Y", merchant: @merchant1
+  #   @product1  = create :product, brand: @brand1, merchant: @merchant1
+
+  #   merchant2  = create :merchant, name: "Merchant A"
+  #   brand2     = create :brand, name: "Brand B", merchant: merchant2
+  #   @product2  = create :product, brand: brand2, merchant: merchant2
+  # end
+
 
   scenario "lists all products for the given brand", :js do
     visit "/brands/merchant-x/brand-y"
