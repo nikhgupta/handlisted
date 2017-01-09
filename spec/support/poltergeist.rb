@@ -9,7 +9,7 @@ end
 
 Capybara.configure do |config|
   config.app_host              = "http://localhost:7888"
-  config.asset_host            = "http://localhost:7888"
+  config.asset_host            = "http://localhost:7887"
   config.server_host           = "localhost"
   config.server_port           = "7888"
   # config.current_driver        = :poltergeist

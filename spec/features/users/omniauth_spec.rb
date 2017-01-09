@@ -28,6 +28,7 @@ RSpec.feature "User Registration with Omniauth", :omniauth, :mailers do
 
     visit edit_profile_path
     expect(page).to have_field("Name", with: "Test Facebook User")
+    expect(page).to have_field("Email", with: "testuser@facebook.com")
 
     sign_out_if_logged_in
     sign_in_with_provider :facebook
@@ -69,7 +70,7 @@ RSpec.feature "User Registration with Omniauth", :omniauth, :mailers do
     expect(page).to have_alert("authenticated from Google Plus").as_notice
 
     visit edit_profile_path
-    expect(page).to have_content("@testuser - Test Google User")
+    expect(page).to have_link("@testuser", href: "/testuser")
     expect(page).to have_field("Name", with: "Test Google User")
     expect(page).to have_field("Email", with: "testuser@gmail.com")
 
@@ -103,6 +104,7 @@ RSpec.feature "User Registration with Omniauth", :omniauth, :mailers do
 
     visit edit_profile_path
     expect(page).to have_field "Name", with: "Test Twitter User"
+    expect(page).to have_field("Email", with: "john@smith.com")
 
     sign_out_if_logged_in
     sign_in_with_provider :twitter
