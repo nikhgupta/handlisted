@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.feature "Site Search", :js, :slow do
+RSpec.feature "Site Search", :js, :slow, type: :feature do
   context "default behaviour" do
     scenario "search behaviour matches for frontpage and app page" do
       visit root_path

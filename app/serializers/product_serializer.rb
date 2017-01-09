@@ -64,6 +64,6 @@ class ProductSerializer < ActiveModel::Serializer
       entity_output: :as_input,
       header_offset: 0
     }
-    Kramdown::Document.new(object.description, options).to_html.strip
+    Kramdown::Document.new(object.description.to_s, options).to_html.strip
   end
 end

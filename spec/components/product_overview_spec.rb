@@ -1,4 +1,4 @@
-RSpec.feature "Product Overview", :js, :slow do
+RSpec.feature "Product Overview", :js, :slow, type: :feature do
   let(:product) { create :product }
 
   # FIXME: paragraphs are not preserved here!
@@ -11,6 +11,9 @@ RSpec.feature "Product Overview", :js, :slow do
       expect(page).to have_selector("h3", text: "Heading 3")
       expect(page).to have_link("link title", href: "http://example.com")
     end
+  end
+
+  context "Product Comments" do
   end
 
   context "User Likes" do
@@ -48,6 +51,19 @@ RSpec.feature "Product Overview", :js, :slow do
       expect(like_status_for(product)).to be_falsey
       expect(user).not_to be_liking product
     end
+    scenario "comments are allowed", :slow, :js do
+      pending
+      sign_in_as(:confirmed_user) unless @signed_in_user.present?
+      visit product_path(@product)
+      expect(page).to have_selector(".panel-comments .commentForm textarea#comment_comment")
+      fill_in "comment_comment", with: (text || "this is a comment for this product")
+      click_on_button "Add Comment"
+      # skip "test specific to non-js environment" if js_test?
+      expect(page).to have_content("this is a comment for this product")
+      expect(page).to have_selector("textarea#comment_comment", text: "")
+      expect(page).to have_alert("Your comment has been added").as_success
+      expect(page).to have_content("Displaying 1 comment")
+    end
   end
   context "Site Visitor" do
     scenario "liking product requires signing-in" do
@@ -55,6 +71,20 @@ RSpec.feature "Product Overview", :js, :slow do
       toggle_like_for_product product
       expect(current_path).to eq new_user_session_path
       expect(page).to have_alert("need to sign in").as_error
+    end
+    scenario "comments are visible" do
+      pending
+      visit product_path(product)
+      expect(page).to have_no_selector(".panel-comments .comment-form")
+      expect(page).to have_content("login to add comments")
+      expect(page).to have_no_content("No comments were found")
+    end
+    scenario "commenting is disabled" do
+      pending
+      visit product_path(product)
+      expect(page).to have_no_selector(".panel-comments .comment-form")
+      expect(page).to have_content("login to add comments")
+      expect(page).to have_no_content("No comments were found")
     end
   end
 end

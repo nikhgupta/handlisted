@@ -42,7 +42,7 @@
     @pagination  = {last_page: opts.last_page, next_page: 2, first_page: true}
     @reachedEnd  = => $(window).scrollTop() > $(document).height() - $(window).height() - opts.offset
     @ajax_in_progress = false
-    @url = opts.url || "/products.json?"
+    @url = opts.url || "/products.json"
     @params = opts.params || {}
 
     @loadMoreProductsFrom = (url, callback = ->) =>

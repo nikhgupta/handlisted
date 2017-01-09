@@ -1,7 +1,5 @@
-GIT
-  remote: git://github.com/nikhgupta/product_scraper.git
-  revision: bc45a62f623577bffe46f51dc89bd890e81f8829
-  branch: master
+PATH
+  remote: vendor/gems/product_scraper
   specs:
     product_scraper (0.2.2)
       activesupport

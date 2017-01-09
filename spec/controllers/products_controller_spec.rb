@@ -85,7 +85,6 @@ RSpec.describe ProductsController, type: :controller do
     # render_views
     # NOTE: this is actually happening via JS, but rack-test passes since devise
     # sends a redirect anyways on no auth.
-    # TODO: test this inside request specs.
     it "requires a user to be logged in" do
       sign_in nil
       product = Product.create! valid_attributes

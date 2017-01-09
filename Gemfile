@@ -24,7 +24,7 @@ gem 'bootstrap-generators'
 # Business Logic
 gem 'pg_search'
 gem 'sidekiq-status'
-gem 'product_scraper', github: 'nikhgupta/product_scraper', branch: :master
+gem 'product_scraper', path: "vendor/gems/product_scraper", branch: :master
 
 # ActiveRecord Helpers
 gem 'acts_in_relation'
