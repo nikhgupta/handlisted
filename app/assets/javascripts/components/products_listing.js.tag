@@ -5,11 +5,11 @@
       </div>
     </div>
 
-    <div class="paginator" if="{ !(pagination.last_page && pagination.first_page) && !(pagination.last_page && opts.no_end_notice) }" >
+    <div class="paginator" if="{ !(infiscroll.pagination.last_page && infiscroll.pagination.first_page) && !(infiscroll.pagination.last_page && opts.no_end_notice) }" >
       <div class="pagination bg-header has-loader">
-        <a if={ !ajax_in_progress && !pagination.last_page } class='load-more' href="{url}?page={pagination.next_page}" rel="next">Load More</a>
-        <img if={ ajax_in_progress} src='/images/ajax-loader.gif' width="40" height="40"/>
-        <strong if={ pagination.last_page }>Whoa! You've reached the end of the world!</strong>
+        <a if={ !ajaxip && !infiscroll.pagination.last_page } class='load-more' href="{infiscroll.url}?page={infiscroll.pagination.next_page}" rel="next">Load More</a>
+        <img if={ ajaxip} src='/images/ajax-loader.gif' width="40" height="40"/>
+        <strong if={ infiscroll.pagination.last_page }>Whoa! You've reached the end of the world!</strong>
       </div>
     </div>
   </div>
@@ -37,36 +37,19 @@
   </style>
 
   <script type="text/coffee">
-    @path_prefix = opts.path_prefix || "products"
-    @products    = opts.products || []
-    @pagination  = {last_page: opts.last_page, next_page: 2, first_page: true}
-    @reachedEnd  = => $(window).scrollTop() > $(document).height() - $(window).height() - opts.offset
-    @ajax_in_progress = false
-    @url = opts.url || "/products.json"
-    @params = opts.params || {}
+    @mixin(window.InfiniteScrolling)
 
-    @loadMoreProductsFrom = (url, callback = ->) =>
-      return unless url?
-      @ajax_in_progress = true; @update()
-      options = $.extend {}, @params, { group: opts.group, per_page: opts.paging}
-      $.get url, options, (response, status, xhr) =>
-        $.merge @products, response
-        callback(response)
-        @pagination = $.parseJSON xhr.getResponseHeader("X-Pagination")
-        @ajax_in_progress = false; @update()
-
-    @on 'mount', =>
-      $(window).scroll =>
-        el = $("a.load-more.clicked", @root)
-        return unless @reachedEnd() and el.length > 0
-        @loadMoreProductsFrom el.attr("href")
-
-      $("a.load-more", @root).on 'click', (e) =>
-        e.preventDefault()
-        $("a.load-more", @root).addClass('clicked')
-        @loadMoreProductsFrom $(e.target).attr('href')
-
-      (@loadMoreProductsFrom opts.url if opts.url?) unless @products.length > 0
+    @createInfiniteScroll
+      offset: opts.offset || 200,
+      resource_group: opts.group,
+      resource_paging: opts.per_page,
+      resource: opts.products || [],
+      url: opts.url || "/products.json",
+      url_params: opts.url_params || {},
+      url_path_prefix: opts.url_path_prefix || "products",
+      load_more_elem: opts.load_more_elem || "a.load-more",
+      pagination: { last_page: false, next_page: 2, first_page: true }
+    @products = @infiscroll.resource
 
   </script>
 </products-listing>

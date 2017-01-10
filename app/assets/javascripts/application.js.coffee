@@ -58,6 +58,7 @@
 #= require services/magnific_modal
 
 #= require_self
+#= require mixins/infinite_scrolling
 #= require components/raw
 #= require components/progress_bar
 #= require components/product_card
