@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:like, :create]
   set_pagination_headers :users, only: [:likers]
   set_pagination_headers :products, only: [:index, :search, :related]
+  set_pagination_headers :comments, only: [:show]
 
   include Commentable
   include Sidekiq::Statusable
@@ -11,7 +12,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    scope = Product.includes(:merchant, :brand, :category, :founder, :likers)
+    scope = Product.includes(:merchant, :brand, :category, :founder, :likers, comments: :user)
     scope = scope.order(updated_at: :desc)
     @products = paginate scope.all
     respond_to do |format|
@@ -22,7 +23,7 @@ class ProductsController < ApplicationController
 
   def search
     @query = params[:search] rescue nil
-    scope = Product.includes :merchant, :brand, :founder, :category
+    scope = Product.includes :merchant, :brand, :founder, :category, comments: :user
     scope = @query ? scope.search(@query).all : scope.none
     @products = paginate scope
     respond_to do |format|
@@ -93,8 +94,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      scope = Product.includes(:merchant, :founder, :category, :brand)
-      @product = scope.find(params[:id])
+      @product = Product.with_default_includes.find(params[:id])
     end
 
     def paginate(relation, per_page = nil)

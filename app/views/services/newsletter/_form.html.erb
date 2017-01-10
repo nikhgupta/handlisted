@@ -1,16 +1,16 @@
-<div class="col-sm-5 footer-newsletter p-r-60 b-r b-grey">
-  <h3 class="light m-t-5">Subscribe to our newsletter</h3>
-  <h5 class="hint-text">Want beautiful products delivered right to your inbox?</h5>
-  <%= form_tag newsletter_subscription_path, method: :post, remote: true, class: "m-t-30 m-b-20", role: "form" do %>
-    <div class="row">
-      <div class="form-group form-group-default input-group col-xs-8 col-sm-8">
+<h3 class="light m-t-5">Subscribe to our newsletter</h3>
+<h5 class="hint-text">Want beautiful products delivered right to your inbox?</h5>
+<%= form_tag newsletter_subscription_path, method: :post, remote: true, class: "m-t-30 m-b-20", role: "form" do %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="form-group form-group-default input-group" style="width: 100%">
         <%= label_tag :email %>
         <%= email_field_tag :email, nil, placeholder: "Email address", required: true, email: true, class: "form-control" %>
       </div>
-      <div class='col-xs-4 col-sm-4'>
-        <%= submit_tag "Subscribe", class: "btn btn-primary btn-block" %>
-      </div>
     </div>
-    <p class="font-arial fs-12 hint-text">We value your <strong>privacy</strong>. None of the details supplied will be shared with external parties</p>
-  <% end %>
-</div>
+    <div class='col-xs-12 col-sm-4'>
+      <%= submit_tag "Subscribe", class: "btn btn-primary btn-block" %>
+    </div>
+  </div>
+  <p class="font-arial fs-12 hint-text">We value your <strong>privacy</strong>. None of the details supplied will be shared with external parties</p>
+<% end %>

@@ -1,2 +1,2 @@
-<%= overview_for @product, social_sharing:
-  present(@product).social_sharing(popup: true, via: "handlisted") %>
+<%= overview_for @product, comments: @comments, current_user: current_user,
+  social_sharing: social_sharing_for(@product, popup: true, via: "handlisted") %>

@@ -10,6 +10,7 @@ RSpec.feature "Categories" do
     @per_page   = Kaminari.config.default_per_page
   end
   scenario "lists all root categories across the site with atleast one product" do
+    pending
     visit shop_path
 
     expect(page).to have_content('Parent1')
@@ -24,11 +25,13 @@ RSpec.feature "Categories" do
   end
 
   scenario "lists products for the given root category without any products" do
+    pending
     visit category_path(@p3)
     expect(page).to have_content("No products were found for this category")
   end
 
   scenario "lists all products for the given root category", :js do
+    pending
     visit category_path(@p1)
 
     expect(page).to have_selector('h3', text: "Parent1")
@@ -37,6 +40,7 @@ RSpec.feature "Categories" do
   end
 
   scenario "allows loading more products for the given category", :js, :slow do
+    pending
     create_list :product, @per_page * 2, category: @p2
     visit category_path(@p2)
 

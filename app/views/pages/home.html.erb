@@ -12,8 +12,6 @@
                       A community curation of
                     </h1>
                     <h4 class="sm-text-center text-white">Beautiful elegant products from Indian merchants</h4>
-                    <%# <h5 class="block-title text-white sm-text-center">Behind the scenes watch tour</h5> %>
-                    <%# <p class="fs-12 font-arial hint-text sm-text-center">Available at themeforest, envato market place.</p> %>
                     <%= link_to image_tag('arrow_down.png'), '#', data: { toggle: "velocity", target: "#home-featured" } %>
                   </div>
                 </div>
@@ -38,10 +36,10 @@
       </div>
     </div>
     <%= link_to image_tag('arrow_down_2.png', class: 'm-t-30'), '#', data: { toggle: "velocity", target: "#explore" } %>
-    <% if latest_updated_product.present? %>
+    <% if featured_product.present? %>
       <div class='row'>
         <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 open-details' data-pages="float" data-max-top-translate="40" data-max-bottom-translate="300" data-speed="-0.1" data-delay="1000" data-curve="ease">
-          <%= card_for(latest_updated_product) %>
+          <%= card_for(featured_product) %>
         </div>
       </div>
     <% end %>
@@ -109,6 +107,6 @@
     <h5 class="block-title hint-text m-b-0"><%= link_to 'Add a Product', page_path('add-products') %> OR</h5>
     <h1 class="light m-t-5">Browse our Curated Products</h1>
     <h5 class="hint-text">You can, always, type anywhere to search our database</h5>
-    <%= render "categories/lists/default", categories: featured_categories(3), html: { class: "col-xs-6 col-sm-4 text-center" } %>
+    <%= featured_categories_list(3, class: "col-xs-6 col-sm-4 text-center", style: "margin-top: 30px") %>
   </div>
 </section>

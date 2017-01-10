@@ -97,4 +97,8 @@ class Product < ActiveRecord::Base
     return if merchant.present? || brand.blank?
     self.merchant = brand.merchant
   end
+
+  def self.with_default_includes
+    includes(:merchant, :founder, :category, :brand, comments: :user)
+  end
 end

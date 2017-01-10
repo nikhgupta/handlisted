@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :pid, :identifier, :name, :slug
+  attributes :id, :pid, :identifier, :name, :slug
   attributes :url, :merchant_url
   attributes :price, :marked_price, :display_price
   attributes :available, :prioritized
@@ -14,9 +14,14 @@ class ProductSerializer < ActiveModel::Serializer
 
   has_many :likers
   has_many :related_products
+  has_many :comments
 
   attributes :note, :description, :marked_description
   attributes :states
+
+  def comments
+    object.comments.order(updated_at: :desc).limit(5)
+  end
 
   def price
     object.price.format

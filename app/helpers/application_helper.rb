@@ -1,23 +1,4 @@
 module ApplicationHelper
-  def present(object, klass=nil)
-    unless object.nil? || object.is_a?(ApplicationPresenter)
-      klass ||= "#{object.class}Presenter".constantize
-      object = klass.new(object, self)
-    end
-    yield object if block_given?
-    object
-  end
-
-  def listing_of(key, objects, options = {})
-    key = key.to_s.underscore.pluralize
-    not_found = "<p class='alert alert-info'>No matching #{key} were found!</p>"
-    klass = "#{key.singularize}_serializer".camelize.constantize
-    return not_found unless objects && objects.count > 0
-    serialized = objects.map{|p| klass.new(p, scope: self) }
-    options = {key => serialized, last_page: objects.last_page?}.merge(options)
-    riot_component "#{key}_listing", options
-  end
-
   def card_for(object, options = {})
     key = object.class.name.underscore
     serialized = "#{key.camelize}Serializer".constantize.new(object, scope: self)
@@ -30,8 +11,14 @@ module ApplicationHelper
     riot_component "#{key}_overview", options.merge(key => serialized)
   end
 
-  def current_user
-    present(super) if super
+  def listing_of(key, objects, options = {})
+    key = key.to_s.underscore.pluralize
+    not_found = "<p class='alert alert-info'>No matching #{key} were found!</p>"
+    klass = "#{key.singularize}_serializer".camelize.constantize
+    return not_found unless objects && objects.count > 0
+    serialized = objects.map{|p| klass.new(p, scope: self) }
+    options = {key => serialized, last_page: objects.last_page?}.merge(options)
+    riot_component "#{key}_listing", options
   end
 
   def path_is?(path)
@@ -88,13 +75,13 @@ module ApplicationHelper
     link_to html.html_safe, link, options
   end
 
-  def products_listing_for(products, kind: nil, group: nil, html: {})
-    locals = { products: products, kind: kind, group: group, html: html }
-    listing_of :products, products, offset: 200
-    # render layout: "products/listing", locals: locals do
-    #   yield if block_given?
-    # end
-  end
+  # def products_listing_for(products, kind: nil, group: nil, html: {})
+  #   locals = { products: products, kind: kind, group: group, html: html }
+  #   listing_of :products, products, offset: 200
+  #   # render layout: "products/listing", locals: locals do
+  #   #   yield if block_given?
+  #   # end
+  # end
 
 
   #### AFTER PAGES THEME ################

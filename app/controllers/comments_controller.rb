@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
     options = @comment.persisted? ? { notice: "Your comment has been added." } : { alert: @error }
 
     respond_to do |format|
-      format.js
+      format.json { render json: @comment }
       format.html { redirect_to @commentable, options }
     end
   end

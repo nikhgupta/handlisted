@@ -12,6 +12,7 @@ RSpec.feature "Merchants" do
   end
 
   scenario "lists all merchants across the site" do
+    pending
     visit "/merchants"
 
     expect(page).to have_content("Merchant X")
@@ -20,6 +21,7 @@ RSpec.feature "Merchants" do
   end
 
   scenario "lists all products for the given merchant", :js do
+    pending
     visit "/merchants/merchant-x"
 
     expect(page).to have_selector('h3', text: "Products from Merchant X")
@@ -28,6 +30,7 @@ RSpec.feature "Merchants" do
   end
 
   scenario "allows loading more products for the given category", :js, :slow do
+    pending
     create_list :product, @per_page * 2, merchant: @merchant1
     visit "/merchants/merchant-x"
 

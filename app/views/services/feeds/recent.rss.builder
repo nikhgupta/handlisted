@@ -23,7 +23,7 @@ xml.rss version: "2.0", 'xmlns:atom' => 'http://www.w3.org/2005/Atom' do
         xml.author    "hello@handlisted.in (Handlisted.in)"
         xml.category  product.category.name
         xml.guid      product_short_url(product.id)
-        xml.description present(product).rss_description
+        xml.description rss_description_for(product)
       end
     end
   end

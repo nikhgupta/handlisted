@@ -18,6 +18,7 @@ RSpec.feature "User Profiles :: Public Listing", :js do
   end
 
   scenario 'users have a public profile' do
+    pending
     setup @user, likes: 1, found: 2, visit: true
     expect(page).to have_content("@johnsmith")
     expect(page).to have_content("Likes 1 product")
@@ -34,6 +35,7 @@ RSpec.feature "User Profiles :: Public Listing", :js do
   # end
 
   scenario 'lists the product that the user likes' do
+    pending
     liked, found = setup @user, likes: 1, found: 2, visit: true
 
     expect(page).to have_linkhref("#liked-products")
@@ -50,6 +52,7 @@ RSpec.feature "User Profiles :: Public Listing", :js do
 
   context 'has infinite scrolling for these listings' do
     scenario "loads more records when 'load more' button is clicked", :slow do
+      pending
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")
@@ -85,6 +88,7 @@ RSpec.feature "User Profiles :: Personal Listing", :js do
   end
 
   scenario 'users can see their profile' do
+    pending
     setup @user, likes: 1, found: 2, visit: true
     expect(page).to have_content("@johnsmith")
     expect(page).to have_content("Likes 1 product")
@@ -92,6 +96,7 @@ RSpec.feature "User Profiles :: Personal Listing", :js do
   end
 
   scenario 'lists the product that the user likes' do
+    pending
     liked, found = setup @user, likes: 1, found: 2, visit: true
 
     expect(page).to have_linkhref("#liked-products")
@@ -109,6 +114,7 @@ RSpec.feature "User Profiles :: Personal Listing", :js do
 
   context 'has infinite scrolling for these listings' do
     scenario "loads more records when 'load more' button is clicked", :slow do
+      pending
       count = @per_page * 2 + 1
       liked, found = setup @user, likes: count, found: count, visit: true
       expect(page).to have_link("Load More")

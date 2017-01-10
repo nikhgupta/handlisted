@@ -33,4 +33,8 @@ class Category < ActiveRecord::Base
   def all_products
     products_for(:self_and_descendants)
   end
+
+  def self.with_default_includes
+    includes(:parent, :children, :products)
+  end
 end

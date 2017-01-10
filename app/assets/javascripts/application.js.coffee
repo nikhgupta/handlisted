@@ -63,10 +63,12 @@
 #= require components/progress_bar
 #= require components/product_card
 #= require components/product_overview
+#= require components/product_comments
 #= require components/products_listing
 #= require components/user_card
 #= require components/users_listing
 #= require components/sitewide_search
+#= require components/category_card
 
 # redirect unauthorized XHR requests to login page
 $(document).ajaxError (e, XHR, options) ->
@@ -95,6 +97,9 @@ $.fn.search.Constructor.prototype.toggleOverlay = (action, key) ->
 #   beforeSend: -> $(".ajax-loader").show()
 
 ready = ->
+  # always pass csrf tokens on ajax calls
+  $.ajaxSetup
+    headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
 
   if $('[data-toggle="velocity"]').length > 0
     $('[data-toggle="velocity"]').click ->

@@ -1,6 +1,14 @@
 RSpec.feature "Product Overview", :js, :slow, type: :feature do
   let(:product) { create :product }
 
+  def add_comment(product, text: nil)
+    sign_in_as(:confirmed_user) unless @signed_in_user.present?
+    visit product_path(product)
+    expect(page).to have_selector(".product-comments .comment-form textarea#comment_comment")
+    fill_in "comment_comment", with: (text || "this is a comment for this product")
+    click_on_button "Add Comment"
+  end
+
   # FIXME: paragraphs are not preserved here!
   it "presents formatted HTML from the product description's markdown" do
     markdown = "### Heading 3\n[link title](http://example.com)"
@@ -14,6 +22,69 @@ RSpec.feature "Product Overview", :js, :slow, type: :feature do
   end
 
   context "Product Comments" do
+    scenario "product profile does not allow commenting when logged out" do
+      visit product_path(product)
+      expect(page).to have_no_selector(".panel-comments .comment-form")
+      expect(page).to have_content("login to add comments")
+      expect(page).to have_content("No comments were found")
+    end
+    scenario "product profile allows commenting on product when logged in" do
+      add_comment product, text: "this is a comment for this product"
+
+      expect(page).to have_content("this is a comment for this product")
+      expect(page).to have_selector("textarea#comment_comment", text: "")
+      expect(page).to have_no_alert("Your comment has been added")
+      expect(page).to have_css(".comment-result.text-success", text: "Comment Posted!")
+    end
+    scenario "displays validation errors when they occur" do
+      add_comment product, text: "short comment"
+      expect(page).to have_css(".comment-result.text-danger", text: "is too short")
+    end
+  end
+
+  context "Related Products" do
+    background do
+      p1, c1, s1 = Category.create_hierarchy :parent1, :child1, :subchild1
+      p2, c2, s2 = Category.create_hierarchy :parent2, :child2, :subchild2
+      @product1   = create :product, category: s1, name: "Product 1"
+      @product2   = create :product, category: s1, name: "Product 2"
+      @product3   = create :product, category: c1
+      @product4   = create :product, category: s2
+    end
+    scenario "are populated from descendants of its category hierarchy" do
+      visit product_path(@product3)
+      selector = ".panel.related-products .product.card.mini"
+
+      expect(page).to have_selector("#{selector}[data-pid='#{@product1.pid}']")
+      expect(page).to have_selector("#{selector}[data-pid='#{@product2.pid}']")
+      expect(page).to have_no_selector("#{selector}[data-pid='#{@product4.pid}']")
+    end
+    scenario "are not populated from ancestors of its category hierarchy" do
+      visit product_path(@product1)
+      selector = ".panel.related-products .product.card.mini"
+
+      expect(page).to have_selector("#{selector}[data-pid='#{@product2.pid}']")
+      expect(page).to have_no_selector("#{selector}[data-pid='#{@product3.pid}']")
+      expect(page).to have_no_selector("#{selector}[data-pid='#{@product4.pid}']")
+    end
+    scenario "show overview of the product in a modal, when clicked" do
+      pending "issue #116"
+      visit product_path(@product1)
+      find(".related-product").trigger('click')
+
+      expect(page.current_path).to eq product_path(@product1)
+      within "#modal-panel" do
+        expect(page).to have_selector(".product.card-overview[data-pid='#{@product2.pid}']")
+        expect(page).to have_selector("h1", text: "Product 2")
+        find(".related-product").trigger('click')
+      end
+
+      within "#modal-panel" do
+        expect(page).to have_selector(".product.card-overview[data-pid='#{@product1.pid}']")
+        expect(page).to have_selector("h1", text: "Product 1")
+      end
+    end
+    scenario "related products has load more view"
   end
 
   context "User Likes" do

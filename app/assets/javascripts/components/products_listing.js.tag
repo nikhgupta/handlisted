@@ -48,7 +48,7 @@
       url_params: opts.url_params || {},
       url_path_prefix: opts.url_path_prefix || "products",
       load_more_elem: opts.load_more_elem || "a.load-more",
-      pagination: { last_page: false, next_page: 2, first_page: true }
+      pagination: { last_page: false, next_page: 2, first_page: true, header: "X-Product-Pagination" }
     @products = @infiscroll.resource
 
   </script>

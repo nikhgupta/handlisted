@@ -1,7 +1,0 @@
-<div class='row m-t-60'>
-  <% categories.each do |category| %>
-    <div class='<%= html[:class] ? html[:class] : "col-sm-4 text-center" %>'>
-      <%= render "categories/cards/default", category: category, presenter: present(category) %>
-    </div>
-  <% end %>
-</div>

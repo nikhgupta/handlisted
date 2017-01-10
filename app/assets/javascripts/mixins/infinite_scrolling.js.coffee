@@ -23,7 +23,7 @@
     $.get url, url_params, (response, status, xhr) =>
       $.merge @infiscroll.resource, response
       callback(response)
-      @infiscroll.pagination = $.parseJSON xhr.getResponseHeader("X-Pagination")
+      @infiscroll.pagination = $.parseJSON xhr.getResponseHeader(@infiscroll.pagination.header)
       @ajaxip = false; @update()
 
   createInfiniteScroll: (opts, update) ->

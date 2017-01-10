@@ -1,4 +1,4 @@
-.categoryCard {
+.category.card {
   .panel-heading {
     min-height: 100px !important;
     .panel-title {
@@ -13,5 +13,9 @@
   }
   small.text-hint {
     font-size: 50%;
+  }
+  .breadcrumbs a {
+    color: #666;
+    &:hover { color: #444; }
   }
 }

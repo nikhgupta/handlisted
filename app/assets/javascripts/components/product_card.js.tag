@@ -189,8 +189,8 @@
         window.location = @url
       else
         $.get("#{@url}.json").done (response) =>
-          console.log "product details were asked for"
-          console.log response
+          # console.log "product details were asked for"
+          # console.log response
 
     @reported = (e) =>
       console.log "product was reported for incorrect information"

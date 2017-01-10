@@ -62,7 +62,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-12">
         <div class='panel panel-transparent related-products'>
           <div class='panel-heading'>
             <div class='panel-title'>Related Products</div>
@@ -72,27 +72,30 @@
           </div>
         </div>
       </div>
-<!--       <div class="col-md-3"> -->
-<!--         <div class='panel product-comments'> -->
-<!--           <div class='panel-heading'> -->
-<!--             <div class='panel-title'>Comments/Reviews</div> -->
-<!--           </div> -->
-<!--           <div class='panel-body'> -->
-<!--             <%= render "comments/form" %> -->
-<!--             <%= render "comments/lists/default", comments: @comments %> -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class='panel product-comments'>
+          <div class='panel-heading'>
+            <div class='panel-title'>Comments/Reviews</div>
+          </div>
+          <div class='panel-body'>
+            <product-comments comments={ product.comments}></product-comments>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script type='text/coffee'>
     @product = opts.product
+    @current_user = opts.current_user
     price  = @product.price.replace(/[^0-9\.]/g, '')
     marked = @product.marked_price.replace(/[^0-9\.]/g, '')
     @aff_btn = if opts.product.available and price > 0 then "success" else "light"
 
     @on 'mount', =>
+      # console.log opts.product.comments
       # console.log "mounted product overview"
   </script>
 </product-overview>

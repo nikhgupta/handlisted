@@ -3,16 +3,16 @@
     <div class='user-info-card'>
       <div class='widget panel no-border no-margin bg-master-lighter'>
         <div class="panel-heading pull-top top-right">
-          <h3 class="no-margin"><%= presenter.username_link %></h3>
+          <h3 class="no-margin"><%= username_link_for(user) %></h3>
         </div>
         <div class="container-xs-height">
           <div class="row row-xs-height">
             <div class="col-xs-5 col-xs-height col-middle relative">
-              <%= presenter.avatar_link %>
+              <%= avatar_link_for(user) %>
             </div>
             <div class="col-xs-7 col-xs-height col-middle relative text-right">
               <div class='badges' style='margin-right: 16px'>
-                <%= presenter.badge_list %>
+                <%= badge_list_for(user) %>
               </div>
             </div>
           </div>

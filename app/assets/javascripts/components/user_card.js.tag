@@ -7,7 +7,7 @@
 
   <script type="text/coffee">
     @user = opts.user
-    @primary = opts.primary || @user.primary?
-    @avatar = if @user.image then @user.image else "/images/avatars/missing.jpg"
+    @primary = opts.primary? || @user?.primary?
+    @avatar = if @user?.image? then @user.image else "/images/avatars/missing.jpg"
   </script>
 </user-card>

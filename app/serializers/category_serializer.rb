@@ -8,10 +8,18 @@ class CategorySerializer < ActiveModel::Serializer
 
   attributes :id, :name, :slug
   attributes :depth
-  attributes :products_count
+  attributes :products_count, :breadcrumbs, :cover_image
 
   # N+1 queries for products index:
   # attributes :ancestors_list, :leaves_list
+
+  def breadcrumbs
+    scope.breadcrumbs_for(object)
+  end
+
+  def cover_image
+    scope.cover_image_for(object)
+  end
 
   def ancestors_list
     object.ancestors.map(&:name)

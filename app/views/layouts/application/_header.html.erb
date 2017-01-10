@@ -32,7 +32,7 @@
           <%# <li><%= link_to 'How it Works?', page_path("add-products"), data: { text: "How it Works?" }, class: on_page?(:page, "add-products", :active) %1></li> %>
           <li><%= link_to 'Discover', products_path, data: { text: "Discover" }, class: "b-r b-transparent-white #{on_page?(:products, :active)}" %></li>
           <% if current_user.present? %>
-            <li><%= link_to "#{fa_icon 'user', class: "m-r-10"} Profile".html_safe, profile_path(current_user.model), data: { text: "Profile" }, class: on_page?(:profile, current_user, :active) %></li>
+            <li><%= link_to "#{fa_icon 'user', class: "m-r-10"} Profile".html_safe, profile_path(current_user), data: { text: "Profile" }, class: on_page?(:profile, current_user, :active) %></li>
             <li><%= link_to "#{fa_icon 'sign-out', class: "m-r-10"} Log out".html_safe, destroy_user_session_path, data: { text: "Log out" } %></li>
           <% else %>
             <li><%= link_to "#{fa_icon 'sign-in', class: "m-r-10"} Log in".html_safe, new_user_session_path, data: { text: "Log in" }, class: on_page?(:new_user_session, :active) %></li>

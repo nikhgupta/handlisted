@@ -15,19 +15,22 @@ module Products::Collection
 
   def show
     @header ||= instance.name.titleize
-    render "products/collection/show", locals: { entity: params[:controller].singularize }
+    respond_to do |format|
+      format.json { render json: instance }
+    end
+    # render "products/collection/show", locals: { entity: params[:controller].singularize }
   end
 
   private
 
   def instance
-    instance_variable_get("@#{params[:controller].singularize}") || default_instance
+    instance_variable_get("@#{params[:controller].singularize}") || scoped_model.find(params[:id])
   end
 
   def paginate_collection
     name = "@#{params[:controller].pluralize}"
     instance    = instance_variable_get name
-    collection  = instance ? instance.page(params[:page]) : default_collection
+    collection  = instance ? instance.page(params[:page]) : scoped_model.all
     @collection = instance_variable_set(name, collection.page(params[:page]))
   end
 
@@ -37,11 +40,8 @@ module Products::Collection
     @products = instance.send(method).page params[:page]
   end
 
-  def default_collection
-    params[:controller].singularize.classify.constantize.all
-  end
-
-  def default_instance
-    params[:controller].singularize.classify.constantize.find(params[:id])
+  def scoped_model
+    model = params[:controller].singularize.classify.constantize
+    model.respond_to?(:with_default_includes) ? model.with_default_includes : model
   end
 end

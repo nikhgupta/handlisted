@@ -1,5 +1,4 @@
-<% presenter = present(@user); link = presenter.username_link %>
-<%= render partial: "profile_box", locals: { presenter: presenter, liked: @liked, found: @found } %>
+<%= render partial: "profile_box", locals: { user: @user, liked: @liked, found: @found } %>
 
 <div class="row user-product-listing">
   <div class="col-sm-6">
@@ -7,14 +6,14 @@
       <div class="panel-heading">
         <div class='panel-title text-black hint-text'>
           <span class="font-montserrat fs-11 all-caps">
-            Products Liked by <%= link %> <i class="fa fa-chevron-right"></i>
+            Products Liked by <%= username_link_for(@user) %> <i class="fa fa-chevron-right"></i>
           </span>
         </div>
       </div>
       <div class="panel-body panel-scrollable">
         <div id="liked-products" class="tab-pane">
           <%= listing_of :products, @products[:liked], offset: 200, class: "col-xs-12 col-sm-6 col-md-4",
-            paging: 3, no_end_notice: true, mini: true, group: :liked, url: "/#{presenter.username}/liked.json" %>
+            paging: 3, no_end_notice: true, mini: true, group: :liked, url: "/#{@user.username}/liked.json" %>
         </div>
       </div>
     </div>
@@ -25,14 +24,14 @@
       <div class="panel-heading">
         <div class='panel-title text-black hint-text'>
           <span class="font-montserrat fs-11 all-caps">
-            Products Found by <%= link %> <i class="fa fa-chevron-right"></i>
+            Products Found by <%= username_link_for(@user) %> <i class="fa fa-chevron-right"></i>
           </span>
         </div>
       </div>
       <div class="panel-body panel-scrollable">
         <div id="found-products" class="tab-pane active">
           <%= listing_of :products, @products[:found], offset: 200, class: "col-xs-12 col-sm-6 col-md-4",
-            paging: 3, no_end_notice: true, mini: true, group: :found, url: "/#{presenter.username}/found.json" %>
+            paging: 3, no_end_notice: true, mini: true, group: :found, url: "/#{@user.username}/found.json" %>
         </div>
       </div>
     </div>
