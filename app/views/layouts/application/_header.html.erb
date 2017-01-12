@@ -24,7 +24,7 @@
         <sitewide-search id="product_search" data-riot>
           <%= link_to fa_icon('pg-search', not_fa: true) +
             "Type anywhere to <span class='bold'>search</span>".html_safe,
-            '#', class: 'search-link', data: { toggle: "search" } %>
+            '#', class: 'search-link hidden-sm', data: { toggle: "search" } %>
         </sitewide-search>
         <ul class="menu">
           <li><%= link_to 'Home', root_path, data: { text: "Home" }, class: on_page?(:root, :active) %></li>

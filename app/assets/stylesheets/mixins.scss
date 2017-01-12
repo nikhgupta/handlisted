@@ -10,6 +10,9 @@
 @mixin centered-image-container($height: 300px, $ratio: 80%) {
   height: $height;
   position: relative;
+  @media (max-width: 480px) {
+    height: $height * 2 / 3;
+  }
   .image-container {
     top: 0; left: 0;
     right: 0;

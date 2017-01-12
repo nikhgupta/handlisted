@@ -7,7 +7,7 @@
             <div class="col-xs-height col-middle text-center">
               <div class="container">
                 <div class='row'>
-                  <div class="col-md-6 no-padding col-xs-10 col-xs-offset-1 col-md-offset-6">
+                  <div class="col-md-7 no-padding col-xs-10 col-xs-offset-1 col-md-offset-5">
                     <h1 class="light sm-text-center text-white" data-swiper-parallax="-15%" style="transform: translate3d(0%, 0px, 0px);">
                       A community curation of
                     </h1>
@@ -38,7 +38,7 @@
     <%= link_to image_tag('arrow_down_2.png', class: 'm-t-30'), '#', data: { toggle: "velocity", target: "#explore" } %>
     <% if featured_product.present? %>
       <div class='row'>
-        <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 open-details' data-pages="float" data-max-top-translate="40" data-max-bottom-translate="300" data-speed="-0.1" data-delay="1000" data-curve="ease">
+        <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 open-details' data-pages="float" data-max-top-translate="40" data-max-bottom-translate="300" data-speed="-0.1" data-delay="1000" data-curve="ease">
           <%= card_for(featured_product) %>
         </div>
       </div>
@@ -71,7 +71,7 @@
 </section>
 
 <section id="home-progress" class="container container-fixed-lg">
-  <div class="md-p-l-20 md-p-r-20 xs-no-padding">
+  <div class="md-p-l-20 md-p-r-20 xs-no-padding clearfix">
     <div class="row">
       <div class="col-sm-3 xs-m-b-30">
         <h2 class="font-montserrat no-margin text-uppercase p-l-30 sm-no-padding"><span data-pages-animate="number" data-value="<%= total_products %>" data-animation-duration="800">0</span></h2>
@@ -91,13 +91,11 @@
     <p class="pull-right font-arial hint-text fs-11"><%= updated_progress %>% <span class="hint-text">Products have been Reviewed by Community</span>. <%= link_to "Want to Help Us?", page_path("add-products") %></p>
   </div>
 
-  <div class="p-t-60 md-p-l-20 md-p-r-20 xs-no-padding">
-    <div class="xs-b-b">
-      <h5 class="block-title hint-text no-margin">Like/Review/Share</h5>
-      <h2 class="m-t-5">As a community member, you can like, review or share new products.</h2>
-      <div class="col-sm-10 no-padding">
-        <h4 class="hint-text">Each of these actions takes you one step closer to a secret badge - that helps display your contribution in the community. We specially admire any efforts in describing the product briefly, in your own words.</h4>
-      </div>
+  <div class="p-t-60 md-p-l-20 md-p-r-20 xs-no-padding xs-m-t-20">
+    <h5 class="block-title hint-text no-margin">Like/Review/Share</h5>
+    <h2 class="m-t-5">As a community member, you can like, review or share new products.</h2>
+    <div class="col-sm-10 no-padding">
+      <h4 class="hint-text">Each of these actions takes you one step closer to a secret badge - that helps display your contribution in the community. We specially admire any efforts in describing the product briefly, in your own words.</h4>
     </div>
   </div>
 </section>
@@ -107,6 +105,11 @@
     <h5 class="block-title hint-text m-b-0"><%= link_to 'Add a Product', page_path('add-products') %> OR</h5>
     <h1 class="light m-t-5">Browse our Curated Products</h1>
     <h5 class="hint-text">You can, always, type anywhere to search our database</h5>
-    <%= featured_categories_list(3, class: "col-xs-6 col-sm-4 text-center", style: "margin-top: 30px") %>
+    <% categories = featured_categories(3) %>
+    <div class="xs-m-t-20 sm-m-t-30 m-t-40">
+      <div class="col-xs-12 col-sm-6  col-md-4 text-center"><%= card_for(categories[0]) %></div>
+      <div class="col-xs-12 col-sm-6  col-md-4 text-center"><%= card_for(categories[1]) %></div>
+      <div class="col-xs-12 hidden-sm col-md-4 text-center"><%= card_for(categories[2]) %></div>
+    </div>
   </div>
 </section>

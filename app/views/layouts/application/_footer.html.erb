@@ -1,25 +1,25 @@
-<section id="footer">
+<section id="footer" class="sm-p-l-0 sm-p-r-0">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 footer-newsletter p-r-60 b-r b-grey">
+      <div class="footer-newsletter col-xs-12 col-sm-6 p-r-60 sm-p-r-20 b-r b-grey xs-no-border">
         <%= render "services/newsletter/form" %>
       </div>
-      <div class="col-sm-6 footer-about p-l-60">
+      <div class="footer-about col-sm-6 col-xs-12 p-l-60 sm-p-l-20 xs-m-t-30">
         <%= link_logo_to root_path %>
         <h5 class='m-t-5'>
           Discover amazing products from Indian merchants, curated by a community with a great taste.
         </h5>
 
         <ul class="footer-nav">
-          <li><%= link_to 'About', page_path("about") %></li>
+          <li class="xs-p-l-0 xs-p-r-10"><%= link_to 'About', page_path("about") %></li>
           <li class='hidden-xs'><%= link_to 'Add Products', page_path("add-products") %></li>
           <% if current_user %>
-            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+            <li class="xs-p-l-0 xs-p-r-10"><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
           <% else %>
-            <li><%= link_to 'Log in', new_user_session_path %></li>
-            <li><%= link_to 'Register', new_user_registration_path %></li>
+            <li class="xs-p-l-0 xs-p-r-10"><%= link_to 'Log in', new_user_session_path %></li>
+            <li class="xs-p-l-0 xs-p-r-10"><%= link_to 'Register', new_user_registration_path %></li>
           <% end %>
-          <li><%= link_to 'Send feedback', 'mailto:feedback@handlisted.in' %></li>
+          <li class="xs-p-l-0 xs-p-r-10"><%= link_to 'Feedback', 'mailto:feedback@handlisted.in' %></li>
         </ul>
         <p class='small'>handlisted.in is an independent company.<br>
           Merchants that appear on this website have their respective trademarks.<br>

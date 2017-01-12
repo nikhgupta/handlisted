@@ -8,7 +8,7 @@ RSpec.feature "HomePage" do
 
     expect(page).to have_link("About", href: "/pages/about")
     expect(page).to have_link("Add Products", href: "/pages/add-products")
-    expect(page).to have_link("Send feedback", href: "mailto:feedback@handlisted.in")
+    expect(page).to have_link("Feedback", href: "mailto:feedback@handlisted.in")
 
     sign_in_as :confirmed_user, username: "testuser"
     visit root_path
