@@ -18,6 +18,8 @@
     @setMinimumAndIncrement = (min, inc) =>
       if @current_progress < min then @setProgress(min) else @increment(inc)
 
+    @has_delayed    = => @current_progress > 100
+
     @setStatus = (status) =>
       options = { status: @statusMap[status] }
       $.extend(options, current_progress: 100) unless status in ["queued", "working"]

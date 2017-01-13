@@ -59,7 +59,7 @@ module AddProductHelpers
   end
 
   def progress_status
-    bar = find("nav.header .progress-bar:not([aria-valuenow='0'])")
+    bar = find(".overlay .progress-bar:not([aria-valuenow='0'])")
     bar["aria-valuenow"].to_i if bar
   end
 
@@ -75,7 +75,7 @@ module AddProductHelpers
   def add_product_via_search_and_perform(url, instant: true, &block)
     add_product_via_sitewide_search(url, instant: instant)
     click_on_link "Import Product" if instant
-    expect(page).to have_selector('nav.header .progress-bar-master')
+    expect(page).to have_selector('.overlay .progress-bar-master')
     expect(progress_status).to be >= 10
     expect(ProductScraperJob.jobs.size).to eq 1
     yield if block_given?

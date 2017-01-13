@@ -39,7 +39,19 @@ RSpec.feature "HomePage" do
     visit root_path
     expect(page).to have_link "Browse Products", href: "/products"
     expect(page).to have_link "Learn More", href: "/pages/add-products"
+  end
+
+  scenario "only displays section with category cards when available", :js do
+    visit root_path
+    expect(page).not_to have_link "Add a Product", href: "/pages/add-products"
+    expect(page).to have_no_css(".category.card")
+    # Home page does not display section with Category cards, if categories with
+    # products could not be found. Let's make sure, home page displays this
+    # section.
+    create_list(:category, 5).each{|cat| create(:product, category: cat) }
+    visit root_path
     expect(page).to have_link "Add a Product", href: "/pages/add-products"
+    expect(page).to have_css(".category.card", count: 3)
   end
 
   scenario "has social links" do

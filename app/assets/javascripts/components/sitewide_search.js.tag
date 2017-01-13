@@ -1,7 +1,7 @@
 <sitewide-search>
   <yield></yield>
 
-  <div class="overlay" style="display: none" data-pages="search">
+  <div class="overlay sm-p-l-20 xs-p-l-0" style="display: none" data-pages="search">
     <div class="overlay-content {has-results: ((total && total > 0) || !!found_product)} m-t-20">
       <div class="container-fluid">
         <a href="/"><img class="overlay-brand" alt="logo" height="33" src="/images/handlisted-text-logo.png"></a>
@@ -10,34 +10,34 @@
         </a>
       </div>
 
-      <div class="container-fluid">
+      <div class="container-fluid m-t-40">
         <input type="text" name="search" id="overlay-search" placeholder="Search..."
         class="no-border overlay-search bg-transparent" autocomplete="off" spellcheck="false">
-        <br>
-        <div class="inline-block">
-          <div class="checkbox right">
-            <input id="checkboxn" type="checkbox" value="1" checked="checked">
-            <label for="checkboxn"><i class="fa fa-search"></i> Search within page</label>
-          </div>
-        </div>
+        <!-- <br> -->
+        <!-- <div class="inline-block"> -->
+        <!--   <div class="checkbox right"> -->
+        <!--     <input id="checkboxn" type="checkbox" value="1" checked="checked"> -->
+        <!--     <label for="checkboxn"><i class="fa fa-search"></i> Search within page</label> -->
+        <!--   </div> -->
+        <!-- </div> -->
 
-        <div show="{ ajax_wip }" class="ajax-loader inline-block m-l-10">
+        <div show="{ ajax_wip }" class="ajax-loader inline-block">
           <img src='/images/ajax-loader.gif' width="32"/>
         </div>
 
-        <div show="{!ajax_wip}" class="inline-block m-l-10"><p class="fs-13">
+        <div show="{!ajax_wip}" class="inline-block"><p class="fs-13">
             <strong if="{ import_status }">{ import_status }</strong>
             <strong if="{ query && total == 0 }">No products were found for your query!</strong>
             <strong if="{!query && !import_status}">Instant search upto 8 products or press Enter for in-depth search!</strong>
         </p></div>
 
-        <div show="{ total && query && total > 8 }" class="inline-block m-l-10">
+        <div show="{ total && query && total > 8 }" class="inline-block">
           <a href="/products/search?search={query}" class="btn btn-primary btn-cons m-b-10">
             <i class="fa fa-search text-white"></i>
             <span class="bold text-white">View All</span>
           </a>
         </div>
-        <div show="{url_to_import && !sidekiq_poll}" class="inline-block m-l-10">
+        <div show="{url_to_import && !sidekiq_poll}" class="inline-block">
           <button class="btn btn-primary btn-cons m-b-10 product-importer" type="button">
             <a href="#" data-target="{url_to_import}">
               <i class="fa fa-plus text-white"></i>
@@ -49,14 +49,12 @@
         <progress-bar if="{ sidekiq_poll }" name="sidekiqbar"></progress-bar>
       </div>
 
-      <div class="container-fluid">
-        <div if="{!ajax_wip && !found_product}" class="panel panel-transparent search-results">
-          <div class="panel-heading"><div class="panel-title">Found Products</div></div>
-          <div class="panel-body">
-            <div if="{total && total > 0}" class="row products list mini">
-              <div class="col-md-3 col-sm-6" each="{result in results}">
-                <product-card product={result} mini="true"></product-card>
-              </div>
+      <div class="container-fluid m-t-30">
+        <div if="{!ajax_wip && !found_product && total && total > 0}" class="search-results">
+          <h3>Found Products</h3>
+          <div class="products list mini">
+            <div class="col-md-3 col-sm-6 p-l-0" each="{result in results}">
+              <product-card product={result} mini="true"></product-card>
             </div>
           </div>
         </div>
@@ -84,10 +82,18 @@
       .overlay-search {
         font-weight: 300;
         height: 120px;
-        width: 90%;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #ddd !important;
       }
       .card {
         border: 1px solid #e0e0e0;
+      }
+
+      .search-results {
+        h3 { text-transform: uppercase; font-weight: 500; }
+      }
+      .progress,.overlay-search {
+        width: calc(100% - 20px);
       }
     }
 
@@ -165,10 +171,13 @@
         progress = @tags.sidekiqbar
         progress.reset() if !@poller?
         progress.setStatus res.status.toLowerCase()
+        if progress.has_delayed()
+          clearInterval(@poller) and @pollResults.push(job_id)
+          @updateSearch ajax_wip: false, import_status: "Import took a long time! Please, try again in a moment.."
         if res.status is "Queued"
-          progress.setMinimumAndIncrement(10, 1)
+          progress.setMinimumAndIncrement(10, 2)
         else if res.status is "Working"
-          progress.setMinimumAndIncrement(30, 3)
+          progress.setMinimumAndIncrement(40, 3)
         else if res.status is "Complete"
           $.get "/products/#{res.id}.json", (product) =>
             message = "Import was Successful! Congrats!"

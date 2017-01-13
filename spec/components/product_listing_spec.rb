@@ -33,7 +33,7 @@ RSpec.feature "Product Listing", :js, :slow, type: :feature do
     click_on_link "Load More"
     expect(page).to have_css(".product.card", count: @per_page * 2)
 
-    page.execute_script('window.scrollTo(0,100000)')
+    page.execute_script('window.scrollBy(0,10000)')
     expect(page).to have_css('.pagination img')
     expect(page).not_to have_css('.pagination img')
     expect(page).to have_css(".product.card", count: Product.count)

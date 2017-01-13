@@ -27,6 +27,7 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
       visit root_path
       search_using_sitewide_search :bags
       expect(page).to have_text "No products were found for your query!"
+      expect(page).not_to have_text "FOUND PRODUCTS"
       expect(page).not_to have_css ".product.card"
     end
   end
@@ -41,17 +42,20 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
       search_using_sitewide_search :bags
       expect(current_path).to eq(root_path)
       expect_search_to_show_message "No products were found"
+      expect(page).not_to have_text "FOUND PRODUCTS"
       expect_search_not_to have_product_card_for(@moto)
       expect_search_not_to have_product_card_for(@kindle)
     end
     scenario "search should list only matching products" do
       search_using_sitewide_search('kindle')
       expect(current_path).to eq(root_path)
+      expect(page).to have_text "FOUND PRODUCTS"
       expect_search_to have_product_card_for(@kindle)
       expect_search_not_to have_product_card_for(@moto)
       expect(page).not_to have_text("No products were found")
 
       search_using_sitewide_search('moto')
+      expect(page).to have_text "FOUND PRODUCTS"
       expect_search_not_to have_product_card_for(@kindle)
       expect_search_to have_product_card_for(@moto)
       expect(page).not_to have_text("No products were found")
@@ -100,7 +104,7 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
     scenario "users adds a product url in query" do
       visit root_path
       add_product_via_search_and_perform(@import)
-      expect(page).to have_selector('nav.header .progress-bar-success')
+      expect(page).to have_selector('.overlay .progress-bar-success')
       wait_for_traffic
       product = Product.find_by(pid: "B00L4VS12S")
       expect(product).to be_persisted
@@ -138,6 +142,8 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
 
       product = Product.find_by(pid: "B007W0NFCG")
       expect(product).not_to be_nil
+      expect(page).to have_text "Imported: #{product.name}"
+      expect(page).not_to have_text "FOUND PRODUCTS"
       expect_search_to_show_message "Import was Successful"
       expect_search_to have_product_card_for(product)
     end
@@ -153,10 +159,19 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
       }.to raise_error(ProductScraper::Error)
       expect(page).to have_text "Import Failed. Error: Some Error"
     end
-    scenario 'user adds a product that takes a long time to process' do
+    scenario 'user adds a product which takes a long time to import' do
+      # `nil` status specifies job expiration in Sidekiq
       allow(Sidekiq::Status).to receive(:status).and_return("Queued", nil)
       add_product_via_search_and_perform :kindle
       expect(page).to have_text "Import failed due to unknown reasons!"
+    end
+    scenario 'sidekiq does not complete the import, while progress bar reaches 100%', :very_slow do
+      # FIXME: not sure how to stub progress go above 100 using tests
+      Capybara.default_max_wait_time = 60
+      allow(Sidekiq::Status).to receive(:status).and_return("Queued")
+      add_product_via_search_and_perform :kindle
+      expect(page).to have_text "Import took a long time!"
+      Capybara.default_max_wait_time = ENV['CAPYBARA_TIMEOUT'] ? ENV['CAPYBARA_TIMEOUT'].to_i : 5
     end
     scenario 'user adds a product that has already been imported'
   end
