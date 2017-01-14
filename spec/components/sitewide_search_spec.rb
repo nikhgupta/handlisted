@@ -60,6 +60,22 @@ RSpec.feature "Site Search", :js, :slow, type: :feature do
       expect_search_to have_product_card_for(@moto)
       expect(page).not_to have_text("No products were found")
     end
+    scenario "results are not populated when query is blank" do
+      visit products_path
+      click_on_link "anywhere to search"
+      find('input#overlay-search').native.send_keys "k"
+
+      sleep 0.4
+      assert_running_ajax
+      find('input#overlay-search').native.send_keys :Backspace
+
+      within(".overlay") do
+        sleep 0.6
+        expect(page).to have_text "Instant search"
+        expect(page).not_to have_text "FOUND PRODUCTS"
+        expect(page).to have_selector(".product.card", count: 0)
+      end
+    end
     scenario "search is reset when the overlay is closed" do
       search_using_sitewide_search('kindle')
       within(".overlay"){ expect(page).to have_selector ".product.card", count: 1 }

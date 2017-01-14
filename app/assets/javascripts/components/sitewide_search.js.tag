@@ -53,7 +53,7 @@
         <div if="{!ajax_wip && !found_product && total && total > 0}" class="search-results">
           <h3>Found Products</h3>
           <div class="products list mini">
-            <div class="col-md-3 col-sm-6 p-l-0" each="{result in results}">
+            <div class="col-md-3 col-sm-6" style="padding-left: 0" each="{result in results}">
               <product-card product={result} mini="true"></product-card>
             </div>
           </div>
@@ -156,8 +156,9 @@
           callback(query)
         else
           $.post '/products/search.json', search: query, (products) =>
-            @updateSearch ajax_wip: false, total: products.length, results: products.slice(0,8)
-            callback(query)
+            if @query == query
+              @updateSearch ajax_wip: false, total: products.length, results: products.slice(0,8)
+              callback(query)
 
     @addProduct = (url) =>
       @updateSearch url_to_import: null, sidekiq_poll: true, ajax_wip: true, pollResults: []
