@@ -76,18 +76,18 @@ $(document).ajaxError (e, XHR, options) ->
   if XHR.status is 401 and (XHR.responseText is message or XHR.responseJSON?.error is message)
     window.location.replace("/login?unauthorized")
 
-# override overlay toggle fn. to fix scrolling issues
+# override overlay toggle fn. to fix scrolling and header issues
 tgOld = $.fn.search.Constructor.prototype.toggleOverlay
 $.fn.search.Constructor.prototype.toggleOverlay = (action, key) ->
   tgOld.apply(@, [action, key])
   if action is 'show'
     @$element.scrollTop = 0
     $("body").addClass 'noscroll has-overlay'
-    $("body nav.header").addClass('minimized')
+    $("body.pages nav.header").addClass('minimized')
     @$element.attr("aria-hidden", false)
     @$element.trigger('show')
   else
-    $("body nav.header").removeClass('minimized')
+    $("body.pages nav.header").removeClass('minimized')
     $("body").removeClass 'noscroll has-overlay'
     @$element.attr("aria-hidden", true)
     @$element.trigger('hide')
