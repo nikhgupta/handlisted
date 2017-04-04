@@ -3,11 +3,11 @@ if defined?(Spring)
   message  = "Coverage tests while Spring is running are unreliable.\n"
   message += "Please, try again with Spring disabled.\n"
   message += "Try running: bin/coverage"
-  puts "\e[33m#{message}\e[0m"
+  puts "\\033[33m#{message}\\033[0m"
 elsif SimpleCov.running
-  puts "\e[37mSimpleCov is already running..\e[0m\n"
+  puts "\\033[37mSimpleCov is already running..\\033[0m\n"
 else
-  puts "\e[35mLoading SimpleCov for coverage testing..\e[0m\n"
+  puts "\\033[35mLoading SimpleCov for coverage testing..\\033[0m\n"
   SimpleCov.start 'rails' do
     add_filter 'vendor/'
     add_filter 'app/admin'  # for now
